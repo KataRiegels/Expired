@@ -30,7 +30,6 @@ from kivy.metrics import dp
 from Items import *
 from Widgets import *
 from Widgets.Bars import *
-from Widgets import ScrollViewList
 from . import *
 class MyItem(TwoLineAvatarListItem):
     def on_long_touch(self, touch):

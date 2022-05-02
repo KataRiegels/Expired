@@ -17,10 +17,21 @@ from Screens.MainMenuScreen import *
 # from Screens.MainMenuScreen import *
 # from kivymd.uix.textfield import MDTextField
 from Items import *
-import Screens.test
 # from Widgets.Bars import *
 from kivy.uix.screenmanager import *
 from kivy.core.text import LabelBase
+
+from kivy.core.window import Window
+from kivy.properties import ObjectProperty
+
+# class MyAppClass(FloatLayout):#its a FloatLayout in my case
+#     _screen_manager=ObjectProperty(None)
+#     def __init__(self,**kwargs):
+#         super(MyAppClass,self).__init__(**kwargs)
+#         #code goes here and add:
+
+
+
 
 # from kivymd.uix.transition.transition import MDFadeSlideTransition
 # kivymd.uix.transition.transition.MDFadeSlideTransition
@@ -132,19 +143,22 @@ class TestApp(MDApp):
         self.items = Items("data.json")
         self.items.openFridge()
         self.fridge = self.items
+        # Window.bind(on_keyboard=self.Android_back_click)
+        Window.bind(on_keyboard=self.Android_back_click)
+
         return manager
         # return Lay()
-    def swipe_screen(self, right):
-        # if self.enable_swipe:
-            # i = int(self.sm.current)
-        if right:
-            self.sm.transition.direction = 'right'
-            self.bar.switch_tab("list")
-            # self.sm.current = str((i-1) % len(self.screens))
-        else:
-            self.sm.transition.direction = 'left'
-            self.bar.switch_tab("list")
-            # self.sm.current = str((i+1) % len(self.screens))
+    def Android_back_click(self,window,key,*largs):
+        if key == 27:
+            self.bar.back_screen()
+            # self.bar.switch_tab(self.bar.get_screen_from_order(self.bar.current_tab).name)#you can create a method here to cache in a list the number of screens and then pop the last visited screen.
+            return True
+        
+        
+        
+        
+        
+        
 TestApp().run()
 
 
