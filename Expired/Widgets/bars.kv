@@ -1,0 +1,52 @@
+
+
+
+<MNavigationBar>:
+
+
+
+
+    MenuScreen:
+        id: menu_tab
+        _parent: root
+        order: 1
+        direction: "left"
+        name: 'menu'
+        text: 'Menu'
+        icon: 'backburger'
+        on_tab_press: root.change_screen("menu")
+
+
+    ListScreen:
+        id: list_tab
+        _parent: root
+        order: 2
+        direction: "right"
+        text: 'List'
+        icon: 'format-list-numbered'
+        on_tab_press: root.change_screen("list")
+        # on_tab_press: app.swipe_screen("right")
+
+    ScanScreen:
+        id: scan_tab
+        _parent: root
+        order: 3
+        text: 'Scan'
+        icon: 'camera'
+        name: 'scan'
+        on_tab_press: root.change_screen("scan")
+
+    SettingsScreen:
+        id: settings_tab
+        _parent: root
+        order: 4
+        name: 'settings'
+        text: 'Settings'
+        icon: 'cog'
+        on_tab_press: root.change_screen("settings")
+
+<Toolbar>:
+    title: "Scan Screen"
+    pos_hint: {"top": 1}
+    anchor_title: 'center'
+    right_action_items: [["close-circle", lambda x: app.stop()]]

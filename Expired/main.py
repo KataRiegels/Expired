@@ -1,31 +1,42 @@
-from kivy.app import App
+
+
+import os
 from kivy.lang import Builder
+from kivymd.app import MDApp
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.button import Button
-from kivymd.app import MDApp
-from Screens.MScreen import PrimaryScreen
-from Screens.MainMenuScreen import MenuScreen
+from Screens.ListScreen import ListScreen
 from Screens.ScanScreen import ScanScreen
 from Screens.SettingsScreen import SettingsScreen
 from Screens.CalenderScreen import CalenderScreen
-from kivy.core.text import LabelBase
 from kivy.config import Config
+from kivymd.uix.screen import MDScreen
+# from kivymd.uix.label import MDLabel
+from Screens.MainMenuScreen import *
+# from Screens.MainMenuScreen import *
+# from kivymd.uix.textfield import MDTextField
 from Items import *
-from kivymd.uix.textfield import MDTextField
+import Screens.test
+# from Widgets.Bars import *
+from kivy.uix.screenmanager import *
+from kivy.core.text import LabelBase
+
 # from kivymd.uix.transition.transition import MDFadeSlideTransition
 # kivymd.uix.transition.transition.MDFadeSlideTransition
 
 LabelBase.register(name='ExpiredFont', fn_regular='Resources/custom.ttf')
-Builder.load_file('Screens/listscreen.kv')
-Builder.load_file('Screens/mainmenuscreen.kv')
-from Screens.ListScreen import ListScreen
-Builder.load_file('Widgets/itemlistdisplay.kv')
-Builder.load_file('Screens/scanscreen.kv')
-Builder.load_file('Widgets/bars.kv')
 
-Builder.load_file('Screens/settingsscreen.kv')
-Builder.load_file('Screens/calenderscreen.kv')
-Builder.load_file('main_screen.kv')
+def building():
+    Builder.load_file('Screens/mainmenuscreen.kv')
+    Builder.load_file('Widgets/itemlistdisplay.kv')
+    Builder.load_file('Screens/listscreen.kv')
+    Builder.load_file('Screens/scanscreen.kv')
+
+    Builder.load_file('Screens/settingsscreen.kv')
+    Builder.load_file('Screens/calenderscreen.kv')
+    Builder.load_file('Widgets/bars.kv')
+    return Builder.load_file('main_screen.kv')
 # Config.set(' graphics', 'resizable', '0')
 # Config.set('graphics', 'height', '600')
 # Config.set('graphics', 'width', '300')
@@ -101,28 +112,39 @@ colors = {
     }
 }
 
-# 
+class Lay(BoxLayout):
+    pass
+
 class TestApp(MDApp):
     def build(self):
+        manager = building()
+        self.enable_swipe = True
+        bar = manager.ids.nav_bar
+        menuscreen = bar.ids.menu_tab
+        bar.ids.tab_manager.transition = SlideTransition(direction = "right") 
+        self.sm = bar.ids.tab_manager
+        self.bar = bar
+        
+        
         self.theme_cls.colors = colors
         self.theme_cls.primary_palette = "Red"
         self.theme_cls.accent_palette = "Teal"
-        # self.theme_cls.primary_palette = "Green"  # "Purple", "Red"
-        # self.theme_cls.primary_hue = "200"  # "500"
         self.items = Items("data.json")
-        # items.jsonFo rmatToItemFormat()
         self.items.openFridge()
-        # sm = ScreenManager()
-        sm = PrimaryScreen()
-        self.sm = sm
-        sm.fridge = self.items # so it can be accessed by other screens
-        sm.add_widget(MenuScreen(name='menu'))
-        sm.add_widget(ListScreen(name='list'))
-        sm.add_widget(ScanScreen(name='scan'))
-        sm.add_widget(SettingsScreen(name='settings'))
-        sm.add_widget(CalenderScreen(name='calender'))
-        return sm
-
+        self.fridge = self.items
+        return manager
+        # return Lay()
+    def swipe_screen(self, right):
+        # if self.enable_swipe:
+            # i = int(self.sm.current)
+        if right:
+            self.sm.transition.direction = 'right'
+            self.bar.switch_tab("list")
+            # self.sm.current = str((i-1) % len(self.screens))
+        else:
+            self.sm.transition.direction = 'left'
+            self.bar.switch_tab("list")
+            # self.sm.current = str((i+1) % len(self.screens))
 TestApp().run()
 
 
