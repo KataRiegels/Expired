@@ -1,5 +1,5 @@
 #:import Factory kivy.factory.Factory
-
+#:import get_color_from_hex kivy.utils.get_color_from_hex
 
 <MSnackbar>:
     text: "Please hold an item to start selection"
@@ -9,37 +9,52 @@
 
 <ConfirmDelete>
     title: "Do you want to delete:"
+    md_bg_color: app.theme_cls.primary_color
     type: "simple"
 
 
 # Layout for where to display labels in the item list and header
 <ItemLayout@RelativeLayout>:
     exp_date_lbl: " exp date here "
-    exp_date_font_size: "12dp"
+    exp_date_font_size: dp(20)
     product_name_lbl: " product name here"
-    product_name_font_size: "12dp"
-    MDLabel:
-        markup: True
-        id: product_name_lbl
-        font_size: root.product_name_font_size
-        text:      root.product_name_lbl
-        pos_hint: {"x":.3,"y":.0}
+    theme_text_color: "Primary"
+    # text_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
+    text_color: 0,0,0,1
+    product_name_font_size: dp(20)
     MDLabel:
         markup: True
         id: expiry_date_lbl
-        pos_hint:{'x':.01,'y':.0}
+        font_name: "BestBefore"
+        pos_hint:{'x':.02,'y':.0}
+        theme_text_color: root.theme_text_color
+        text_color: root.text_color
+        # text_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
+        # text_color: 0, 1, 0, 1
+        
         text: root.exp_date_lbl
         font_size: root.exp_date_font_size
+    MDLabel:
+        markup: True
+        id: product_name_lbl
+        theme_text_color: root.theme_text_color
+        text_color: root.text_color
+        font_size: root.product_name_font_size
+        text:      root.product_name_lbl
+        pos_hint: {"x":.3,"y":.0}
 
 # List items are subclassing this - this is written here to overwrite kivyMD's own version
 # <BaseListItem>
 <ListItemBase>
     size_hint_y: None
+    # divider: True
+    bg_color: app.theme_cls.primary_light
     canvas:
         Color:
-            rgba:
-                self.theme_cls.divider_color if root.divider is not None\
-                else (0, 0, 0, 0)
+            rgba: 
+                # self.theme_cls.divider_color if root.divider is not None\
+                # else (0, 0, 0, 0)
+                self.theme_cls.divider_color 
         Line:
             points: (root.x ,root.y, root.x+self.width, root.y) if root.divider == 'Full' else (root.x+root._txt_left_pad, root.y, root.x+self.width-root._txt_left_pad-root._txt_right_pad,root.y)
         Color:
@@ -54,7 +69,9 @@
 
 # List item settings
 <FoodItemSelection>
-    bg_color: [.8,.5,.9,.4]
+    # bg_color: [.8,.5,.9,.4]
+    # bg_color: app.theme_cls.primary_color
+    bg_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["700"])
     _no_ripple_effect: True
     _txt_top_pad:"0dp"
     _txt_bot_pad:"0dp"
@@ -67,7 +84,9 @@
     _lbl_primary: None
     # size_hint_x: None
     icon_: "magnify"
-    text_color: 0, 1, 1, 1
+    text_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
+    # text_color: 0, 1, 0, 1
+    # text_color: 0, 1, 1, 1
     # height: dp(5)
     line_color: 1, 0, 1, 1
     # icon_color: 1,1,1,1
@@ -87,8 +106,8 @@
 
 <Icon@IconLeftWidget>
     theme_text_color: "Custom"
-    text_color: 0, 1, 1, 1
-
+    # text_color: 0, 1, 0, 1
+    text_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
 # <SortDropdownMenu@MDDropdownMenu>
 #     SortIconButton:
 #         on_press: root._parent.sortName(ascending=True)
@@ -100,17 +119,13 @@
     pos_hint: {"right": 1, "bottom": 1}
     # size: (dp(48),0)
     size_hint_y: .6
-    size_hint_x: .5
+    size_hint_x: .7
     title: "Sort by"
-    # canvas:
-    #     Rectangle:
-    #         group: "Background_instruction"
-    #         size: self.size
-    #         pos: self.pos if not isinstance(self, RelativeLayout) else (0, 0)
-    #         # radius: root.radius
-    #         # source: root.background
-    #     Color: 
-    #         rgba: [.9,.9,.9,.1] # Bad solution to annoying backgroun color
+    background: ""
+    # background_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_dark_hue])
+    background_color: app.theme_cls.primary_color
+    # background_color: get_color_from_hex(app.theme_cls.colors["Teal"]["50"])
+    background_normal: ""
     GridLayout:
         cols: 1
         SortIconButton:
@@ -186,62 +201,9 @@
         orientation: "vertical"
         padding: ([10,10,10,10])
         spacing: 5     
-            # MDIconButton:
-            #     icon: "magnify"
-            #     pos_hint: {"x": .5, "center_y": .5}
-            #     theme_icon_color: "Custom"
-            #     icon_color: [1,1,0,1]
-            #     on_press: root.searchItems()
-        # Snackbar:
-        #     id: delete_error_snackbar
-        # RelativeLayout: # The part with the search field etc
-        #     size_hint_x: 1
-        #     size_hint_y: .1
-        #     TextInput:
-        #         id:search_field
-        #         hint_text: 'Search item'
-        #         size_hint_x: .5
-        #         pos_hint: {'x': 0, 'y': 0}
-        #         readonly: False
-        #         multiline: False
-        #     MDIconButton:
-        #         icon: "magnify"
-        #         pos_hint: {"x": .5, "center_y": .5}
-        #         on_press: root.searchItems()
-        #     MDLabel:
-        #         text: "Sort by"
-        #         pos_hint: {'x': .7, 'y': 0}
-        #     Button:
-        #         theme_text_color: "Custom"
-        #         text_color: 0, 0, 1, 1
-        #         text: 'Sort by'
-        #         size_hint_x: .1
-        #         pos_hint: {'x': .8, 'y': 0}
-        #         # on_press: root.sortName()
-        #         # on_release: Factory.SortByPopup().open()
-        #         on_release: root.openSortBy()
-            # Button:
-            #     theme_text_color: "Custom"
-            #     text_color: 0, 0, 1, 1
-            #     text: 'Name'
-            #     size_hint_x: .1
-            #     pos_hint: {'x': .8, 'y': 0}
-            #     on_press: root.sortName()
-            # Button:
-            #     theme_text_color: "Custom"
-            #     text: 'Date'
-            #     size_hint_x: .1
-            #     pos_hint: {'x': .9, 'y': 0}
-            #     on_press: root.sortDate()
         BoxLayout:
             size_hint_y: .1
             size_hint_x: 1
-            canvas.before:
-                Color:
-                    rgba: 1, 1, 1, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
             ItemLayout:
                 exp_date_lbl: "[b]Expiry date[/b] \nYYYY/MM/DD"
                 product_name_lbl: "[b] Product name[/b]"
@@ -280,8 +242,12 @@
             radius: root.radius
             source: root.background
         Color: 
-            rgba: [.9,1,.1,.0] # Bad solution to annoying backgroun color
+            # rgba: [.9,1,.1,.0] # Bad solution to annoying backgroun color
+            # rgba: app.theme_cls.primary_color # Bad solution to annoying backgroun color
+            rgba: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["200"])
     padding: ([0,0,0,0]) # just moves the widgets in. color rectangle behind stays...
     spacing: "2dp"
-    md_bg_color: [.8,.5,.9,.0]
+    # md_bg_color: app.theme_cls.primary_color
+    # md_bg_color: app.secondary_dark
+    md_bg_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["200"])
     overlay_color: [1,1,1,0.2]

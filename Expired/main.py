@@ -1,9 +1,11 @@
 
 
 import os
+import kivy
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.button import Button
 from Screens.ListScreen import ListScreen
@@ -17,12 +19,14 @@ from Screens.MainMenuScreen import *
 # from Screens.MainMenuScreen import *
 # from kivymd.uix.textfield import MDTextField
 from Items import *
-# from Widgets.Bars import *
+from Widgets.Bars import *
 from kivy.uix.screenmanager import *
 from kivy.core.text import LabelBase
 
+
 from kivy.core.window import Window
 from kivy.properties import ObjectProperty
+from kivy.utils import get_color_from_hex
 
 # class MyAppClass(FloatLayout):#its a FloatLayout in my case
 #     _screen_manager=ObjectProperty(None)
@@ -37,6 +41,7 @@ from kivy.properties import ObjectProperty
 # kivymd.uix.transition.transition.MDFadeSlideTransition
 
 LabelBase.register(name='ExpiredFont', fn_regular='Resources/custom.ttf')
+LabelBase.register(name='BestBefore', fn_regular='Resources/Dited.otf')
 
 def building():
     Builder.load_file('Screens/mainmenuscreen.kv')
@@ -54,10 +59,9 @@ def building():
 
 # from kivy.core.window import Window
 
-# Window.softinput_mode = "below_target"
+Window.softinput_mode = "below_target"
 
 import json
-
 colors = {
     "Teal": {
         "50": "e4f8f9",
@@ -128,6 +132,9 @@ class Lay(BoxLayout):
 
 class TestApp(MDApp):
     def build(self):
+        self.items = Items("data.json")
+        self.items.openFridge()
+        self.fridge = self.items
         manager = building()
         self.enable_swipe = True
         bar = manager.ids.nav_bar
@@ -136,18 +143,33 @@ class TestApp(MDApp):
         self.sm = bar.ids.tab_manager
         self.bar = bar
         
-        
+        # self.primary_light_hue = 
+        # self.primary_dark_hue = 
+        self.theme_cls.accent_palette = "Red"
+        # self.theme_cls.accent_hue = "50"
+        # self.theme_cls.accent_light_hue = "50"
+        # self.theme_cls.accent_dark_hue = "500"
         self.theme_cls.colors = colors
-        self.theme_cls.primary_palette = "Red"
-        self.theme_cls.accent_palette = "Teal"
-        self.items = Items("data.json")
-        self.items.openFridge()
-        self.fridge = self.items
+        # self.theme_cls.primary_hue = "900"
+        self.theme_cls.primary_hue = "900"
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "Blue"    
+        self.theme_cls.primary_light_hue = "50"    
+        self.theme_cls.primary_dark_hue = "500"
+        self.secondary_dark = get_color_from_hex(self.theme_cls.colors[self.theme_cls.primary_palette][self.theme_cls.primary_light_hue])
+            
+        # self.theme_cls.bg_normal = "Teal"
+        # self.theme_cls.accent_palette = "Red"
+        # self.theme_cls.accent_dark_hue = "50"    
         # Window.bind(on_keyboard=self.Android_back_click)
         Window.bind(on_keyboard=self.Android_back_click)
 
         return manager
         # return Lay()
+    
+    def change_theme(self): 
+        self.theme_cls.primary_palette = "Red"
+        
     def Android_back_click(self,window,key,*largs):
         if key == 27:
             self.bar.back_screen()

@@ -1,13 +1,30 @@
 
+<MDBottomNavigationHeader>:
+    # text_color: 1,1,1,1
+    # opposite_colors: 1,1,1,1
+    # text_color_normal: 1,1,1,1
+
 
 
 <MNavigationBar>:
 
+    # panel_color: app.theme_cls.primary_dark
+    panel_color: app.theme_cls.primary_color
 
-
+    text_color_active: app.theme_cls.primary_light
+    text_color_normal: app.theme_cls.primary_dark
 
     MenuScreen:
+        # canvas:
+        #     Color:
+        #         rgba: app.theme_cls.primary_light
+        #     Rectangle:
+        #         size: root.size
         id: menu_tab
+        md_bg_color: app.theme_cls.bg_light
+        # icon_color: app.theme_cls.primary_light
+
+        # specific_text_color: 1, 1, 1, 1
         _parent: root
         order: 1
         direction: "left"
@@ -46,7 +63,9 @@
         on_tab_press: root.change_screen("settings")
 
 <Toolbar>:
+    md_bg_color: app.theme_cls.primary_color
     title: "Scan Screen"
+    height: dp(40)
     pos_hint: {"top": 1}
     anchor_title: 'center'
     right_action_items: [["close-circle", lambda x: app.stop()]]

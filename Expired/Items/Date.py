@@ -29,6 +29,8 @@ class Date():
         return (self.year,self.month,self.day) == (other.year,other.month,other.day)
 
 
+    def toString(self):
+        return f"{self.day}/{self.month}-{self.year}"
 
     def toString_DMY(self):
         return f"{self.day}/{self.month}-{self.year}"

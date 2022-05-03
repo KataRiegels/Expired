@@ -1,21 +1,36 @@
 <SettingsScreen>:
     # MNavigationBar:
     Toolbar:
-        title: "List screen"
-    Button:
-        text: 'test cat api'
+        title: "Settings"
+    # Button:
+    #     text: 'test cat api'
+    #     size_hint:(.5,.1)
+    #     pos_hint: {'x':.25,'y':.4}
+    #     on_press: root.apiTEST2()
+    # Button:
+    #     text: 'test api (pc)'
+    #     size_hint:(.5,.1)
+    #     pos_hint: {'x':.25,'y':.3}
+    #     on_press: root.apiTEST()
+    MDRaisedButton:
+        id: features
+        text: 'enable'
+        # theme_text_color: "Custom"
+        # text_color: app.theme_cls.primary_light
+        # md_bg_color: app.theme_cls.primary_color
         size_hint:(.5,.1)
-        pos_hint: {'x':.25,'y':.4}
-        on_press: root.apiTEST2()
-    Button:
-        text: 'test api (pc)'
+        pos_hint: {'x':.25,'y':.5}
+        on_press: root.enable_features()
+    MDRaisedButton:
+        text: 'change theme'
         size_hint:(.5,.1)
-        pos_hint: {'x':.25,'y':.3}
-        on_press: root.apiTEST()
+        # md_bg_color: app.theme_cls.primary_color
+        pos_hint: {'x':.25,'y':.6}
+        on_press: app.change_theme()
     MDLabel:
         id: labelText
-        text: "API response"
+        text: ""
         halign: "center"
         font_size: '30dp'
-        pos_hint: {'x':0,'y':.2}
+        pos_hint: {'x':0,'y':-.3}
 

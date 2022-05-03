@@ -22,6 +22,7 @@ class FoodItemSelection(ListItemBase):
         self._owner = _owner
         super().__init__()
     def createOption(self):
+        print(self.ids)
         self.ids.list_item.exp_date_lbl = self._owner.expiryDate.toString_DMY()
         self.ids.list_item.product_name_lbl = self._owner.productName
 
@@ -73,14 +74,14 @@ class ConfirmDelete(MDDialog):
     def __init__(self, _parent = None, deleted_items = None, **kwargs):
         self.cancel_button = MDFlatButton(
                 text="CANCEL",
-                theme_text_color="Custom",
-                # text_color=self.theme_cls.primary_color,
+                # theme_text_color="Custom",
+                text_color=MDApp.get_running_app().theme_cls.primary_color,
                 on_release= self.dismiss,
             )
         self.ok_button = MDFlatButton(
                 text="CONFIRM",
-                theme_text_color="Custom",
-                # text_color=self.theme_cls.primary_color,
+                # theme_text_color="Custom",
+                text_color=MDApp.get_running_app().theme_cls.primary_color,
                 on_release= self.confirmButton,
             )
         buttons=[

@@ -12,6 +12,7 @@ class MScreen(NavigationItem,Screen,CommonGestures):
     # app = App.get_running_app()
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
+        self.md_bg_color = MDApp.get_running_app().theme_cls.bg_light
          
         # self.sm = self.app.sm
         # self.add_widget(self.sm.bar)

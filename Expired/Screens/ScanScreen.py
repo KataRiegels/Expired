@@ -17,6 +17,7 @@ if platform == 'android':
 from kivymd.uix.button import MDRaisedButton
 from kivy.uix.textinput import TextInput
 from kivymd.uix.textfield import MDTextField
+from kivymd.app import MDApp
 
 class FilteredInput(MDTextField):
     def insert_text(self, substring, from_undo=False):
@@ -28,6 +29,8 @@ class FilteredInput(MDTextField):
             else:
                 s = substring
         return super().insert_text(s, from_undo=from_undo)
+    def on_disabled(self, *args):
+        pass
 
 class ScanScreen(MScreen):
     dialog = None
@@ -129,9 +132,9 @@ class ScanScreen(MScreen):
     def save_item_to_fridge(self,item_save = None):
         item_save = self.test2
         productName = self.itemTextInput.text
-        expDate = Date(item_save.year,item_save.month,item_save.day)
+        expDate = Date(year = item_save.year,month = item_save.month, day=item_save.day)
         item = Item(productName,expDate)
-        self.manager.fridge.addItemToFridge(item)
+        MDApp.get_running_app().fridge.addItemToFridge(item)
         # item.createUniqueID()
 
         # text = self.itemTextInput.text + " expires on " + str(self.test2.day) +" "+ str(self.test2.month) +" "+ str(self.test2.year),
