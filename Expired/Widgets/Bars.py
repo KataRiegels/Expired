@@ -115,10 +115,11 @@ class MNavigationBar(MDBottomNavigation):
     #     _get_disabled_hint_text_color, bind=["theme_style"]
     # )
 
+""" I believe this is unnecessary - was used as superclass for MScreen"""
 class NavigationItem(MDBottomNavigationItem):
     
     pass
 
 
-class Toolbar(MDToolbar):
-    pass
+# class Toolbar(MDToolbar):
+#     pass

@@ -7,7 +7,7 @@ from Widgets.Bars import MNavigationBar, NavigationItem
 from gestures4kivy import CommonGestures
 
 # class MScreen(MDScreen):
-class MScreen(NavigationItem,Screen,CommonGestures):
+class MScreen(MDBottomNavigationItem,Screen,CommonGestures):
 # class MScreen(NavigationItem):
     # app = App.get_running_app()
     def __init__(self,*args,**kwargs):
