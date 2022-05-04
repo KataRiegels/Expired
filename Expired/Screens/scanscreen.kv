@@ -3,18 +3,25 @@
     pressed_ok:funSpinner
     itemTextInput:itemName
     # MNavigationBar:
-    Toolbar:
-        title: "Scan"
+
+    MDSpinner:
+        id: funSpinner
+        size_hint: (.1,.1)
+        pos_hint: {'center_x': .5, 'center_y': .25}
+        active: False
     BoxLayout:
-        pos_hint: {'center_x': .5, 'center_y': .65}
-        size_hint: (1,.5)
+        pos_hint: {'center_x': .5, 'top': .95}
+        # size_hint: (1,.5)
+        size_hint: (1,.7)
         Preview:
             id: preview
 	        aspect_ratio: '16:9'
+    Toolbar:
+        title: "Scan"
     MDFillRoundFlatIconButton:
         icon: "magnify-scan"
         text: "Scan image"
-        pos_hint: {'center_x': .5, 'center_y': .45}
+        pos_hint: {'center_x': .5, 'center_y': .30}
         on_release: root.photo()
         # theme_text_color: "Custom"
         # text_color: 0, 0, 1, 1
@@ -33,43 +40,8 @@
         text: "Select Expiry Date"
         # pos_hint: {'center_x': .5, 'center_y': .35}
         on_release: root.show_date_picker()
-        pos_hint: {'center_x': .75, 'center_y': .25}
-    # MDRaisedButton:
-    #     id: date_label
-    #     text: "Select Expiry Date"
-    #     # pos_hint: {'center_x': .5, 'center_y': .35}
-    #     on_release: root.show_date_picker()
-    #     pos_hint: {'center_x': .75, 'center_y': .25}
-
-    MDSpinner:
-        id: funSpinner
-        size_hint: (.1,.1)
-        pos_hint: {'center_x': .5, 'center_y': .25}
-        active: False
-
-    # MDLabel:
-    #     id:date_label
-    #     text:'Select a Date'
-    #     halign: 'center'
-    #     pos_hint: {'center_x': .75, 'center_y': .25}
-    #     font_size: '30dp'
-    #     bold: True
-
-    MDFillRoundFlatIconButton:
-        id: date_label
-        font_size: dp(15)
-        icon: "content-save"
-        # pos_hint: {'center_x': .5, 'center_y': .35}
-        text: "Save Item"
-        pos_hint: {'center_x': .5, 'center_y': .1}
-        pos_hint: {'center_x': .5, 'y': .04}
-        on_release: root.save_item()
-    # MDRaisedButton:
-    #     text: "Save Item"
-    #     pos_hint: {'center_x': .5, 'center_y': .15}
-    #     on_release: root.save_item()
-
-
+        pos_hint: {'center_x': .75, 'center_y': .17}
+    
     FilteredInput:
         id: itemName
         hint_text: "Enter item name"
@@ -85,5 +57,35 @@
         size_hint: .35,None
         height: '40dp'
         # pos_hint: {'center_x': .25, 'center_y': .25}
-        pos_hint: {'x': .1, 'center_y': .25}
+        pos_hint: {'x': .1, 'center_y': .17}
         fill_color: 1,1,1,.1
+    # MDRaisedButton:
+    #     id: date_label
+    #     text: "Select Expiry Date"
+    #     # pos_hint: {'center_x': .5, 'center_y': .35}
+    #     on_release: root.show_date_picker()
+    #     pos_hint: {'center_x': .75, 'center_y': .25}
+
+    # MDLabel:
+    #     id:date_label
+    #     text:'Select a Date'
+    #     halign: 'center'
+    #     pos_hint: {'center_x': .75, 'center_y': .25}
+    #     font_size: '30dp'
+    #     bold: True
+
+    MDFillRoundFlatIconButton:
+        id: date_label
+        font_size: dp(15)
+        icon: "content-save"
+        # pos_hint: {'center_x': .5, 'center_y': .35}
+        text: "Save Item"
+        # pos_hint: {'center_x': .5, 'center_y': .1}
+        pos_hint: {'center_x': .5, 'y': .04}
+        on_release: root.save_item()
+    # MDRaisedButton:
+    #     text: "Save Item"
+    #     pos_hint: {'center_x': .5, 'center_y': .15}
+    #     on_release: root.save_item()
+
+

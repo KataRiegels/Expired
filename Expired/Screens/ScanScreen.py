@@ -52,7 +52,7 @@ class ScanScreen(MScreen):
         # self.save_item_to_fridge(self.test2)
 
     def on_pre_enter(self):
-        self.selected_date.text ="Select a Date"
+        # self.selected_date.text ="Select a Date"
         self.test2 = None
 
         if platform == 'android':

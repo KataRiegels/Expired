@@ -69,19 +69,21 @@ class MNavigationBar(MDBottomNavigation):
             # self.switch_tab(next_screen)
         # self.current_tab = sm.get_screen(next_screen.name).order
         # self.updateBackList(current.order)
-        self.updateBackList(next_screen.order)
+        # self.updateBackList(next_screen.order)
         self.current_tab = current.order
         self.switch_tab(next_screen.name)
     
     def back_screen(self):
-        # to_screen_order = self.current_tab
-        current = self.get_screen_from_order(self.current_tab)
-        to_screen_order = self.latest_tabs[-2]
+        to_screen_order = self.current_tab
         to_screen = self.get_screen_from_order(to_screen_order)
+        if self.current_tab == self.ids.tab_manager.current_screen.order:
+            self.switch_tab("menu")
+        else: self.switch_tab(to_screen.name)
+        # current = self.get_screen_from_order(self.current_tab)
+        # to_screen_order = self.latest_tabs[-2]
         # print(to_screen.order)
-        self.updateBackList(to_screen.order)
+        # self.updateBackList(to_screen.order)
         # self.updateBackList(self.current_tab)
-        self.switch_tab(to_screen.name)
     
     def change_screen(self,to_screen):
         # self.on_text_color_normal(None,[1,1,1,1])
@@ -91,7 +93,7 @@ class MNavigationBar(MDBottomNavigation):
             sm.transition.direction = 'left'
         if current.order > sm.get_screen(to_screen).order:
             sm.transition.direction = 'right'
-        self.updateBackList(sm.get_screen(to_screen).order)
+        # self.updateBackList(sm.get_screen(to_screen).order)
         # self.updateBackList(current.order)
         self.current_tab = current.order
         # self.current_tab = sm.get_screen(to_screen).order

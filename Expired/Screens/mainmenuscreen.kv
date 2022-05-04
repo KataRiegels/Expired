@@ -88,8 +88,10 @@
     # NoteLayout:
     FloatLayout:        
         pos_hint: {"center_x":.5,"center_y":.4}
-        size_hint:None, .6
-        size: self.height, self.height
+        size_hint: .8, None
+        size: self.width, self.width
+        # size_hint:None, .5
+        # size: self.height, self.height
         Image:
             pos_hint: {"x":0,"y":0}
             source: 'Resources/sticky_note.png'
