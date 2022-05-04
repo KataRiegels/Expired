@@ -22,7 +22,7 @@ from Items import *
 from Widgets.Bars import *
 from kivy.uix.screenmanager import *
 from kivy.core.text import LabelBase
-
+from kivy.uix.scrollview import DampedScrollEffect
 
 from kivy.core.window import Window
 from kivy.properties import ObjectProperty
@@ -41,6 +41,8 @@ from kivy.utils import get_color_from_hex
 # kivymd.uix.transition.transition.MDFadeSlideTransition
 
 LabelBase.register(name='ExpiredFont', fn_regular='Resources/custom.ttf')
+# LabelBase.register(name='BestBefore', fn_regular='Resources/bestbefore-regular.ttf')
+# LabelBase.register(name='BestBefore', fn_regular='Resources/bestbefore.ttf')
 LabelBase.register(name='BestBefore', fn_regular='Resources/Dited.otf')
 
 def building():
@@ -132,9 +134,7 @@ class Lay(BoxLayout):
 
 class TestApp(MDApp):
     def build(self):
-        self.items = Items("data.json")
-        self.items.openFridge()
-        self.fridge = self.items
+        
         manager = building()
         self.enable_swipe = True
         bar = manager.ids.nav_bar
@@ -158,6 +158,10 @@ class TestApp(MDApp):
         self.theme_cls.primary_dark_hue = "500"
         self.secondary_dark = get_color_from_hex(self.theme_cls.colors[self.theme_cls.primary_palette][self.theme_cls.primary_light_hue])
             
+        self.items = Items("data.json")
+        self.items.openFridge()
+        self.fridge = self.items
+        self.bar.ids.menu_tab.prepareMenu()
         # self.theme_cls.bg_normal = "Teal"
         # self.theme_cls.accent_palette = "Red"
         # self.theme_cls.accent_dark_hue = "50"    
@@ -168,7 +172,10 @@ class TestApp(MDApp):
         # return Lay()
     
     def change_theme(self): 
-        self.theme_cls.primary_palette = "Red"
+        if self.theme_cls.primary_palette == "Blue":
+            self.theme_cls.primary_palette = "Red"
+        elif self.theme_cls.primary_palette == "Red":
+            self.theme_cls.primary_palette = "Blue"
         
     def Android_back_click(self,window,key,*largs):
         if key == 27:
@@ -176,7 +183,9 @@ class TestApp(MDApp):
             # self.bar.switch_tab(self.bar.get_screen_from_order(self.bar.current_tab).name)#you can create a method here to cache in a list the number of screens and then pop the last visited screen.
             return True
         
-        
+    def stop(self, *largs):
+        self.bar.ids.scan_tab.on_leave()
+        return super().stop(*largs)
         
         
         

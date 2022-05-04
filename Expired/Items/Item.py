@@ -23,7 +23,7 @@ class Item():
 
     """ In order for displaying the item """
     def toString(self):
-        return f"{self.productName} - exp: {self.expiryDate}"
+        return f"{self.productName} expiring {self.expiryDate.toString()}"
 
 
 

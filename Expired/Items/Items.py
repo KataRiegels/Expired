@@ -80,7 +80,7 @@ class Items():
     def jsonFormatToItemFormat(self,jsonitem = None):
         self.loadJSON()
         for key,value in self.jsonDict.items():
-            item  = Item(value[0],Date(value[1][0],value[1][1],value[1][2]),key)
+            item  = Item(value[0],Date(year = value[1][0],month = value[1][1],day = value[1][2]),key)
             self.addItemToLists(item)
 
     """ Sorting the sorted lists for after adding items """

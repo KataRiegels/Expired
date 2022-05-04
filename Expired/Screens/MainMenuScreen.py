@@ -18,23 +18,25 @@ from kivymd.app import MDApp
 #     pass
 
 class DateLayout(RelativeLayout):
-    def __init__(self, **kw):
-        
-        super().__init__(**kw)
         
     def createItem(self,item):
-        self.ids.expiry_date_lbl = item.expiryDate.toString()
-        self.ids.product_name_lbl = item.productName
+        self.ids.expiry_date_lbl.text = item.expiryDate.toString()
+        self.ids.product_name_lbl.text = item.productName
     
     pass
 
 
 class DatesLayout(BoxLayout):
     
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    # def __init__(self,item = None, _owner = None):
+    #     self.item = item
+    #     self._owner = _owner
+    #     super().__init__()
     
     def addItem(self,item):
+        # item.exp_date_lbl = self._owner.expiryDate.toString()
+        # item.product_name_lbl = self._owner.productName
+        # print(item.ids.expiry_date_lbl.tex)
         self.add_widget(item)
         pass
 
@@ -43,18 +45,21 @@ class MenuScreen(MScreen):
         super().__init__(**args)
 
     def on_pre_enter(self, *args):
+        return super().on_pre_enter(*args)
+
+    def prepareMenu(self):
+        self.ids.dates_layout.clear_widgets()
         for item in MDApp.get_running_app().fridge.sortedFridgeListDate:
             food = DateLayout()
             food.createItem(item)
             # food.ids.exp_date_lbl = item.expiryDate.toString()
             # food.ids.product_name_lbl = item.productName
-            # self.ids.dates_layout.addItem(food)
+            self.ids.dates_layout.addItem(food)
+            if len(self.ids.dates_layout.children)>3:
+                break
             # self.ids.dates_layout
-        print(self.ids)
         # self.ids.test
-        return super().on_pre_enter(*args)
-
-    
+        
 
     def changeToList(self):
         self.manager.current = 'list'

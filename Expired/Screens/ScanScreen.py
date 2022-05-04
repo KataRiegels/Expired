@@ -46,6 +46,7 @@ class ScanScreen(MScreen):
     def on_save(self, instance, value, date_range):
         self.pressed_ok.active = True
         self.test2 = value
+        print(self.test2.day)
         self.selected_date.text = "Select a Date"
         Clock.schedule_once(self.test,1)
         # self.save_item_to_fridge(self.test2)
@@ -123,7 +124,7 @@ class ScanScreen(MScreen):
 
 
     def show_date_picker(self):
-        date_dialog = MDDatePicker()
+        date_dialog = MDDatePicker(md_bg_color = MDApp.get_running_app().theme_cls.primary_light)
         date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
         date_dialog.open()
 

@@ -1,5 +1,6 @@
 #:import Factory kivy.factory.Factory
 #:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import ScrollEffect kivy.effects.scroll.ScrollEffect
 
 <MSnackbar>:
     text: "Please hold an item to start selection"
@@ -117,6 +118,7 @@
     anchor_x: 'left'
     anchor_y: 'bottom'
     pos_hint: {"right": 1, "bottom": 1}
+    # pos_hint: {"right": 1, "y": 0}
     # size: (dp(48),0)
     size_hint_y: .6
     size_hint_x: .7
@@ -159,40 +161,42 @@
 
 <SearchPopUp>:
     id: search_popup
+    anchor_x: 'left'
+    anchor_y: 'bottom'
     on_open: search_field.show_keyboard()
-    # size_hint_y: .1
     size_hint_y: None
     size: (0,search_field.line_height*2)
-    # size: (0,10)
     size_hint_x: .5
+    pos_hint: {"center_x": .5, "y": .2}
+    background: ""
+    background_color: app.theme_cls.primary_color
+    background_normal: ""
+
     canvas:
         Color:
-            rgba: (1, 1, 1, 1)
+            # rgba: (1, 1, 1, 1)
+            rgba: app.theme_cls.primary_dark
         Rectangle:
             pos: self.pos
             size: self.size
-    # size_y: search_field.line_height
-    # title: None
-    BoxLayout:
-        orientation: "horizontal"
-        TextInput:
-            id:search_field
-            hint_text: 'Search item'
-            size_hint_x: .5
-            pos_hint: {'x': 0, 'y': 0}
-            on_text_validate: root.clickedSearch()
-            # on_enter: root.clickedSearch()
-            readonly: False
-            multiline: False
-            focus: True
-        MDIconButton:
-            icon: "magnify"
-            pos_hint: {"x": .5, "center_y": .5}
-            # theme_icon_color: "Custom"
-            # icon_color: [1,1,0,0]
-            theme_text_color: "Custom"
-            text_color: [1,1,0,1]
-            on_press: root.clickedSearch()
+    GridLayout:
+        cols: 1
+        rows: 1
+        BoxLayout:
+            orientation: "horizontal"
+            TextInput:
+                id:search_field
+                hint_text: 'Search item'
+                size_hint_x: .3
+                on_text_validate: root.clickedSearch()
+                readonly: False
+                multiline: False
+                focus: True
+            MDIconButton:
+                icon: "magnify"
+                pos_hint: {"x": .5, "center_y": .5}
+                on_press: root.clickedSearch()
+                
 # Holdng all information about the whole list view
 <ItemListView>:
     MDBoxLayout:
@@ -209,10 +213,19 @@
                 product_name_lbl: "[b] Product name[/b]"
                 
         # The list of items but in a scroll view
-        ScrollView:
-            id: scrollview
-            MSelectionList:
-                id: selection_list
+        BoxLayout:
+            
+            ScrollView:
+                
+                id: scrollview
+                always_overscroll: False
+                do_scroll_x: False
+                effect_cls: ScrollEffect
+                bar_width: 10
+                MSelectionList:
+                    # size_hint_y: None
+                    id: selection_list
+                    size_hint_min: None,None
         MDToolbar: # The bar above the whole list part
             id: toolbar
             title: "Items"

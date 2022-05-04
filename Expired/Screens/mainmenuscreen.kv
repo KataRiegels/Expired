@@ -1,12 +1,20 @@
 
 <DateLayout>:
     exp_date_lbl: " exp date here "
-    exp_date_font_size: dp(20)
+    exp_date_font_size: dp(18)
     product_name_lbl: " product name here"
     theme_text_color: "Custom"
     # text_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
     text_color: 0,0,0,1
     product_name_font_size: dp(20)
+    MDLabel:
+        markup: False
+        id: product_name_lbl
+        theme_text_color: root.theme_text_color
+        text_color: root.text_color
+        font_size: root.product_name_font_size
+        text:      root.product_name_lbl
+        pos_hint: {"x":.3,"y":.0}
     MDLabel:
         markup: True
         id: expiry_date_lbl
@@ -16,41 +24,33 @@
         text_color: root.text_color
         text: root.exp_date_lbl
         font_size: root.exp_date_font_size
-    MDLabel:
-        markup: True
-        id: product_name_lbl
-        theme_text_color: root.theme_text_color
-        text_color: root.text_color
-        font_size: root.product_name_font_size
-        text:      root.product_name_lbl
-        pos_hint: {"x":.3,"y":.0}
 
-<NoteLayout@FloatLayout>:
-    pos_hint: {"center_x":.5,"center_y":.4}
-    size_hint: .4, None
-    size: self.width, self.width
-    canvas:
-        Color:
-            rgba: 1, 1, 1, 1
-        Rectangle:
-            pos: self.pos
-            size: self.size
-    Image:
-        pos_hint: {"x":0,"y":0}
-        source: 'Resources/sticky_note.png'
-        size: self.texture_size
-    MDLabel:
-        pos_hint: {"x":.1,"top":1}
-        text: "Next to expire:"
-        size_hint_y: .3
-        font_size: dp(30)
-        # pos_hint: {"center_x":.7,"center_y":.4}
-        text_color: 0,0,0,1
-        # halign: "center"
-        theme_text_color: "Custom"
-        text_color: 0, 0, 0, 1
-    DatesLayout:
-        # id: dates_layout
+# <NoteLayout@FloatLayout>:
+#     pos_hint: {"center_x":.5,"center_y":.4}
+#     size_hint: .4, None
+#     size: self.width, self.width
+#     canvas:
+#         Color:
+#             rgba: 1, 1, 1, 1
+#         Rectangle:
+#             pos: self.pos
+#             size: self.size
+#     Image:
+#         pos_hint: {"x":0,"y":0}
+#         source: 'Resources/sticky_note.png'
+#         size: self.texture_size
+#     MDLabel:
+#         pos_hint: {"x":.1,"top":1}
+#         text: "Next to expire:"
+#         size_hint_y: .3
+#         font_size: dp(30)
+#         # pos_hint: {"center_x":.7,"center_y":.4}
+#         text_color: 0,0,0,1
+#         # halign: "center"
+#         theme_text_color: "Custom"
+#         text_color: 0, 0, 0, 1
+#     DatesLayout:
+#         # id: dates_layout
 
 <DatesLayout>: 
     # size_hint_x: 1
@@ -88,14 +88,8 @@
     # NoteLayout:
     FloatLayout:        
         pos_hint: {"center_x":.5,"center_y":.4}
-        size_hint: .4, None
-        size: self.width, self.width
-        canvas:
-            Color:
-                rgba: 1, 1, 1, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
+        size_hint:None, .7
+        size: self.height, self.height
         Image:
             pos_hint: {"x":0,"y":0}
             source: 'Resources/sticky_note.png'

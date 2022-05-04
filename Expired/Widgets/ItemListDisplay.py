@@ -20,10 +20,10 @@ class FoodItemSelection(ListItemBase):
     def __init__(self,item = None, _owner = None):
         self.item = item
         self._owner = _owner
+        print(type(self._owner))
         super().__init__()
     def createOption(self):
-        print(self.ids)
-        self.ids.list_item.exp_date_lbl = self._owner.expiryDate.toString_DMY()
+        self.ids.list_item.exp_date_lbl = self._owner.expiryDate.toString()
         self.ids.list_item.product_name_lbl = self._owner.productName
 
     def __repr__(self):
@@ -134,6 +134,7 @@ class ItemListView(RelativeLayout):
     """ Not sure what this was for. Does literally nothing. """
     def refresh_on_exit(self):
         self.widgets = self.fridge.widget_list
+        self.add_all_items()
         self.displayWidgets()
 
     """ Adds the widgets to the list view widget """
@@ -180,7 +181,6 @@ class ItemListView(RelativeLayout):
     def delete_items(self):
         items = self.ids.selection_list.get_selected_list_items()
         for item in items:
-            print(type(item.instance_item._owner))
             # self.screen.manager.fridge.removeItem(item.instance_item._owner)
             self.MDApp.get_running_app().fridge.removeItem(item.instance_item._owner)
             self.current_widgets.remove(item.instance_item._owner.food_item_selection)
@@ -221,7 +221,8 @@ class ItemListView(RelativeLayout):
         # self.list_of_widgets.refill_list(self.widgets)
         self.refreshList()
         # self.displayWidgets()
-        text_popup = SearchPopup(_parent = self).open()
+        SearchPopup(_parent = self).open()
+        # SortByPopup(_parent = self).open()
 
 
 class SortByPopup(Popup):
@@ -236,7 +237,6 @@ class SearchPopup(ModalView):
     def __init__(self, _parent = None, **kwargs):
         super().__init__(**kwargs)
         self._parent =  _parent
-
     # def on_enter(self):
     #     self.clickedSearch()
 
