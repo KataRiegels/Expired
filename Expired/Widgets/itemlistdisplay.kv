@@ -20,7 +20,6 @@
     exp_date_font_size: dp(20)
     product_name_lbl: " product name here"
     theme_text_color: "Primary"
-    # text_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
     text_color: 0,0,0,1
     product_name_font_size: dp(20)
     MDLabel:
@@ -30,9 +29,6 @@
         pos_hint:{'x':.02,'y':.0}
         theme_text_color: root.theme_text_color
         text_color: root.text_color
-        # text_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
-        # text_color: 0, 1, 0, 1
-        
         text: root.exp_date_lbl
         font_size: root.exp_date_font_size
     MDLabel:
@@ -45,16 +41,12 @@
         pos_hint: {"x":.3,"y":.0}
 
 # List items are subclassing this - this is written here to overwrite kivyMD's own version
-# <BaseListItem>
 <ListItemBase>
     size_hint_y: None
-    # divider: True
     bg_color: app.theme_cls.primary_light
     canvas:
         Color:
             rgba: 
-                # self.theme_cls.divider_color if root.divider is not None\
-                # else (0, 0, 0, 0)
                 self.theme_cls.divider_color 
         Line:
             points: (root.x ,root.y, root.x+self.width, root.y) if root.divider == 'Full' else (root.x+root._txt_left_pad, root.y, root.x+self.width-root._txt_left_pad-root._txt_right_pad,root.y)
@@ -70,36 +62,34 @@
 
 # List item settings
 <FoodItemSelection>
-    # bg_color: [.8,.5,.9,.4]
-    # bg_color: app.theme_cls.primary_color
     bg_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["700"])
     _no_ripple_effect: True
-    _txt_top_pad:"0dp"
-    _txt_bot_pad:"0dp"
-    _height: dp(30)
+    _txt_top_pad:"12dp"
+    _txt_bot_pad:"12dp"
     height: dp(30)
+    size_hint_y: None
+    canvas:
+        Color:
+            rgba: 
+                self.theme_cls.divider_color 
+        Line:
+            points: (root.x ,root.y, root.x+self.width, root.y) if root.divider == 'Full' else (root.x+root._txt_left_pad, root.y, root.x+self.width-root._txt_left_pad-root._txt_right_pad,root.y)
+        Color:
+            rgba: root.bg_color if root.bg_color else (0, 0, 0, 0)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    ItemLayout:
+        product_name_lbl: "THIS IS A TEST"
+        id: list_item
 
 # <SortIconButton@MDRectangleFlatIconButton>
 <SortIconButton@OneLineIconListItem>
     theme_text_color: "Custom"
     _lbl_primary: None
-    # size_hint_x: None
     icon_: "magnify"
     text_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
-    # text_color: 0, 1, 0, 1
-    # text_color: 0, 1, 1, 1
-    # height: dp(5)
     line_color: 1, 0, 1, 1
-    # icon_color: 1,1,1,1
-    # specific_text_color: 1,0,1,1
-    # theme_icon_color: 1,0,1,1
-    # size_hint: None, None
-    # size: (20,20)
-    # bg_color: 1,1,0,1
-    # MDLabel:
-    #     id: _lbl_primary
-    #     text: "kdjflskdjf"
-    #     font_size: dp(5)
     Icon:
         id: _icon
         icon: root.icon_
@@ -107,26 +97,17 @@
 
 <Icon@IconLeftWidget>
     theme_text_color: "Custom"
-    # text_color: 0, 1, 0, 1
     text_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
-# <SortDropdownMenu@MDDropdownMenu>
-#     SortIconButton:
-#         on_press: root._parent.sortName(ascending=True)
-#         icon: "sort-alphabetical-ascending"
 <SortByPopup>
 
     anchor_x: 'left'
     anchor_y: 'bottom'
     pos_hint: {"right": 1, "bottom": 1}
-    # pos_hint: {"right": 1, "y": 0}
-    # size: (dp(48),0)
     size_hint_y: .6
     size_hint_x: .7
     title: "Sort by"
     background: ""
-    # background_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_dark_hue])
     background_color: app.theme_cls.primary_color
-    # background_color: get_color_from_hex(app.theme_cls.colors["Teal"]["50"])
     background_normal: ""
     GridLayout:
         cols: 1
@@ -136,26 +117,20 @@
             on_press: root._parent.sortName(ascending=True)
             on_release: root.dismiss()
             icon_:"sort-alphabetical-ascending"
-            # Icon:
-            #     icon: "sort-alphabetical-ascending"
         SortIconButton:
             text: "Descending name"
             on_press: root._parent.sortName(ascending=False)
             on_release: root.dismiss()
             icon_:"sort-alphabetical-descending"
-            # Icon:
-            #     icon: "sort-alphabetical-descending"
         SortIconButton:
             text: "Ascending date"
             on_press: root._parent.sortDate(ascending=True)
             on_release: root.dismiss()
-            # Icon:
             icon_: "sort-calendar-ascending"
         SortIconButton:
             text: "Descending date"
             on_press: root._parent.sortDate(ascending=False)
             on_release: root.dismiss()
-            # Icon:
             icon_: "sort-calendar-descending"
 
 
@@ -174,7 +149,6 @@
 
     canvas:
         Color:
-            # rgba: (1, 1, 1, 1)
             rgba: app.theme_cls.primary_dark
         Rectangle:
             pos: self.pos
@@ -205,34 +179,24 @@
         orientation: "vertical"
         padding: ([10,10,10,10])
         spacing: 5     
-        BoxLayout:
+        ItemLayout:
             size_hint_y: .1
             size_hint_x: 1
-            ItemLayout:
-                exp_date_lbl: "[b]Expiry date[/b] \nYYYY/MM/DD"
-                product_name_lbl: "[b] Product name[/b]"
-                
-        # The list of items but in a scroll view
-        BoxLayout:
-            
-            ScrollView:
-                
-                id: scrollview
-                always_overscroll: False
-                do_scroll_x: False
-                effect_cls: ScrollEffect
-                bar_width: 10
-                MSelectionList:
-                    # size_hint_y: None
-                    id: selection_list
-                    size_hint_min: None,None
+            exp_date_lbl: "[b]Expiry date[/b] \nYYYY/MM/DD"
+            product_name_lbl: "[b] Product name[/b]"
+        ScrollView: 
+            id: scrollview
+            always_overscroll: False
+            do_scroll_x: False
+            effect_cls: ScrollEffect
+            bar_width: 10
+            MySelectionList:
+                id: selection_list
+                size_hint_min: None,None
         MDToolbar: # The bar above the whole list part
             id: toolbar
             title: "Items"
             size_hint_y: .1
-            # specific_text_color: 1,0,1,1
-            # md_bg_color: 0, 0, 0, 1
-            # left_action_items: [["menu"]]
             right_action_items: 
                 [
                 ["magnify",lambda x: root.openSearch()],
@@ -240,12 +204,8 @@
                 ["delete",lambda x: root.deleteSelectedItems()],
                 ["refresh",lambda x: root.refreshList()],
                 ]
-    # MDDropdownMenu:
-    #     id: sort_menu
-            # SortIconButton:
-
 # The list itself which displays the items
-<MSelectionList>:
+<MySelectionList>:
     # Not sure about this, just basically copied from kivyMD
     canvas.before:
         RoundedRectangle:
@@ -255,12 +215,8 @@
             radius: root.radius
             source: root.background
         Color: 
-            # rgba: [.9,1,.1,.0] # Bad solution to annoying backgroun color
-            # rgba: app.theme_cls.primary_color # Bad solution to annoying backgroun color
             rgba: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["200"])
     padding: ([0,0,0,0]) # just moves the widgets in. color rectangle behind stays...
     spacing: "2dp"
-    # md_bg_color: app.theme_cls.primary_color
-    # md_bg_color: app.secondary_dark
     md_bg_color: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["200"])
     overlay_color: [1,1,1,0.2]

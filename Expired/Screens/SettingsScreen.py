@@ -1,11 +1,11 @@
 from kivy.uix.screenmanager import Screen
-from . import MScreen
+from . import MyScreen
 from kivy.utils import platform
 from kivy.network.urlrequest import UrlRequest
 from kivy.uix.button import Button
 from kivymd.uix.button import MDRaisedButton
 
-class SettingsScreen(MScreen):
+class SettingsScreen(MyScreen):
     
     def enable_features(self):
         self.ids.features
@@ -43,7 +43,7 @@ if platform == ('win'):
     import os
     from trp import Document
 
-class SettingsScreen(MScreen):
+class SettingsScreen(MyScreen):
     
     def apiTEST(self):
 

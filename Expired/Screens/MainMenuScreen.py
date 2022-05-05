@@ -12,7 +12,7 @@
 from sqlite3 import Date
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
-from . import MScreen
+from . import MyScreen
 from kivymd.app import MDApp
 # class MenuScreen():
 #     pass
@@ -40,7 +40,7 @@ class DatesLayout(BoxLayout):
         self.add_widget(item)
         pass
 
-class MenuScreen(MScreen):
+class MenuScreen(MyScreen):
     def __init__(self,**args):
         super().__init__(**args)
 

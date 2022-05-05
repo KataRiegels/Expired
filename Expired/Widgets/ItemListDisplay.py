@@ -13,10 +13,12 @@ from kivymd.app import MDApp
 Used when adding a widget to the item list
 """
 
-class ListItemBase(BaseListItem):
-    pass
+""" Removable? FoodItemSelection used to inherit"""
+# class ListItemBase(BaseListItem):
+#     pass
 
-class FoodItemSelection(ListItemBase):
+class FoodItemSelection(BaseListItem):
+# class FoodItemSelection(ListItemBase):
     def __init__(self,item = None, _owner = None):
         self.item = item
         self._owner = _owner

@@ -36,7 +36,7 @@ class MyItem(TwoLineAvatarListItem):
         self.on_touch_up(touch)
     pass
 
-class ListScreen(MScreen):
+class ListScreen(MyScreen):
     def __init__(self,items = None,**kwargs):
         super().__init__(**kwargs)
         self.items = items

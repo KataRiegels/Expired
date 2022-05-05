@@ -4,7 +4,7 @@ from kivy.uix.screenmanager import Screen
 from kivymd.uix.picker import MDDatePicker
 from kivy.properties import ObjectProperty
 from kivy.clock import Clock
-from . import MScreen
+from . import MyScreen
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
 from Items import *
@@ -32,7 +32,7 @@ class FilteredInput(MDTextField):
     def on_disabled(self, *args):
         pass
 
-class ScanScreen(MScreen):
+class ScanScreen(MyScreen):
     dialog = None
     selected_date = ObjectProperty(None)
     pressed_ok = ObjectProperty(None)
