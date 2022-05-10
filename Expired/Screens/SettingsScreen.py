@@ -4,6 +4,7 @@ from kivy.utils import platform
 from kivy.network.urlrequest import UrlRequest
 from kivy.uix.button import Button
 from kivymd.uix.button import MDRaisedButton
+from kivymd.uix.picker import MDThemePicker
 
 class SettingsScreen(MyScreen):
     
@@ -27,6 +28,10 @@ class SettingsScreen(MyScreen):
             self.ids.features.text = "enable"
             self.remove_widget(self.api1)
             self.remove_widget(self.api2)
+            
+    def show_theme_picker(self):
+        theme_dialog = MDThemePicker()
+        theme_dialog.open()  
             
     def apiTEST2(self,instances):
         request = UrlRequest("https://catfact.ninja/fact", on_success=self.get_data)
