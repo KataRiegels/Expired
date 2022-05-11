@@ -10,6 +10,8 @@ from kivymd.uix.button import MDFlatButton
 from Items import *
 from camera4kivy import Preview
 from kivy.utils import platform
+# from Widgets.ItemListDisplay import MSnackbar
+from Widgets.ItemListDisplay import MSnackbar
 
 if platform == 'android':
     from android.permissions import request_permissions,Permission
@@ -71,27 +73,37 @@ class ScanScreen(MyScreen):
 
     def save_item(self):
         if self.itemTextInput.text == "":
-            self.dialog = MDDialog(
-                text="Please enter an item name",
-                radius=[20, 7, 20, 7],
-                buttons=[
-                    MDFlatButton(
-                        text="CLOSE",
-                        on_release = self.close_dialog
-                    ),
-                ],
-            )
+            # MSnackbar().open()
+            save_item_warning = MSnackbar()
+            save_item_warning.text = "Please enter a product name first"    
+            save_item_warning.open()
         elif not self.test2:
-            self.dialog = MDDialog(
-                text="Please select a date",
-                radius=[20, 7, 20, 7],
-                buttons=[
-                    MDFlatButton(
-                        text="CLOSE",
-                        on_release = self.close_dialog
-                    ),
-                ],
-            )
+            # MSnackbar().open()
+            save_item_warning = MSnackbar()
+            save_item_warning.text = "Please pick a date first"    
+            save_item_warning.open()
+        # if self.itemTextInput.text == "":
+        #     self.dialog = MDDialog(
+        #         text="Please enter an item name",
+        #         radius=[20, 7, 20, 7],
+        #         buttons=[
+        #             MDFlatButton(
+        #                 text="CLOSE",
+        #                 on_release = self.close_dialog
+        #             ),
+        #         ],
+        #     )
+        # elif not self.test2:
+        #     self.dialog = MDDialog(
+        #         text="Please select a date",
+        #         radius=[20, 7, 20, 7],
+        #         buttons=[
+        #             MDFlatButton(
+        #                 text="CLOSE",
+        #                 on_release = self.close_dialog
+        #             ),
+        #         ],
+        #     )
         else:
             self.dialog = MDDialog(
                 text=self.itemTextInput.text[:5] + " expires on " +
@@ -109,7 +121,7 @@ class ScanScreen(MyScreen):
                     ),
                 ],
             )
-        self.dialog.open()
+            self.dialog.open()
 
     def on_cancel(self, instance, value):
         pass
