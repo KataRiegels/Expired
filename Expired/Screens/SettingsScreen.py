@@ -4,28 +4,29 @@ from kivy.utils import platform
 from kivy.network.urlrequest import UrlRequest
 from kivy.uix.button import Button
 from kivymd.uix.button import MDRaisedButton
+from kivymd.uix.button import MDFillRoundFlatButton
 from kivymd.uix.picker import MDThemePicker
 
 class SettingsScreen(MyScreen):
     
     def enable_features(self):
         self.ids.features
-        if self.ids.features.text == "enable":
+        if self.ids.features.text == "Enable test features":
             self.ids.labelText.text = "API response" 
-            self.ids.features.text = "disable"
-            self.api2 = MDRaisedButton(text= 'test cat api',
+            self.ids.features.text = "Disable test features"
+            self.api2 = MDFillRoundFlatButton(text= 'test cat api',
                     size_hint=(.5,.1),
                     pos_hint= {'x':.25,'y':.4},
                     on_press= self.apiTEST2)
             self.add_widget(self.api2)
-            self.api1 = MDRaisedButton(text= 'test cat api (PC)',
+            self.api1 = MDFillRoundFlatButton(text= 'test cat api (PC)',
                     size_hint=(.5,.1),
                     pos_hint= {'x':.25,'y':.3},
                     on_press= self.apiTEST1)
             self.add_widget(self.api1)
-        elif self.ids.features.text == "disable":
+        elif self.ids.features.text == "Disable test features":
             self.ids.labelText.text = "" 
-            self.ids.features.text = "enable"
+            self.ids.features.text = "Enable test features"
             self.remove_widget(self.api1)
             self.remove_widget(self.api2)
             

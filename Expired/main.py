@@ -48,11 +48,11 @@ LabelBase.register(name='BestBefore', fn_regular='Resources/Dited.otf')
 
 def building():
     Builder.load_file('Screens/mainmenuscreen.kv')
+    Builder.load_file('Screens/settingsscreen.kv')
     Builder.load_file('Widgets/itemlistdisplay.kv')
     Builder.load_file('Screens/listscreen.kv')
     Builder.load_file('Screens/scanscreen.kv')
 
-    Builder.load_file('Screens/settingsscreen.kv')
     Builder.load_file('Screens/calenderscreen.kv')
     Builder.load_file('Widgets/bars.kv')
     return Builder.load_file('main_screen.kv')
@@ -146,7 +146,7 @@ class TestApp(MDApp):
         # self.primary_light_hue = 
         # self.primary_dark_hue = 
         self.theme_cls.accent_palette = "Red"
-        # self.theme_cls.accent_hue = "50"
+        # self.theme_cls.accent_hue =  "50"
         # self.theme_cls.accent_light_hue = "50"
         # self.theme_cls.accent_dark_hue = "500"
         self.theme_cls.colors = colors
@@ -161,7 +161,9 @@ class TestApp(MDApp):
         self.items = Items("data.json")
         self.items.openFridge()
         self.fridge = self.items
-        self.bar.ids.menu_tab.prepareMenu()
+        # self.bar.ids.menu_tab.initiateScreen()
+        for child in self.bar.ids.tab_manager.screens:
+            child.initiateScreen()
         # self.theme_cls.bg_normal = "Teal"
         # self.theme_cls.accent_palette = "Red"
         # self.theme_cls.accent_dark_hue = "50"    

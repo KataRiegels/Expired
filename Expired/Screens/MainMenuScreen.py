@@ -47,7 +47,8 @@ class MenuScreen(MyScreen):
     def on_pre_enter(self, *args):
         return super().on_pre_enter(*args)
 
-    def prepareMenu(self):
+    # def prepareMenu(self):
+    def initiateScreen(self):
         self.ids.dates_layout.clear_widgets()
         for item in MDApp.get_running_app().fridge.sortedFridgeListDate:
             food = DateLayout()

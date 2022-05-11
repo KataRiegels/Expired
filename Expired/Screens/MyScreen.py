@@ -29,7 +29,7 @@ class MyScreen(MDBottomNavigationItem,Screen,CommonGestures):
     #     return super().on_tab_press(*args)
         
         
-    def initiateScreens(self):
+    def initiateScreen(self):
         pass
         # bar = MNavigationBar()
         # self.add_widget(bar)

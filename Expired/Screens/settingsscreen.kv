@@ -12,17 +12,18 @@
     #     size_hint:(.5,.1)
     #     pos_hint: {'x':.25,'y':.3}
     #     on_press: root.apiTEST()
-    MDRaisedButton:
+    MDFillRoundFlatButton:
         id: features
-        text: 'enable'
+        text: 'Enable test features'
         # theme_text_color: "Custom"
         # text_color: app.theme_cls.primary_light
-        # md_bg_color: app.theme_cls.primary_color
+        md_bg_color: app.theme_cls.primary_color
         size_hint:(.5,.1)
         pos_hint: {'x':.25,'y':.5}
         on_press: root.enable_features()
-    MDRaisedButton:
-        text: 'change theme'
+    MDFillRoundFlatButton:
+        text: 'Choose theme color'
+        md_bg_color: app.theme_cls.primary_color
         size_hint:(.5,.1)
         # md_bg_color: app.theme_cls.primary_color
         pos_hint: {'x':.25,'y':.6}
