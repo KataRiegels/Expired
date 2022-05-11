@@ -17,8 +17,9 @@ Used when adding a widget to the item list
 # class ListItemBase(BaseListItem):
 #     pass
 
+
+""" The widget that is put into the MySelectionList"""
 class FoodItemSelection(BaseListItem):
-# class FoodItemSelection(ListItemBase):
     def __init__(self,item = None, _owner = None):
         self.item = item
         self._owner = _owner
@@ -29,9 +30,9 @@ class FoodItemSelection(BaseListItem):
         self.ids.list_item.product_name_lbl = self._owner.productName
 
     def __repr__(self):
-
         return str(self._owner.productName)
-""" Hold lists of widgets - includes the list in Items and ItemViewList """
+
+""" Holds lists of widgets - includes the list in Items and ItemViewList """
 class ItemWidgetList():
     def __init__(self,fridge = None):
         self.fridge = fridge
@@ -76,13 +77,11 @@ class ConfirmDelete(MDDialog):
     def __init__(self, _parent = None, deleted_items = None, **kwargs):
         self.cancel_button = MDFlatButton(
                 text="CANCEL",
-                # theme_text_color="Custom",
                 text_color=MDApp.get_running_app().theme_cls.primary_color,
                 on_release= self.dismiss,
             )
         self.ok_button = MDFlatButton(
                 text="CONFIRM",
-                # theme_text_color="Custom",
                 text_color=MDApp.get_running_app().theme_cls.primary_color,
                 on_release= self.confirmButton,
             )
@@ -108,10 +107,6 @@ class ConfirmDelete(MDDialog):
                 break
             elif len(items) > noofitems:
                 self.text += "\n"
-
-class ListItem(OneLineListItem):
-    divider = None
-    pass
 
 """ The part that handles the whole list area
 """
@@ -188,22 +183,17 @@ class ItemListView(RelativeLayout):
             self.current_widgets.remove(item.instance_item._owner.food_item_selection)
             self.ids.selection_list.remove_widget(item)
 
-    def resetList(self):
-        pass
+    # def resetList(self):
+    #     pass
 
     """ Adds back all the items to the current widgets list"""
     def refreshList(self):
         self.current_widgets.refill_list(self.widgets)
         self.ids.toolbar.title = "Items"
-        # self.list_of_widgets.clear()
-        # for widget in self.widgets:
-        #     self.list_of_widgets.append(widget)baselistitem
-        
         self.refreshWidgets()
 
     """ Checks for which items contain searched string and adds it to the list widget """
     def stringSearch(self,string):
-        # self.list_of_widgets.refill_list(self.widgets)
         self.selection_list.clear_widgets()
         for widget in self.current_widgets.copy():
             r = widget._owner.productName.find(string)
@@ -220,15 +210,11 @@ class ItemListView(RelativeLayout):
         self.refreshWidgets()
     
     def openSearch(self):
-        # self.list_of_widgets.refill_list(self.widgets)
         self.refreshList()
-        # self.displayWidgets()
         SearchPopup(_parent = self).open()
-        # SortByPopup(_parent = self).open()
 
 
 class SortByPopup(Popup):
-    
     def __init__(self, _parent = None, **kwargs):
         super().__init__(**kwargs)
         self._parent =  _parent
@@ -239,8 +225,6 @@ class SearchPopup(ModalView):
     def __init__(self, _parent = None, **kwargs):
         super().__init__(**kwargs)
         self._parent =  _parent
-    # def on_enter(self):
-    #     self.clickedSearch()
 
     def clickedSearch(self):
         search_text = self.ids.search_field.text

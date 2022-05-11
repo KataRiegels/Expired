@@ -1,5 +1,5 @@
 from kivymd.uix.bottomnavigation import MDBottomNavigation
-from kivymd.uix.bottomnavigation import MDBottomNavigationItem
+from kivymd.uix.bottomnavigation import MDBottomNavigationItem,MDBottomNavigationHeader
 from kivymd.uix.toolbar import MDToolbar
 from kivymd.app import MDApp
 
@@ -8,7 +8,7 @@ from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.lang import Builder
-from kivy.metrics import sp
+from kivy.metrics import sp,dp
 from kivy.properties import (
     BooleanProperty,
     ListProperty,
@@ -23,7 +23,6 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import Screen, ScreenManagerException
-
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.behaviors import FakeRectangularElevationBehavior
 from kivymd.uix.behaviors.backgroundcolor_behavior import (
@@ -31,6 +30,25 @@ from kivymd.uix.behaviors.backgroundcolor_behavior import (
     SpecificBackgroundColorBehavior,
 )
 
+class MyBottomNavigationHeader(MDBottomNavigationHeader):
+    def on_press(self) -> None:
+        """Called when clicking on a panel item."""
+
+        if self.theme_cls.material_style == "M2":
+            Animation(_label_font_size=sp(14), d=0.1).start(self)
+        elif self.theme_cls.material_style == "M3":
+            Animation(
+                _selected_region_width=dp(64),
+                t="in_out_sine",
+                d=0,
+            ).start(self)
+        Animation(
+            _text_color_normal=self.theme_cls.primary_color
+            # _text_color_normal=self.theme_cls.primary_dark_hue
+            if self.text_color_active == [1, 1, 1, 1]
+            else self.text_color_active,
+            d=0.1,
+        ).start(self)
 
 
 class MNavigationBar(MDBottomNavigation):
@@ -39,6 +57,35 @@ class MNavigationBar(MDBottomNavigation):
         self.latest_tabs = [1]
         self.current_tab = 1
         super().__init__(**kwargs)
+    
+    # def on_text_color_normal(
+    #     self, instance_bottom_navigation, color: list
+    # ) -> None:
+    #     MDBottomNavigationHeader.text_color_normal = color
+    #     for tab in self.ids.tab_bar.children:
+    #         if not tab.active:
+    #             tab._text_color_normal = color
+
+    # def on_text_color_active(
+    #     self, instance_bottom_navigation, color: list
+    # ) -> None:
+    #     MDBottomNavigationHeader.text_color_active = color
+    #     self.text_color_active = color
+    #     for tab in self.ids.tab_bar.children:
+    #         tab.text_color_active = color
+    #         if tab.active:
+    #             # return
+    #             tab._text_color_normal = color
+    
+    
+    def on_press(self):
+        Animation(_label_font_size=sp(14), d=0.1).start(self)
+        Animation(
+            _text_color_normal=self.theme_cls.primary_color,
+            # if self.text_color_active == [1, 1, 1, 1]
+            # else self.text_color_active,
+            d=0.1,
+        ).start(self)
     
     def updateBackList(self,current):
         print(self.latest_tabs)
