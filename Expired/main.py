@@ -47,9 +47,9 @@ LabelBase.register(name='ExpiredFont', fn_regular='Resources/custom.ttf')
 LabelBase.register(name='BestBefore', fn_regular='Resources/Dited.otf')
 
 def building():
+    Builder.load_file('Widgets/itemlistdisplay.kv')
     Builder.load_file('Screens/mainmenuscreen.kv')
     Builder.load_file('Screens/settingsscreen.kv')
-    Builder.load_file('Widgets/itemlistdisplay.kv')
     Builder.load_file('Screens/listscreen.kv')
     Builder.load_file('Screens/scanscreen.kv')
 
@@ -101,6 +101,10 @@ class TestApp(MDApp):
         # self.bar.ids.menu_tab.initiateScreen()
         for child in self.bar.ids.tab_manager.screens:
             child.initiateScreen()
+        self.list_screen = bar.ids.list_tab
+        self.scan_screen = bar.ids.scan_tab
+        self.settings_screen = bar.ids.settings_tab
+        self.menu_screen = bar.ids.menu_tab
         # self.theme_cls.bg_normal = "Teal"
         # self.theme_cls.accent_palette = "Red"
         # self.theme_cls.accent_dark_hue = "50"    
@@ -110,12 +114,6 @@ class TestApp(MDApp):
         return manager
         # return Lay()
     
-    def change_theme(self): 
-        if self.theme_cls.primary_palette == "Blue":
-            self.theme_cls.primary_palette = "Red"
-        elif self.theme_cls.primary_palette == "Red":
-            self.theme_cls.primary_palette = "Blue"
-        
     def Android_back_click(self,window,key,*largs):
         if key == 27:
             self.bar.back_screen()

@@ -1,5 +1,13 @@
 
 
+<MDDatePicker>:
+    md_bg_color: [.5,0,.5,1]
+    background_color: [.5,0,.5,1]
+    # theme_text_color: 'Custom'
+    color_mode: 'custom'
+    line_color_focus: [.5,0,.5,1]
+    # text_color: app.theme_cls.primary_light
+    # text_color: [.5,0,.5,1]
 
 <ScanScreen>:
     selected_date: date_label
@@ -42,13 +50,13 @@
         theme_text_color: 'Custom'
         color_mode: 'custom'
         line_color_focus: app.theme_cls.primary_dark
-        max_text_length: 5
+        max_text_length: 12
         size_hint: .35,None
         height: '40dp'
         pos_hint: {'x': .1, 'center_y': .17}
 
     MDFillRoundFlatIconButton:
-        id: date_label
+        id: save_item
         font_size: dp(15)
         icon: "content-save"
         text: "Save Item"

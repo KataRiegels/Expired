@@ -120,13 +120,17 @@ class ItemListView(RelativeLayout):
 
     def initialEnter(self,screen):
         self.screen = screen
-        # self.fridge = self.screen.manager.fridge
         self.fridge = MDApp.get_running_app().fridge
         self.widgets = self.fridge.widget_list
         self.selection_list = self.ids.selection_list
         self.current_widgets = ItemWidgetList()
         self.add_all_items()
         self.displayWidgets()
+
+    def onLateEnter(self):
+        self.add_all_items()
+        # self.displayWidgets()
+        
 
     """ Not sure what this was for. Does literally nothing. """
     def refresh_on_exit(self):
@@ -179,7 +183,7 @@ class ItemListView(RelativeLayout):
         items = self.ids.selection_list.get_selected_list_items()
         for item in items:
             # self.screen.manager.fridge.removeItem(item.instance_item._owner)
-            self.MDApp.get_running_app().fridge.removeItem(item.instance_item._owner)
+            MDApp.get_running_app().fridge.removeItem(item.instance_item._owner)
             self.current_widgets.remove(item.instance_item._owner.food_item_selection)
             self.ids.selection_list.remove_widget(item)
 

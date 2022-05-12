@@ -44,13 +44,20 @@ class ListScreen(MyScreen):
 
     # kivy func: happens before screen shows
     def on_pre_enter(self, *args):
-        if not self.ids.select_view.fridge:
-            self.ids.select_view.initialEnter(self)
+        # if not self.ids.select_view.fridge:
+        #     self.ids.select_view.initialEnter(self)
+        # else: 
+        #     pass
+            # self.ids.select_view.onLateEnter()
         return super().on_enter(*args)
 
     def on_leave(self, *args):
         self.ids.select_view.refresh_on_exit()
         return super().on_leave(*args)
+
+    def initiateScreen(self):
+        self.ids.select_view.initialEnter(self)
+        # return super().initiateScreen()
 
     def startScreen(self):
         pass

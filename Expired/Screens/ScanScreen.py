@@ -43,13 +43,13 @@ class ScanScreen(MyScreen):
 
     def test(self, value):
         self.pressed_ok.active = False
-        self.selected_date.text = str(self.test2)
+        self.ids.date_label.text = str(self.test2)
 
     def on_save(self, instance, value, date_range):
         self.pressed_ok.active = True
         self.test2 = value
-        print(self.test2.day)
-        self.selected_date.text = "Select a Date"
+        print("ON_SAVE WAS CALLLLEEEDDD")
+        
         Clock.schedule_once(self.test,1)
         # self.save_item_to_fridge(self.test2)
 
@@ -132,11 +132,14 @@ class ScanScreen(MyScreen):
 
     def onConfirm(self,instance):
         self.save_item_to_fridge(self)
+        self.ids.date_label.text = "Select a Date"
+        self.ids.itemName.text = ""
         self.close_dialog(self)
 
 
     def show_date_picker(self):
-        date_dialog = MDDatePicker(md_bg_color = MDApp.get_running_app().theme_cls.primary_light)
+        # date_dialog = MDDatePicker(md_bg_color = MDApp.get_running_app().theme_cls.primary_light)
+        date_dialog = MDDatePicker()
         date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
         date_dialog.open()
 
@@ -147,8 +150,12 @@ class ScanScreen(MyScreen):
         productName = self.itemTextInput.text
         expDate = Date(year = item_save.year,month = item_save.month, day=item_save.day)
         item = Item(productName,expDate)
-        MDApp.get_running_app().fridge.addItemToFridge(item)
-        # item.createUniqueID()
+        app = MDApp.get_running_app()
+        app.fridge.addItemToFridge(item)
+        # manager = app.bar
+        # list_screen = manager.ids.list_tab
+        app.list_screen.ids.select_view.onLateEnter()
+        
 
         # text = self.itemTextInput.text + " expires on " + str(self.test2.day) +" "+ str(self.test2.month) +" "+ str(self.test2.year),
 

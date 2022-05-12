@@ -10,6 +10,8 @@ class Item():
         self.expiryDate  = expiryDate
         self.ID          = ID
         self.food_item_selection = FoodItemSelection(_owner = self)
+        self.food_item_selection.createOption()
+        
         # self.food_item_selection = None
 
     """ Generates an ID for an item with 4 random digits"""
