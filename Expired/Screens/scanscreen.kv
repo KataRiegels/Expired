@@ -3,6 +3,7 @@
 <MDDatePicker>:
     md_bg_color: [.5,0,.5,1]
     background_color: [.5,0,.5,1]
+    text_button_color: app.theme_cls.primary_light
     # theme_text_color: 'Custom'
     color_mode: 'custom'
     line_color_focus: [.5,0,.5,1]
@@ -41,14 +42,23 @@
         # pos_hint: {'center_x': .5, 'center_y': .35}
         on_release: root.show_date_picker()
         pos_hint: {'center_x': .75, 'center_y': .17}
-    
+
     FilteredInput:
         id: itemName
         hint_text: "Enter item name"
         multiline: False
         mode: "rectangle"
+        # mode: "fill"
         theme_text_color: 'Custom'
         color_mode: 'custom'
+                # color_mode: "custom"
+        # normal_color: [1,0,1,1]
+        # focus: False
+        focus_behavior: False
+        unfocus_color: 1, 0, 1, 1
+        text_color: [1,0,1,1]
+        text_color_normal: [1,0,1,1]
+        text_color_focus: [1,0,1,1]
         line_color_focus: app.theme_cls.primary_dark
         max_text_length: 12
         size_hint: .35,None

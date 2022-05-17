@@ -6,6 +6,7 @@ from kivy.uix.button import Button
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.button import MDFillRoundFlatButton
 from kivymd.uix.picker import MDThemePicker
+from kivymd.app import MDApp
 
 class SettingsScreen(MyScreen):
     
@@ -33,6 +34,7 @@ class SettingsScreen(MyScreen):
     def show_theme_picker(self):
         theme_dialog = MDThemePicker()
         theme_dialog.open()  
+        print(f"Theme is: {MDApp.get_running_app().theme_cls.primary_palette}")
             
     def apiTEST2(self,instances):
         request = UrlRequest("https://catfact.ninja/fact", on_success=self.get_data)

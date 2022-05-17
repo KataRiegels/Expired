@@ -18,7 +18,7 @@ if platform == 'android':
     from android import api_version
 from kivymd.uix.button import MDRaisedButton
 from kivy.uix.textinput import TextInput
-from kivymd.uix.textfield import MDTextField
+from kivymd.uix.textfield import MDTextField, MDTextFieldRound
 from kivymd.app import MDApp
 
 class FilteredInput(MDTextField):

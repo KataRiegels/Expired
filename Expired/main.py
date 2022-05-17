@@ -2,6 +2,8 @@
 
 import os
 import kivy
+import kivymd
+print(kivymd.__version__)
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.uix.boxlayout import BoxLayout
@@ -27,23 +29,10 @@ from colors import colors
 from kivy.core.window import Window
 from kivy.properties import ObjectProperty
 from kivy.utils import get_color_from_hex
+import csv
 
-
-# class MyAppClass(FloatLayout):#its a FloatLayout in my case
-#     _screen_manager=ObjectProperty(None)
-#     def __init__(self,**kwargs):
-#         super(MyAppClass,self).__init__(**kwargs)
-#         #code goes here and add:
-
-
-
-
-# from kivymd.uix.transition.transition import MDFadeSlideTransition
-# kivymd.uix.transition.transition.MDFadeSlideTransition
 
 LabelBase.register(name='ExpiredFont', fn_regular='Resources/custom.ttf')
-# LabelBase.register(name='BestBefore', fn_regular='Resources/bestbefore-regular.ttf')
-# LabelBase.register(name='BestBefore', fn_regular='Resources/bestbefore.ttf')
 LabelBase.register(name='BestBefore', fn_regular='Resources/Dited.otf')
 
 def building():
@@ -60,9 +49,27 @@ def building():
 # Config.set('graphics', 'height', '600')
 # Config.set('graphics', 'width', '300')
 
-# from kivy.core.window import Window
 
 Window.softinput_mode = "below_target"
+
+def setTheme(app):
+    with open('theme.csv') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        data = []
+        data = next(csv_reader)
+        primary = data[0]
+        style = data[1]
+            
+    app.theme_cls.accent_palette = "Red"
+    app.theme_cls.colors = colors
+    app.theme_cls.primary_hue = "900"
+    app.theme_cls.theme_style = style
+    app.theme_cls.primary_palette = primary    
+    app.theme_cls.primary_light_hue = "100"    
+    app.theme_cls.primary_dark_hue = "500"
+    app.secondary_dark = get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
+      
+
 
 
 class Lay(BoxLayout):
@@ -78,23 +85,7 @@ class TestApp(MDApp):
         bar.ids.tab_manager.transition = SlideTransition(direction = "right") 
         self.sm = bar.ids.tab_manager
         self.bar = bar
-        
-        # self.primary_light_hue = 
-        # self.primary_dark_hue = 
-        self.theme_cls.accent_palette = "Red"
-        # self.theme_cls.accent_hue =  "50"
-        # self.theme_cls.accent_light_hue = "50"
-        # self.theme_cls.accent_dark_hue = "500"
-        self.theme_cls.colors = colors
-        # self.theme_cls.primary_hue = "900"
-        self.theme_cls.primary_hue = "900"
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "Green"    
-        # self.theme_cls.primary_light_hue = "50"    
-        self.theme_cls.primary_light_hue = "100"    
-        self.theme_cls.primary_dark_hue = "500"
-        self.secondary_dark = get_color_from_hex(self.theme_cls.colors[self.theme_cls.primary_palette][self.theme_cls.primary_light_hue])
-            
+        setTheme(self)
         self.items = Items("data.json")
         self.items.openFridge()
         self.fridge = self.items
@@ -105,23 +96,20 @@ class TestApp(MDApp):
         self.scan_screen = bar.ids.scan_tab
         self.settings_screen = bar.ids.settings_tab
         self.menu_screen = bar.ids.menu_tab
-        # self.theme_cls.bg_normal = "Teal"
-        # self.theme_cls.accent_palette = "Red"
-        # self.theme_cls.accent_dark_hue = "50"    
-        # Window.bind(on_keyboard=self.Android_back_click)
         Window.bind(on_keyboard=self.Android_back_click)
 
         return manager
-        # return Lay()
     
     def Android_back_click(self,window,key,*largs):
         if key == 27:
             self.bar.back_screen()
-            # self.bar.switch_tab(self.bar.get_screen_from_order(self.bar.current_tab).name)#you can create a method here to cache in a list the number of screens and then pop the last visited screen.
             return True
         
     def stop(self, *largs):
         self.bar.ids.scan_tab.on_leave()
+        with open('theme.csv', 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow([self.theme_cls.primary_palette,self.theme_cls.theme_style])
         return super().stop(*largs)
         
         

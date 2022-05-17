@@ -129,6 +129,7 @@ class ItemListView(RelativeLayout):
 
     def onLateEnter(self):
         self.add_all_items()
+        # self.refreshWidgets()
         # self.displayWidgets()
         
 
