@@ -107,9 +107,9 @@ class TestApp(MDApp):
         
     def stop(self, *largs):
         self.bar.ids.scan_tab.on_leave()
-        with open('theme.csv', 'w') as f:
-            writer = csv.writer(f)
-            writer.writerow([self.theme_cls.primary_palette,self.theme_cls.theme_style])
+        # with open('theme.csv', 'w') as f:
+        #     writer = csv.writer(f)
+        #     writer.writerow([self.theme_cls.primary_palette,self.theme_cls.theme_style])
         return super().stop(*largs)
         
         

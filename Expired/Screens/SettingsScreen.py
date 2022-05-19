@@ -7,6 +7,7 @@ from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.button import MDFillRoundFlatButton
 from kivymd.uix.picker import MDThemePicker
 from kivymd.app import MDApp
+import csv
 
 class SettingsScreen(MyScreen):
     
@@ -32,9 +33,16 @@ class SettingsScreen(MyScreen):
             self.remove_widget(self.api2)
             
     def show_theme_picker(self):
-        theme_dialog = MDThemePicker()
+        theme_dialog = MDThemePicker(on_pre_dismiss = self.save_theme)
         theme_dialog.open()  
         print(f"Theme is: {MDApp.get_running_app().theme_cls.primary_palette}")
+            
+    def save_theme(self,instance):
+        app_theme = MDApp.get_running_app().theme_cls
+        with open('theme.csv', 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow([app_theme.primary_palette,app_theme.theme_style])
+        pass
             
     def apiTEST2(self,instances):
         request = UrlRequest("https://catfact.ninja/fact", on_success=self.get_data)
