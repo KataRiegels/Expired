@@ -29,6 +29,8 @@ class MyScreen(MDBottomNavigationItem,Screen,CommonGestures):
     def closeApp(self):
         MDApp.get_running_app().stop()
         
+    def updatedList(self):
+        pass
     # def on_tab_press(self, *args):
         
     #     return super().on_tab_press(*args)

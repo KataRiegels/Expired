@@ -34,9 +34,6 @@ class DatesLayout(BoxLayout):
     #     super().__init__()
     
     def addItem(self,item):
-        # item.exp_date_lbl = self._owner.expiryDate.toString()
-        # item.product_name_lbl = self._owner.productName
-        # print(item.ids.expiry_date_lbl.tex)
         self.add_widget(item)
         pass
 
@@ -53,11 +50,13 @@ class MenuScreen(MyScreen):
         for item in MDApp.get_running_app().fridge.sortedFridgeListDate:
             food = DateLayout()
             food.createItem(item)
-            # food.ids.exp_date_lbl = item.expiryDate.toString()
-            # food.ids.product_name_lbl = item.productName
             self.ids.dates_layout.addItem(food)
             if len(self.ids.dates_layout.children)>3:
                 break
+            
+    def updatedList(self):
+        self.initiateScreen()
+        return super().updatedList()
             # self.ids.dates_layout
         # self.ids.test
         

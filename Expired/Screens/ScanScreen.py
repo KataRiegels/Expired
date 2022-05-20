@@ -48,8 +48,6 @@ class ScanScreen(MyScreen):
     def on_save(self, instance, value, date_range):
         self.pressed_ok.active = True
         self.test2 = value
-        print("ON_SAVE WAS CALLLLEEEDDD")
-        
         Clock.schedule_once(self.test,1)
         # self.save_item_to_fridge(self.test2)
 

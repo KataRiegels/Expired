@@ -3,7 +3,6 @@
 import os
 import kivy
 import kivymd
-print(kivymd.__version__)
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.uix.boxlayout import BoxLayout
@@ -105,11 +104,13 @@ class TestApp(MDApp):
             self.bar.back_screen()
             return True
         
+    def updateList(self):
+        for screen in self.bar.ids.tab_manager.screens:
+            screen.updatedList()
+        
+        
     def stop(self, *largs):
         self.bar.ids.scan_tab.on_leave()
-        # with open('theme.csv', 'w') as f:
-        #     writer = csv.writer(f)
-        #     writer.writerow([self.theme_cls.primary_palette,self.theme_cls.theme_style])
         return super().stop(*largs)
         
         
@@ -118,24 +119,3 @@ class TestApp(MDApp):
 TestApp().run()
 
 
-
-# cake = Item("Cake",Date(2530,5,9),"4")
-# pizza = Item("Pizza",Date(2050,2,6),"2")
-
-# fridge = Items(jsonfile = "data.json")
-# fridge.addItem(cake)
-# fridge.addItem(pizza)
-# fridge.sortAscendingDate()
-# fridge.convertToJSON()
-# jsondic = fridge.createJSON()
-
-
-# dic = fridge.loadJSON()
-# fridge.jsonFormatToItemFormat(dic)
-# items = Items("data copy.json")
-# items.jsonFormatToItemFormat()
-# print(items.fridge)
-# items.removeItem("5")
-# print(items.fridge)
-# # items.convertToJSON()
-# # items.createJSON()

@@ -2,6 +2,7 @@ import time
 import datetime as dt
 
 from Widgets.ItemListDisplay import ItemWidgetList
+from kivymd.app import MDApp
 # import Item
 from . import Date
 from . import Item
@@ -16,7 +17,7 @@ class Items():
     def __init__(self,jsonfile = "NaN"):
         self.fridge = {}
         self.sortedFridgeListDate = []
-        self.sortedFridgeListName = []
+        # self.sortedFridgeListName = []
         # self.widget_list = []
         self.widget_list = ItemWidgetList()
         self.jsonfile = jsonfile
@@ -35,24 +36,29 @@ class Items():
         self.addItemToLists(item)
         self.convertToJSON()
         self.createJSON()
+        MDApp.get_running_app().updateList()
 
     """ Adds items to the current lists and dictionaries"""
     def addItemToLists(self,item:Item):
         self.fridge[item.ID] = item
         self.sortedFridgeListDate.append(item)
-        self.sortedFridgeListName.append(item)
+        # self.sortedFridgeListName.append(item)
         self.widget_list.append(item.food_item_selection)
         self.sortAscendingDate()
-        self.sortProductName()
+        # self.sortProductName()
 
     """ Deletes item from lists and JSON file """
-    def removeItem(self, itemID):
+    def removeItem(self, item):
         # print(type(itemID))
-        self.fridge.pop(itemID.ID)
-        self.jsonDict.pop(itemID.ID)
-        self.widget_list.remove(itemID.food_item_selection)
+        print(type(item))
+        self.fridge.pop(item.ID)
+        self.widget_list.remove(item.food_item_selection)
+        self.sortedFridgeListDate.remove(item)
+        self.jsonDict.pop(item.ID)
         self.convertToJSON()
         self.createJSON()
+        self.sortAscendingDate()
+        MDApp.get_running_app().updateList()
 
     """ Adds an item to the json dictionary with the format accepted by json files """
     def convertToJSON(self):
@@ -73,7 +79,6 @@ class Items():
 
     """ The method called outside to load the JSON file into the current running time """
     def openFridge(self):
-
         self.jsonFormatToItemFormat()
 
     """ Takes the json dict and formats it into Item format """
@@ -86,11 +91,7 @@ class Items():
     """ Sorting the sorted lists for after adding items """
     def sortAscendingDate(self):    
         self.sortedFridgeListDate = sorted(self.sortedFridgeListDate, key=lambda x: (x.expiryDate,x.productName.casefold()))
-        # self.widget_list = sorted(self.widget_list, key=lambda x: (x.owner.expiryDate,x.owner.productName.casefold()))
         self.widget_list.sort_date()
-
-    def sortProductName(self):
-        self.sortedFridgeListName = sorted(self.sortedFridgeListName, key=lambda x: (x.productName.casefold(),x.expiryDate))
 
     def toString(self):
         strs = ""

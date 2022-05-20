@@ -23,7 +23,6 @@ class FoodItemSelection(BaseListItem):
     def __init__(self,item = None, _owner = None):
         self.item = item
         self._owner = _owner
-        print(type(self._owner))
         super().__init__()
     def createOption(self):
         self.ids.list_item.exp_date_lbl = self._owner.expiryDate.toString()

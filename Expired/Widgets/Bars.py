@@ -88,7 +88,6 @@ class MNavigationBar(MDBottomNavigation):
         ).start(self)
     
     def updateBackList(self,current):
-        print(self.latest_tabs)
         self.latest_tabs.append(current)
         if len(self.latest_tabs) > 4:
             self.latest_tabs.pop(0)
@@ -113,10 +112,6 @@ class MNavigationBar(MDBottomNavigation):
             sm.transition.direction = 'left'
             if not current.order > 3:
                 next_screen = self.get_screen_from_order(current.order+1)
-            # self.switch_tab(next_screen)
-        # self.current_tab = sm.get_screen(next_screen.name).order
-        # self.updateBackList(current.order)
-        # self.updateBackList(next_screen.order)
         self.current_tab = current.order
         self.switch_tab(next_screen.name)
     
@@ -126,43 +121,17 @@ class MNavigationBar(MDBottomNavigation):
         if self.current_tab == self.ids.tab_manager.current_screen.order:
             self.switch_tab("menu")
         else: self.switch_tab(to_screen.name)
-        # current = self.get_screen_from_order(self.current_tab)
-        # to_screen_order = self.latest_tabs[-2]
-        # print(to_screen.order)
-        # self.updateBackList(to_screen.order)
-        # self.updateBackList(self.current_tab)
     
     def change_screen(self,to_screen):
-        # self.on_text_color_normal(None,[1,1,1,1])
         sm = self.ids.tab_manager  
         current = sm.current_screen      
         if current.order < sm.get_screen(to_screen).order:
             sm.transition.direction = 'left'
         if current.order > sm.get_screen(to_screen).order:
             sm.transition.direction = 'right'
-        # self.updateBackList(sm.get_screen(to_screen).order)
-        # self.updateBackList(current.order)
         self.current_tab = current.order
-        # self.current_tab = sm.get_screen(to_screen).order
-        # self.current_tab = to_screen.order
     pass
 
-    # def _get_disabled_hint_text_color(self, opposite=False):
-    #     theme_style = self._get_theme_style(opposite)
-    #     if theme_style == "Light":
-    #         # color = get_color_from_hex("000000")
-    #         color = get_color_from_hex("000000")
-    #         color[3] = 0.38
-    #         color[3] = 0.9
-    #     elif theme_style == "Dark":
-    #         color = get_color_from_hex("FFFFFF")
-    #         color[3] = 0.50
-    #         color[3] = 0.9
-    #     return color
-
-    # disabled_hint_text_color = AliasProperty(
-    #     _get_disabled_hint_text_color, bind=["theme_style"]
-    # )
 
 """ I believe this is unnecessary - was used as superclass for MyScreen"""
 class NavigationItem(MDBottomNavigationItem):
