@@ -51,7 +51,7 @@ class MenuScreen(MyScreen):
             food = DateLayout()
             food.createItem(item)
             self.ids.dates_layout.addItem(food)
-            if len(self.ids.dates_layout.children)>3:
+            if len(self.ids.dates_layout.children)>5:
                 break
             
     def updatedList(self):

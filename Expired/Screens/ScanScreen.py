@@ -104,7 +104,7 @@ class ScanScreen(MyScreen):
         #     )
         else:
             self.dialog = MDDialog(
-                text=self.itemTextInput.text[:5] + " expires on " +
+                text=self.itemTextInput.text + " expires on " +
                 str(self.test2.day) + " " + str(self.test2.month) +
                 " " + str(self.test2.year),
                 radius=[20, 7, 20, 7],
