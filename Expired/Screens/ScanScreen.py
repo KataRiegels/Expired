@@ -43,15 +43,17 @@ class ScanScreen(MyScreen):
 
     def test(self, value):
         self.pressed_ok.active = False
-        self.ids.date_label.text = str(self.test2)
+        # self.ids.date_label.text = str(self.test2)
+        self.ids.date_label.text = self.current_date.toString()
 
     def on_save(self, instance, value, date_range):
         self.pressed_ok.active = True
+        self.current_date = Date(year =value.year,month = value.month, day=value.day)
         self.test2 = value
         Clock.schedule_once(self.test,1)
         # self.save_item_to_fridge(self.test2)
 
-    def on_pre_enter(self):
+    def on_enter(self):
         # self.selected_date.text ="Select a Date"
         self.test2 = None
 
@@ -62,7 +64,8 @@ class ScanScreen(MyScreen):
             request_permissions(permissions)
         self.ids.preview.connect_camera()
 
-    def on_leave(self):
+
+    def on_pre_leave(self):
         self.ids.preview.disconnect_camera()
 
     def photo(self):
@@ -103,23 +106,27 @@ class ScanScreen(MyScreen):
         #         ],
         #     )
         else:
-            self.dialog = MDDialog(
-                text=self.itemTextInput.text + " expires on " +
-                str(self.test2.day) + " " + str(self.test2.month) +
-                " " + str(self.test2.year),
-                radius=[20, 7, 20, 7],
-                buttons=[
-                    MDFlatButton(
-                        text="CANCEL",
-                        on_release = self.close_dialog
-                    ),
-                    MDRaisedButton(
-                        text="CONFIRM",
-                        on_release = self.onConfirm
-                    ),
-                ],
-            )
-            self.dialog.open()
+            date  = Date(year =self.test2.year,month = self.test2.month, day=self.test2.day)
+            dialog_text = f"{date.toString()}     {self.itemTextInput.text}"
+            dialog = ConfirmAdd(self, text = dialog_text)
+            dialog.text = dialog_text
+            # self.dialog = MDDialog(
+            #     text=self.itemTextInput.text + " expires on " +
+            #     str(self.test2.day) + " " + str(self.test2.month) +
+            #     " " + str(self.test2.year),
+            #     radius=[20, 7, 20, 7],
+            #     buttons=[
+            #         MDFlatButton(
+            #             text="CANCEL",
+            #             on_release = self.close_dialog
+            #         ),
+            #         MDRaisedButton(
+            #             text="CONFIRM",
+            #             on_release = self.onConfirm
+            #         ),
+            #     ],
+            # )
+            dialog.open()
 
     def on_cancel(self, instance, value):
         pass
@@ -157,4 +164,27 @@ class ScanScreen(MyScreen):
 
         # text = self.itemTextInput.text + " expires on " + str(self.test2.day) +" "+ str(self.test2.month) +" "+ str(self.test2.year),
 
+class ConfirmAdd(MDDialog):
     
+    def __init__(self, _parent = None, **kwargs):
+        self.cancel_button = MDFlatButton(
+                text="CANCEL",
+                text_color=MDApp.get_running_app().theme_cls.primary_color,
+                on_release= self.dismiss,
+            )
+        self.ok_button = MDFlatButton(
+                text="CONFIRM",
+                text_color=MDApp.get_running_app().theme_cls.primary_color,
+                on_release= self.confirmButton,
+            )
+        buttons=[
+            self.cancel_button, self.ok_button
+        ]
+        # self.deleted_items = deleted_items
+        # self.findItems(deleted_items)
+        super().__init__(buttons = buttons, **kwargs)
+        self._parent = _parent
+        
+    def confirmButton(self,instance):
+        self._parent.onConfirm(instance)
+        self.dismiss()

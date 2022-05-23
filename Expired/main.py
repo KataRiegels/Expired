@@ -30,6 +30,9 @@ from kivy.properties import ObjectProperty
 from kivy.utils import get_color_from_hex
 import csv
 
+# Config.set('graphics', 'resizable', '0')
+# Config.set('graphics', 'height', '600')
+# Config.set('graphics', 'width', '300')
 
 LabelBase.register(name='ExpiredFont', fn_regular='Resources/custom.ttf')
 LabelBase.register(name='BestBefore', fn_regular='Resources/Dited.otf')
@@ -44,9 +47,6 @@ def building():
     Builder.load_file('Screens/calenderscreen.kv')
     Builder.load_file('Widgets/bars.kv')
     return Builder.load_file('main_screen.kv')
-# Config.set(' graphics', 'resizable', '0')
-# Config.set('graphics', 'height', '600')
-# Config.set('graphics', 'width', '300')
 
 
 Window.softinput_mode = "below_target"
@@ -74,7 +74,7 @@ def setTheme(app):
 class Lay(BoxLayout):
     pass
 
-class TestApp(MDApp):
+class ExpiringFoodApp(MDApp):
     def build(self):
         
         manager = building()
@@ -116,6 +116,6 @@ class TestApp(MDApp):
         
         
         
-TestApp().run()
+ExpiringFoodApp().run()
 
 
