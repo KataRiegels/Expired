@@ -6,10 +6,13 @@ from kivy.uix.button import Button
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.button import MDFillRoundFlatButton
 from kivymd.uix.picker import MDThemePicker
+from kivymd.uix.label import MDLabel
+from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 import csv
 
 class SettingsScreen(MyScreen):
+
     
     def enable_features(self):
         self.ids.features
@@ -19,7 +22,7 @@ class SettingsScreen(MyScreen):
             self.api2 = MDFillRoundFlatButton(text= 'test cat api',
                     size_hint=(.5,.1),
                     pos_hint= {'x':.25,'y':.4},
-                    on_press= self.apiTEST2)
+                    on_press= self.apisaved_date)
             self.add_widget(self.api2)
             self.api1 = MDFillRoundFlatButton(text= 'test cat api (PC)',
                     size_hint=(.5,.1),
@@ -44,7 +47,7 @@ class SettingsScreen(MyScreen):
             writer.writerow([app_theme.primary_palette,app_theme.theme_style])
         pass
             
-    def apiTEST2(self,instances):
+    def apisaved_date(self,instances):
         request = UrlRequest("https://catfact.ninja/fact", on_success=self.get_data)
 
     def get_data(self,request,response):
@@ -75,7 +78,7 @@ class SettingsScreen(MyScreen):
                 print(doc)
     
 
-    def apiTEST2(self):
+    def apisaved_date(self):
         request = UrlRequest("https://catfact.ninja/fact", on_success=self.get_data)
 
     def get_data(self,request,response):

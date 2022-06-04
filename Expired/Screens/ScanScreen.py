@@ -31,141 +31,111 @@ class FilteredInput(MDTextField):
             else:
                 s = substring
         return super().insert_text(s, from_undo=from_undo)
-    def on_disabled(self, *args):
-        pass
+    # def on_disabled(self, *args):
+    #     pass
 
 class ScanScreen(MyScreen):
     dialog = None
     selected_date = ObjectProperty(None)
-    pressed_ok = ObjectProperty(None)
+    spinner = ObjectProperty(None)
     itemTextInput = ObjectProperty(None)
 
 
-    def test(self, value):
-        self.pressed_ok.active = False
-        # self.ids.date_label.text = str(self.test2)
+    """ Stops the spinner after picked date """
+    def stopSpinner(self, value):
+        self.spinner.active = False
         self.ids.date_label.text = self.current_date.toString()
 
+    """ Triggered when clicking "Confirm" at the date pickers
+    Saving the date  """
     def on_save(self, instance, value, date_range):
-        self.pressed_ok.active = True
+        self.spinner.active = True
         self.current_date = Date(year =value.year,month = value.month, day=value.day)
-        self.test2 = value
-        Clock.schedule_once(self.test,1)
-        # self.save_item_to_fridge(self.test2)
+        self.saved_date = value
+        Clock.schedule_once(self.stopSpinner,1)
 
-    def on_enter(self):
-        # self.selected_date.text ="Select a Date"
-        self.test2 = None
-
+    """ Asking for permission as screen is created """
+    def initiateScreen(self):
         if platform == 'android':
             permissions = [Permission.CAMERA, Permission.RECORD_AUDIO]
             if api_version < 29:
                 permissions.append(Permission.WRITE_EXTERNAL_STORAGE)        
             request_permissions(permissions)
+        
+        return super().initiateScreen()
+
+    """ Method called by Kivy as screen is entered
+    Connects the camera """
+    def on_enter(self):
+        self.saved_date = None
         self.ids.preview.connect_camera()
 
-
+    """ Disconnecting camera when leaving scan screen """
     def on_pre_leave(self):
         self.ids.preview.disconnect_camera()
 
+    """ Captures a photo to use for OCR """
     def photo(self):
         self.ids.preview.capture_photo()
-        Clock.schedule_once(self.test, 0.5)
+        Clock.schedule_once(self.stopSpinner, 0.5)
 
+    """ When pressing the "Save item" button
+    Either adds the item to the fridge or displays snackbars """
     def save_item(self):
-        if self.itemTextInput.text == "":
-            # MSnackbar().open()
+        if self.itemTextInput.text == "": # If product name was not given
             save_item_warning = MSnackbar()
             save_item_warning.text = "Please enter a product name first"    
             save_item_warning.open()
-        elif not self.test2:
-            # MSnackbar().open()
+        elif not self.saved_date:         # If date was not given 
             save_item_warning = MSnackbar()
             save_item_warning.text = "Please pick a date first"    
             save_item_warning.open()
-        # if self.itemTextInput.text == "":
-        #     self.dialog = MDDialog(
-        #         text="Please enter an item name",
-        #         radius=[20, 7, 20, 7],
-        #         buttons=[
-        #             MDFlatButton(
-        #                 text="CLOSE",
-        #                 on_release = self.close_dialog
-        #             ),
-        #         ],
-        #     )
-        # elif not self.test2:
-        #     self.dialog = MDDialog(
-        #         text="Please select a date",
-        #         radius=[20, 7, 20, 7],
-        #         buttons=[
-        #             MDFlatButton(
-        #                 text="CLOSE",
-        #                 on_release = self.close_dialog
-        #             ),
-        #         ],
-        #     )
         else:
-            date  = Date(year =self.test2.year,month = self.test2.month, day=self.test2.day)
+            date  = Date(year =self.saved_date.year,month = self.saved_date.month, day=self.saved_date.day)
             dialog_text = f"{date.toString()}     {self.itemTextInput.text}"
             dialog = ConfirmAdd(self, text = dialog_text)
             dialog.text = dialog_text
-            # self.dialog = MDDialog(
-            #     text=self.itemTextInput.text + " expires on " +
-            #     str(self.test2.day) + " " + str(self.test2.month) +
-            #     " " + str(self.test2.year),
-            #     radius=[20, 7, 20, 7],
-            #     buttons=[
-            #         MDFlatButton(
-            #             text="CANCEL",
-            #             on_release = self.close_dialog
-            #         ),
-            #         MDRaisedButton(
-            #             text="CONFIRM",
-            #             on_release = self.onConfirm
-            #         ),
-            #     ],
-            # )
             dialog.open()
 
-    def on_cancel(self, instance, value):
-        pass
+    # def on_cancel(self, instance, value):
+    #     pass
 
-    def close_dialog(self, instance):
-        if self.dialog:
-            self.dialog.dismiss()
+    # def close_dialog(self, instance):
+        
+    #     # if self.dialog:
+    #     self.dialog.dismiss()
 
-    def onConfirm(self,instance):
+    """ When confirming saved item 
+    Calls for saving item and 'refreshes' entered info """
+    def on_confirm(self,instance):
         self.save_item_to_fridge(self)
         self.ids.date_label.text = "Select a Date"
         self.ids.itemName.text = ""
-        self.close_dialog(self)
+        # self.dialog.dismiss()
+        # self.close_dialog(self)
 
-
+    """ Open date picker """
     def show_date_picker(self):
-        # date_dialog = MDDatePicker(md_bg_color = MDApp.get_running_app().theme_cls.primary_light)
         date_dialog = MDDatePicker()
-        date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
+        date_dialog.bind(on_save=self.on_save)
+        # date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
         date_dialog.open()
 
-
-    # Katas work:
+    """ Creates the actual item and adds it to the Items instance """
     def save_item_to_fridge(self,item_save = None):
-        item_save = self.test2
+        item_save = self.saved_date
         productName = self.itemTextInput.text
         expDate = Date(year = item_save.year,month = item_save.month, day=item_save.day)
         item = Item(productName,expDate)
         app = MDApp.get_running_app()
-        app.fridge.addItemToFridge(item)
-        # manager = app.bar
-        # list_screen = manager.ids.list_tab
-        app.list_screen.ids.select_view.onLateEnter()
+        app.fridge.add_item_to_fridge(item)
+        app.list_screen.ids.select_view.complete_refresh()
+        # app.list_screen.ids.select_view.initialEnter()
         
 
-        # text = self.itemTextInput.text + " expires on " + str(self.test2.day) +" "+ str(self.test2.month) +" "+ str(self.test2.year),
-
+""" Confirm dialog when saving an item """
 class ConfirmAdd(MDDialog):
-    
+    """ Add confirm and cancel buttons to the dialog """
     def __init__(self, _parent = None, **kwargs):
         self.cancel_button = MDFlatButton(
                 text="CANCEL",
@@ -175,16 +145,15 @@ class ConfirmAdd(MDDialog):
         self.ok_button = MDFlatButton(
                 text="CONFIRM",
                 text_color=MDApp.get_running_app().theme_cls.primary_color,
-                on_release= self.confirmButton,
+                on_release= self.confirm_button,
             )
-        buttons=[
-            self.cancel_button, self.ok_button
-        ]
+        buttons=[self.cancel_button, self.ok_button]
         # self.deleted_items = deleted_items
         # self.findItems(deleted_items)
         super().__init__(buttons = buttons, **kwargs)
-        self._parent = _parent
-        
-    def confirmButton(self,instance):
-        self._parent.onConfirm(instance)
+        self._parent = _parent # Such that the scan screen can be accessed
+    
+    """ When confirm button on dialog is pressed """
+    def confirm_button(self,instance):
         self.dismiss()
+        self._parent.on_confirm(instance)

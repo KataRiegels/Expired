@@ -1,8 +1,8 @@
 from Widgets.ItemListDisplay import FoodItemSelection
 from . import Date
-from random import randint
 from Widgets import *
 
+from random import randint
 class Item():
     
     def __init__(self,productName = "NaN",expiryDate=Date(2000,1,1), ID = "Invalid"):

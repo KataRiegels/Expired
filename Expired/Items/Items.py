@@ -29,7 +29,7 @@ class Items():
             yield item
 
     """ Saves an item to the current lists and to the JSON file """
-    def addItemToFridge(self,item):
+    def add_item_to_fridge(self,item):
         item.createUniqueID()
         while item.ID in self.fridge.keys():
             item.createUniqueID()

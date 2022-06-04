@@ -110,7 +110,7 @@ class ExpiringFoodApp(MDApp):
         
         
     def stop(self, *largs):
-        self.bar.ids.scan_tab.on_leave()
+        self.bar.ids.scan_tab.on_pre_leave()
         return super().stop(*largs)
         
         

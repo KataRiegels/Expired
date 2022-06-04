@@ -48,14 +48,15 @@ class ListScreen(MyScreen):
         #     self.ids.select_view.initialEnter(self)
         # else: 
         #     pass
-            # self.ids.select_view.onLateEnter()
-        return super().on_enter(*args)
+            # self.ids.select_view.complete_refresh()
+        return super().on_pre_enter(*args)
 
     def on_leave(self, *args):
         self.ids.select_view.refresh_on_exit()
         return super().on_leave(*args)
 
     def initiateScreen(self):
+        # return
         self.ids.select_view.initialEnter(self)
         # return super().initiateScreen()
 
