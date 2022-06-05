@@ -73,7 +73,7 @@ class ExpiringFoodApp(MDApp):
         print("LOADING JSON FILE")
         self.items = Items("save_files/data.json")
         print("finished loading JSON")
-        self.items.openFridge()
+        self.items.open_fridge()
         self.fridge = self.items
         self.list_screen = bar.ids.list_tab
         self.scan_screen = bar.ids.scan_tab

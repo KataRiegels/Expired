@@ -67,7 +67,7 @@ class ItemListView(RelativeLayout):
         items = self.selection_list.get_selected_list_items()
         for item in items:
             self.current_widgets.remove(item.instance_item._owner.food_item_selection)
-            MDApp.get_running_app().fridge.remove_item(item.instance_item._owner)
+            MDApp.get_running_app().fridge.remove_item_from_fridge(item.instance_item._owner)
             self.selection_list.remove_widget(item)
 
 
