@@ -8,7 +8,7 @@ class ListScreen(MyScreen):
         self.items = items
 
     def initiateScreen(self):
-        self.ids.select_view.create_item_list_widget(self)
+        self.ids.select_view.create_item_list_widget()
 
 
 

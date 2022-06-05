@@ -148,7 +148,7 @@ class ConfirmAdd(MDDialog):
             )
         buttons=[self.cancel_button, self.ok_button]
         # self.deleted_items = deleted_items
-        # self.findItems(deleted_items)
+        # self.add_item_to_dialog(deleted_items)
         super().__init__(buttons = buttons, **kwargs)
         self._parent = _parent # Such that the scan screen can be accessed
     

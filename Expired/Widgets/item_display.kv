@@ -114,22 +114,22 @@
         SortIconButton:
             id: name_ascending
             text: "Ascending name"
-            on_press: root._parent.sortName(ascending=True)
+            on_press: root._parent.sort_display_by_name(ascending=True)
             on_release: root.dismiss()
             icon_:"sort-alphabetical-ascending"
         SortIconButton:
             text: "Descending name"
-            on_press: root._parent.sortName(ascending=False)
+            on_press: root._parent.sort_display_by_name(ascending=False)
             on_release: root.dismiss()
             icon_:"sort-alphabetical-descending"
         SortIconButton:
             text: "Ascending date"
-            on_press: root._parent.sortDate(ascending=True)
+            on_press: root._parent.sort_display_by_date(ascending=True)
             on_release: root.dismiss()
             icon_: "sort-calendar-ascending"
         SortIconButton:
             text: "Descending date"
-            on_press: root._parent.sortDate(ascending=False)
+            on_press: root._parent.sort_display_by_date(ascending=False)
             on_release: root.dismiss()
             icon_: "sort-calendar-descending"
 

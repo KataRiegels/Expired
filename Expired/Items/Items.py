@@ -86,7 +86,7 @@ class Items():
     """ Sorting the sorted lists for after adding items """
     def sort_ascending_date(self):    
         self.sorted_fridge_list = sorted(self.sorted_fridge_list, key=lambda x: (x.expiry_date,x.product_name.casefold()))
-        self.widget_list.sort_date()
+        self.widget_list.sort_by_date()
 
     def as_string(self):
         strs = ""

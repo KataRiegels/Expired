@@ -57,11 +57,6 @@ def setTheme(app):
 
 
 class Root(BoxLayout):
-
-    @mainthread    
-    def test(self):
-        print("dfjjf")
-        pass
     pass
 
 class ExpiringFoodApp(MDApp):
