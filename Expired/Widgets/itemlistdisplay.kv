@@ -162,14 +162,14 @@
                 id:search_field
                 hint_text: 'Search item'
                 size_hint_x: .3
-                on_text_validate: root.clickedSearch()
+                on_text_validate: root.clicked_search()
                 readonly: False
                 multiline: False
                 focus: True
             MDIconButton:
                 icon: "magnify"
                 pos_hint: {"x": .5, "center_y": .5}
-                on_press: root.clickedSearch()
+                on_press: root.clicked_search()
                 
 # Holdng all information about the whole list view
 <ItemListView>:
@@ -199,10 +199,10 @@
             size_hint_y: .1
             right_action_items: 
                 [
-                ["magnify",lambda x: root.openSearch()],
-                ["sort",lambda x: root.openSortBy()],
-                ["delete",lambda x: root.deleteSelectedItems()],
-                ["refresh",lambda x: root.refreshList()],
+                ["magnify",lambda x: root.open_search()],
+                ["sort",lambda x: root.open_sort_by()],
+                ["delete",lambda x: root.pressed_delete()],
+                ["refresh",lambda x: root.refresh_list()],
                 ]
 # The list itself which displays the items
 <MySelectionList>:

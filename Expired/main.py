@@ -94,15 +94,15 @@ class ExpiringFoodApp(MDApp):
         setTheme(self)
         print("LOADING JSON FILE")
         self.items = Items("data.json")
-        self.items.openFridge()
         print("finished loading JSON")
+        self.items.openFridge()
         self.fridge = self.items
         self.list_screen = bar.ids.list_tab
         self.scan_screen = bar.ids.scan_tab
         self.settings_screen = bar.ids.settings_tab
         self.menu_screen = bar.ids.menu_tab
         self.menu_screen.initiateScreen()
-        # self.list_screen.ids.select_view.initialEnter()
+        # self.list_screen.ids.select_view.create_item_list_widget()
         # Clock.schedule_once(self.make_widget,1)
         # self.make_widget(2)
         Window.bind(on_keyboard=self.Android_back_click)
@@ -125,7 +125,7 @@ class ExpiringFoodApp(MDApp):
     # @mainthread
     def make_widget(self, value):
         print("loading...")
-        self.list_screen.ids.select_view.initialEnter()
+        self.list_screen.ids.select_view.create_item_list_widget()
         print("Created list view")
         for child in self.bar.ids.tab_manager.screens:
             if not child == self.menu_screen:

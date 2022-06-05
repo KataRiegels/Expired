@@ -54,7 +54,7 @@ class MenuScreen(MyScreen):
     #     return super().on_enter(*args)
 
     # def create_selection_list(self):
-    #     # MDApp.get_running_app().list_screen.ids.select_view.initialEnter()
+    #     # MDApp.get_running_app().list_screen.ids.select_view.create_item_list_widget()
     #     app = MDApp.get_running_app()
     #     print("hello")
         

@@ -34,8 +34,8 @@ class FoodItemSelection(BaseListItem):
         self.ids.list_item.exp_date_lbl = self._owner.expiryDate.toString()
         self.ids.list_item.product_name_lbl = self._owner.productName
 
-    # def __repr__(self):
-    #     return str(self._owner.productName)
+    def __repr__(self):
+        return str(self._owner.productName)
 
 """ Holds lists of widgets - includes the list in Items and ItemViewList """
 class ItemWidgetList(list):
@@ -44,47 +44,17 @@ class ItemWidgetList(list):
         self.sorted_fridge_list = []
         self.sort_date()
     
-    # def __iter__(self):
-    #     for item in self.sorted_fridge_list:
-    #         yield item
-            
-    # def __getitem__(self, item):
-    #     return getattr(self, item)
-    
-    # def sort_date(self,ascending = True):
-    #     self.sorted_fridge_list = sorted(self.sorted_fridge_list,reverse=not ascending, key=lambda x: (x._owner.expiryDate,x._owner.productName.casefold()))
-
-    # def sort_name(self,ascending = True):
-    #     self.sorted_fridge_list = sorted(self.sorted_fridge_list,reverse=not ascending, key=lambda x: (x._owner.productName.casefold(),x._owner.expiryDate))
-    
     def sort_date(self,ascending = True):
         self.sort(reverse=not ascending, key=lambda x: (x._owner.expiryDate,x._owner.productName.casefold()))
 
     def sort_name(self,ascending = True):
         self.sort(reverse=not ascending, key=lambda x: (x._owner.productName.casefold(),x._owner.expiryDate))
     
-    # def append(self,item):
-    #     self.sorted_fridge_list.append(item)
-    
-    # def remove(self,item):
-    #     self.sorted_fridge_list.remove(item)
-        
-    # def clear(self):
-    #     self.sorted_fridge_list.clear()
-
-    # def copy(self):
-    #     return self.sorted_fridge_list.copy()
-
-    # def refill_list(self,list):
-    #     self.sorted_fridge_list.clear()
-    #     for widget in list:
-    #         self.sorted_fridge_list.append(widget)
     def refill_list(self,list):
         
         self.clear()
         for widget in list:
             self.append(widget)
-    pass
 
 
 
@@ -131,13 +101,13 @@ class ConfirmDelete(MDDialog):
 """
 class ItemListView(RelativeLayout):
 
-    list_of_items = []
-    list_of_items_sorted = []
-    current_widgets = []
-    current_widgets = []
+    # list_of_items = []
+    # list_of_items_sorted = []
+    # current_widgets = []
+    # current_widgets = []
     fridge = None
 
-    def initialEnter(self,screen=None):
+    def create_item_list_widget(self,screen=None):
         self.screen = screen
         self.fridge = MDApp.get_running_app().fridge
         self.widgets = self.fridge.widget_list
@@ -145,33 +115,31 @@ class ItemListView(RelativeLayout):
         self.current_widgets = ItemWidgetList()
         
         self.add_all_items()
-        self.displayWidgets()
+        self.refresh_widgets()
 
     def add_item_to_list(self,item):
         option = item.food_item_selection
         option.createOption()
         self.current_widgets.append(option)
-        self.ids.selection_list.add_widget(option)
-        pass
+        self.selection_list.add_widget(option)
 
-    def complete_refresh(self):
-        self.widgets = self.fridge.widget_list
-        self.add_all_items()
-        self.refreshWidgets()
-        # self.displayWidgets()
+    # def complete_refresh(self):
+    #     self.widgets = self.fridge.widget_list
+    #     self.add_all_items()
+    #     self.refresh_widgets()
         
 
     """ Not sure what this was for. Does literally nothing. """
-    def refresh_on_exit(self):
-        self.widgets = self.fridge.widget_list
-        self.add_all_items()
-        self.displayWidgets()
+    # def refresh_on_exit(self):
+    #     # self.widgets = self.fridge.widget_list
+    #     self.add_all_items()
+    #     self.refresh_widgets()
 
-    """ Adds the widgets to the list view widget """
-    def displayWidgets(self):
-        self.ids.selection_list.clear_widgets()
+    """ Adds the widgets to the MySelectionList list view widget """
+    def refresh_widgets(self):
+        self.selection_list.clear_widgets()
         for item in self.current_widgets:
-            self.ids.selection_list.add_widget(item)
+            self.selection_list.add_widget(item)
         # print(self.selection_list.canvas.children)
             
 
@@ -179,100 +147,73 @@ class ItemListView(RelativeLayout):
     """Just adds all items to the list view"""
     def add_all_items(self):
         self.current_widgets.clear()
-        # for item in self.fridge:
-        #     option = item.food_item_selection
-        #     option.createOption()
-        #     self.current_widgets.append(option)
         for item in self.fridge:
-            a=0
             food = FoodItemSelection(_owner = item)
             food.createOption()
             self.current_widgets.append(food)
-            # self.ids.selection_list.add_widget(food)
-
-    """Give it the list of items you want the list to show"""
-    def refreshWidgets(self):
-        self.displayWidgets()
-        # print(f"BEFORE: {len(self.ids.selection_list.children)}")
-        # self.ids.selection_list.clear_widgets()
-        # print(len(self.selection_list.canvas.children))
-        # print(f"AFTER: {len(self.ids.selection_list.children)}")
-        # for widget in self.current_widgets:
-        # print(self.current_widgets[0])
-        # self.test_make_items()
-        # threading.Thread(target = self.test_make_items).start()
-        # self.ids.selection_list.add_widget(self.current_widgets[1])
-    
-    @mainthread    
-    def test_make_items(self):
-        for item in self.fridge:
-            a=0
-            food = FoodItemSelection(_owner = item)
-            # food = BaseListItem()
-            # food.createOption()
-            # self.ids.selection_list.add_widget(food)
-
-
-
-
 
     """Sorts the list view by date"""
     def sortDate(self,ascending = True):
         self.current_widgets.sort_date(ascending=ascending)
-        self.refreshWidgets()
+        self.refresh_widgets()
 
     """Sorts the list view by name"""
     def sortName(self,ascending = True):
         self.current_widgets.sort_name(ascending=ascending)
-        self.refreshWidgets()
+        self.refresh_widgets()
 
-    """Deletes the items selected by user
-    ATTENTION: should maybe have a snackbar for when people press the delete and nothing is selected"""
-    def deleteSelectedItems(self):
-        items = self.ids.selection_list.get_selected_list_items()
-        if not items:
+    """Deletes the items selected by user"""
+    def pressed_delete(self):
+        items = self.selection_list.get_selected_list_items()
+        if not items: # If the user did not select any items
             MSnackbar().open()
-        else:
+        else:         # Asking user to confirm delete
             delete_dialog = ConfirmDelete(_parent = self,deleted_items = items)
             delete_dialog.open()
     
     def delete_items(self):
-        items = self.ids.selection_list.get_selected_list_items()
+        items = self.selection_list.get_selected_list_items()
         for item in items:
             # self.screen.manager.fridge.removeItem(item.instance_item._owner)
             MDApp.get_running_app().fridge.removeItem(item.instance_item._owner)
             self.current_widgets.remove(item.instance_item._owner.food_item_selection)
-            self.ids.selection_list.remove_widget(item)
+            self.selection_list.remove_widget(item)
 
     # def resetList(self):
     #     pass
 
     """ Adds back all the items to the current widgets list"""
-    def refreshList(self):
+    def refresh_list(self):
         # self.current_widgets = self.widgets.copy()
         self.current_widgets.refill_list(self.widgets)
         self.ids.toolbar.title = "Items"
-        self.refreshWidgets()
+        self.refresh_widgets()
 
     """ Checks for which items contain searched string and adds it to the list widget """
-    def stringSearch(self,string):
+    def search_items(self,string):
         self.selection_list.clear_widgets()
         for widget in self.current_widgets.copy():
             r = widget._owner.productName.find(string)
             if r==-1:
                 self.current_widgets.remove(widget)
-        self.refreshWidgets()
+        self.refresh_widgets()
     
-    def searchItems(self):
-        search_input = self.ids.search_popup.ids.search_field.text
-        self.stringSearch(search_input)
+    # def searchItems(self):
+    #     search_input = self.ids.search_popup.ids.search_field.text
+    #     # self.search_items(search_input)
+    #     self.selection_list.clear_widgets()
+    #     for widget in self.current_widgets.copy():
+    #         r = widget._owner.productName.find(search_input)
+    #         if r==-1:
+    #             self.current_widgets.remove(widget)
+    #     self.refresh_widgets()
         
-    def openSortBy(self):
+    def open_sort_by(self):
         SortByPopup(_parent = self).open()
-        self.refreshWidgets()
+        self.refresh_widgets()
     
-    def openSearch(self):
-        self.refreshList()
+    def open_search(self):
+        self.refresh_list()
         SearchPopup(_parent = self).open()
 
 
@@ -288,9 +229,9 @@ class SearchPopup(ModalView):
         super().__init__(**kwargs)
         self._parent =  _parent
 
-    def clickedSearch(self):
+    def clicked_search(self):
         search_text = self.ids.search_field.text
-        self._parent.stringSearch(search_text)
+        self._parent.search_items(search_text)
         self._parent.ids.toolbar.title = search_text
         self.dismiss()
         pass
@@ -301,76 +242,76 @@ class SearchPopup(ModalView):
     
     
     
-""" Representing the expiry date of an item """
-class Date():
+# """ Representing the expiry date of an item """
+# class Date():
 
-    months_dict = \
-        {"1":{"full": "January",    "clipped":"Jan"},
-        "2":{ "full": "February",   "clipped":"Feb"},
-        "3":{ "full": "March",      "clipped":"Mar"},
-        "4":{ "full": "April",      "clipped":"Apr"},
-        "5":{ "full": "May",        "clipped":"May"},
-        "6":{ "full": "June",       "clipped":"Jun"},
-        "7":{ "full": "July",       "clipped":"Jul"},
-        "8":{ "full": "August",     "clipped":"Aug"},
-        "9":{ "full": "September",  "clipped":"Sep"},
-        "10":{"full": "October",    "clipped":"Oct"},
-        "11":{"full": "November",   "clipped":"Nov"},
-        "12":{"full": "December",   "clipped":"Dec"},
-    }
+#     months_dict = \
+#         {"1":{"full": "January",    "clipped":"Jan"},
+#         "2":{ "full": "February",   "clipped":"Feb"},
+#         "3":{ "full": "March",      "clipped":"Mar"},
+#         "4":{ "full": "April",      "clipped":"Apr"},
+#         "5":{ "full": "May",        "clipped":"May"},
+#         "6":{ "full": "June",       "clipped":"Jun"},
+#         "7":{ "full": "July",       "clipped":"Jul"},
+#         "8":{ "full": "August",     "clipped":"Aug"},
+#         "9":{ "full": "September",  "clipped":"Sep"},
+#         "10":{"full": "October",    "clipped":"Oct"},
+#         "11":{"full": "November",   "clipped":"Nov"},
+#         "12":{"full": "December",   "clipped":"Dec"},
+#     }
 
-    def __init__(self,day=1,month=1,year=2000):
-        self.day = day; self.month = month; self.year = year
+#     def __init__(self,day=1,month=1,year=2000):
+#         self.day = day; self.month = month; self.year = year
 
-    """ For sorting based on date """
-    def __lt__(self,other):
-        return (self.year,self.month,self.day) < (other.year,other.month,other.day)
-    def __gt__(self,other):
-        return (self.year,self.month,self.day) > (other.year,other.month,other.day)
-    def __eq__(self,other):
-        return (self.year,self.month,self.day) == (other.year,other.month,other.day)
+#     """ For sorting based on date """
+#     def __lt__(self,other):
+#         return (self.year,self.month,self.day) < (other.year,other.month,other.day)
+#     def __gt__(self,other):
+#         return (self.year,self.month,self.day) > (other.year,other.month,other.day)
+#     def __eq__(self,other):
+#         return (self.year,self.month,self.day) == (other.year,other.month,other.day)
 
-    # "%02d" % (number,)
-    def toString(self):
-        return f"{self.day:02d}/{self.month:02d}-{self.year}"
+#     # "%02d" % (number,)
+#     def toString(self):
+#         return f"{self.day:02d}/{self.month:02d}-{self.year}"
 
-    def toString_DMY(self):
-        return f"{self.day}/{self.month}-{self.year}"
+#     def toString_DMY(self):
+#         return f"{self.day}/{self.month}-{self.year}"
     
-    def toString_MDY(self):
-        # if self.day < 10:
-        return f"{self.month}/{self.day}-{self.year}"
+#     def toString_MDY(self):
+#         # if self.day < 10:
+#         return f"{self.month}/{self.day}-{self.year}"
 
-    def toString_DMY_month(self):
-        return f"{self.months_dict[str(self.month)]}"
-    
-    
+#     def toString_DMY_month(self):
+#         return f"{self.months_dict[str(self.month)]}"
     
     
-from random import randint
-class Item():
     
-    def __init__(self,productName = "NaN",expiryDate=Date(2000,1,1), ID = "Invalid"):
-        self.productName = productName
-        self.expiryDate  = expiryDate
-        self.ID          = ID
-        self.food_item_selection = FoodItemSelection(_owner = self)
-        self.food_item_selection.createOption()
+    
+# from random import randint
+# class Item():
+    
+#     def __init__(self,productName = "NaN",expiryDate=Date(2000,1,1), ID = "Invalid"):
+#         self.productName = productName
+#         self.expiryDate  = expiryDate
+#         self.ID          = ID
+#         self.food_item_selection = FoodItemSelection(_owner = self)
+#         self.food_item_selection.createOption()
         
-        # self.food_item_selection = None
+#         # self.food_item_selection = None
 
-    """ Generates an ID for an item with 4 random digits"""
-    def createUniqueID(self):
-        ID = str(randint(1000,4999))
-        self.ID = self.productName + ID
+#     """ Generates an ID for an item with 4 random digits"""
+#     def createUniqueID(self):
+#         ID = str(randint(1000,4999))
+#         self.ID = self.productName + ID
 
-    """ Arranges the information so it can be stored in the JSON file """
-    def convertToJSONInput(self):
-        return [self.productName,[self.expiryDate.year,self.expiryDate.month,self.expiryDate.day]]
+#     """ Arranges the information so it can be stored in the JSON file """
+#     def convertToJSONInput(self):
+#         return [self.productName,[self.expiryDate.year,self.expiryDate.month,self.expiryDate.day]]
 
-    """ In order for displaying the item """
-    def toString(self):
-        return f"{self.productName} expiring {self.expiryDate.toString()}"
+#     """ In order for displaying the item """
+#     def toString(self):
+#         return f"{self.productName} expiring {self.expiryDate.toString()}"
 
 
 

@@ -1,40 +1,27 @@
 
 
 
-from kivymd.theming import ThemableBehavior
-from kivymd.uix.behaviors import TouchBehavior
-
-from kivymd.uix.button import MDIconButton
 from kivymd.uix.list import MDList
-from kivymd.uix.relativelayout import MDRelativeLayout
 from kivy.animation import Animation
-from kivy.clock import Clock
 from kivymd.uix.selection import SelectionItem
 from kivymd.uix.selection import SelectionIconCheck
-
-from kivy.graphics.context_instructions import Color
-from kivy.graphics.vertex_instructions import (
-    Ellipse,
-    RoundedRectangle,
-    SmoothLine,
-)
-from kivy.lang import Builder
 from kivy.metrics import dp
 from kivy.properties import (
     BooleanProperty,
     ColorProperty,
     ListProperty,
     NumericProperty,
-    ObjectProperty,
     StringProperty,
 )
 from kivy.animation import Animation
-from kivy.clock import Clock
 
 
+""" Selection item used in container for MySelectionList """
 class MySelectionItem(SelectionItem):
+    """ Method copied from KivyMD's SelectionItem """
     def on__progress_animation(self, instance, value):
         if value:
+            # d input changed from 1 to .3 - Makes long-touch shorter
             anim = Animation(_progress_line_end=360, d=.3, t="in_out_quad")
             anim.bind(
                 on_progress=self.do_animation_progress_line,
@@ -50,7 +37,7 @@ class MySelectionItem(SelectionItem):
         else:
             self.reset_progress_animation()
 
-
+""" MySelectionList is essentially copied from KivyMD's own MDSelectionList """
 class MySelectionList(MDList):
     selected_mode = BooleanProperty(False)
     icon = StringProperty("check")
@@ -72,7 +59,7 @@ class MySelectionList(MDList):
             md_bg_color=self.icon_bg_color,
             icon_check_color=self.icon_check_color,
         )
-        widget.parent = None
+        widget.parent = None # Added line
         container = MySelectionItem(
             size_hint=(1, None),
             height=widget.height,

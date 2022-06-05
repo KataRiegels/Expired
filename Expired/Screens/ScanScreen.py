@@ -130,8 +130,6 @@ class ScanScreen(MyScreen):
         app = MDApp.get_running_app()
         app.fridge.add_item_to_fridge(item)
         app.list_screen.ids.select_view.add_item_to_list(item)
-        # app.list_screen.ids.select_view.complete_refresh()
-        # app.list_screen.ids.select_view.initialEnter()
         
 
 """ Confirm dialog when saving an item """
