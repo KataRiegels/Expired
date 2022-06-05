@@ -3,7 +3,6 @@ from kivymd.app import MDApp
 from kivymd.uix.screen import MDScreen
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.uix.bottomnavigation import MDBottomNavigation,MDBottomNavigationItem
-from widgets.bars import MNavigationBar, NavigationItem
 from gestures4kivy import CommonGestures
 
 # class MyScreen(MDScreen):
