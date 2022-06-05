@@ -30,9 +30,9 @@ class Items():
 
     """ Saves an item to the current lists and to the JSON file """
     def add_item_to_fridge(self,item):
-        item.createUniqueID()
+        item.create_unique_ID()
         while item.ID in self.fridge.keys():
-            item.createUniqueID()
+            item.create_unique_ID()
         self.addItemToLists(item)
         self.convertToJSON()
         self.createJSON()
@@ -44,7 +44,7 @@ class Items():
         self.sortedFridgeListDate.append(item)
         self.widget_list.append(item.food_item_selection)
         self.sortAscendingDate()
-        # self.sortProductName()
+        # self.sortproduct_name()
 
     """ Deletes item from lists and JSON file """
     def removeItem(self, item):
@@ -62,7 +62,7 @@ class Items():
     """ Adds an item to the json dictionary with the format accepted by json files """
     def convertToJSON(self):
         for item in self.fridge.values():
-            self.jsonDict[item.ID] = item.convertToJSONInput()
+            self.jsonDict[item.ID] = item.as_JSON_format()
 
     """ Rewrites the current json file with the current json dictionary"""
     def createJSON(self):
@@ -90,13 +90,13 @@ class Items():
 
     """ Sorting the sorted lists for after adding items """
     def sortAscendingDate(self):    
-        self.sortedFridgeListDate = sorted(self.sortedFridgeListDate, key=lambda x: (x.expiryDate,x.productName.casefold()))
+        self.sortedFridgeListDate = sorted(self.sortedFridgeListDate, key=lambda x: (x.expiry_date,x.product_name.casefold()))
         self.widget_list.sort_date()
 
-    def toString(self):
+    def as_string(self):
         strs = ""
         for item in self.fridge.values():
-            strs = f"{strs + item.toString()}\n"
+            strs = f"{strs + item.as_string()}\n"
         return strs
 
     """ Probably unnecessary - depends on where we want to store out data"""

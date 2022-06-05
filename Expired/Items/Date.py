@@ -29,17 +29,17 @@ class Date():
         return (self.year,self.month,self.day) == (other.year,other.month,other.day)
 
     # "%02d" % (number,)
-    def toString(self):
+    def as_string(self):
         return f"{self.day:02d}/{self.month:02d}-{self.year}"
 
-    def toString_DMY(self):
+    def as_string_DMY(self):
         return f"{self.day}/{self.month}-{self.year}"
     
-    def toString_MDY(self):
+    def as_string_MDY(self):
         # if self.day < 10:
         return f"{self.month}/{self.day}-{self.year}"
 
-    def toString_DMY_month(self):
+    def as_string_DMY_month(self):
         return f"{self.months_dict[str(self.month)]}"
 
 

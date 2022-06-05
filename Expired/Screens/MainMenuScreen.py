@@ -20,8 +20,8 @@ from kivymd.app import MDApp
 class DateLayout(RelativeLayout):
         
     def createItem(self,item):
-        self.ids.expiry_date_lbl.text = item.expiryDate.toString()
-        self.ids.product_name_lbl.text = item.productName
+        self.ids.expiry_date_lbl.text = item.expiry_date.as_string()
+        self.ids.product_name_lbl.text = item.product_name
     
     pass
 

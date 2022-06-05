@@ -5,28 +5,25 @@ from Widgets import *
 from random import randint
 class Item():
     
-    def __init__(self,productName = "NaN",expiryDate=Date(2000,1,1), ID = "Invalid"):
-        self.productName = productName
-        self.expiryDate  = expiryDate
+    def __init__(self,product_name = "NaN",expiry_date=Date(2000,1,1), ID = "Invalid"):
+        self.product_name = product_name
+        self.expiry_date  = expiry_date
         self.ID          = ID
         self.food_item_selection = FoodItemSelection(_owner = self)
-        # self.food_item_selection = productName
         self.food_item_selection.createOption()
-        
-        # self.food_item_selection = None
 
     """ Generates an ID for an item with 4 random digits"""
-    def createUniqueID(self):
-        ID = str(randint(1000,4999))
-        self.ID = self.productName + ID
+    def create_unique_ID(self):
+        ID      = str(randint(1000,4999))
+        self.ID = self.product_name + ID
 
     """ Arranges the information so it can be stored in the JSON file """
-    def convertToJSONInput(self):
-        return [self.productName,[self.expiryDate.year,self.expiryDate.month,self.expiryDate.day]]
+    def as_JSON_format(self):
+        return [self.product_name,[self.expiry_date.year,self.expiry_date.month,self.expiry_date.day]]
 
     """ In order for displaying the item """
-    def toString(self):
-        return f"{self.productName} expiring {self.expiryDate.toString()}"
+    def as_string(self):
+        return f"{self.product_name} expiring {self.expiry_date.as_string()}"
 
 
 

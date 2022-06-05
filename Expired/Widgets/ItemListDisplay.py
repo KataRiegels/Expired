@@ -31,11 +31,11 @@ class FoodItemSelection(BaseListItem):
         self._owner = _owner
         super().__init__()
     def createOption(self):
-        self.ids.list_item.exp_date_lbl = self._owner.expiryDate.toString()
-        self.ids.list_item.product_name_lbl = self._owner.productName
+        self.ids.list_item.exp_date_lbl = self._owner.expiry_date.as_string()
+        self.ids.list_item.product_name_lbl = self._owner.product_name
 
     def __repr__(self):
-        return str(self._owner.productName)
+        return str(self._owner.product_name)
 
 """ Holds lists of widgets - includes the list in Items and ItemViewList """
 class ItemWidgetList(list):
@@ -45,10 +45,10 @@ class ItemWidgetList(list):
         self.sort_date()
     
     def sort_date(self,ascending = True):
-        self.sort(reverse=not ascending, key=lambda x: (x._owner.expiryDate,x._owner.productName.casefold()))
+        self.sort(reverse=not ascending, key=lambda x: (x._owner.expiry_date,x._owner.product_name.casefold()))
 
     def sort_name(self,ascending = True):
-        self.sort(reverse=not ascending, key=lambda x: (x._owner.productName.casefold(),x._owner.expiryDate))
+        self.sort(reverse=not ascending, key=lambda x: (x._owner.product_name.casefold(),x._owner.expiry_date))
     
     def refill_list(self,list):
         
@@ -90,7 +90,7 @@ class ConfirmDelete(MDDialog):
         self.text = ""; noofitems = 0
         for item in items:
             noofitems += 1
-            self.text += f"{item.instance_item._owner.toString()}"
+            self.text += f"{item.instance_item._owner.as_string()}"
             if noofitems >= 3:
                 self.text += "\n..."
                 break
@@ -193,7 +193,7 @@ class ItemListView(RelativeLayout):
     def search_items(self,string):
         self.selection_list.clear_widgets()
         for widget in self.current_widgets.copy():
-            r = widget._owner.productName.find(string)
+            r = widget._owner.product_name.find(string)
             if r==-1:
                 self.current_widgets.remove(widget)
         self.refresh_widgets()
@@ -203,7 +203,7 @@ class ItemListView(RelativeLayout):
     #     # self.search_items(search_input)
     #     self.selection_list.clear_widgets()
     #     for widget in self.current_widgets.copy():
-    #         r = widget._owner.productName.find(search_input)
+    #         r = widget._owner.product_name.find(search_input)
     #         if r==-1:
     #             self.current_widgets.remove(widget)
     #     self.refresh_widgets()
@@ -272,17 +272,17 @@ class SearchPopup(ModalView):
 #         return (self.year,self.month,self.day) == (other.year,other.month,other.day)
 
 #     # "%02d" % (number,)
-#     def toString(self):
+#     def as_string(self):
 #         return f"{self.day:02d}/{self.month:02d}-{self.year}"
 
-#     def toString_DMY(self):
+#     def as_string_DMY(self):
 #         return f"{self.day}/{self.month}-{self.year}"
     
-#     def toString_MDY(self):
+#     def as_string_MDY(self):
 #         # if self.day < 10:
 #         return f"{self.month}/{self.day}-{self.year}"
 
-#     def toString_DMY_month(self):
+#     def as_string_DMY_month(self):
 #         return f"{self.months_dict[str(self.month)]}"
     
     
@@ -291,9 +291,9 @@ class SearchPopup(ModalView):
 # from random import randint
 # class Item():
     
-#     def __init__(self,productName = "NaN",expiryDate=Date(2000,1,1), ID = "Invalid"):
-#         self.productName = productName
-#         self.expiryDate  = expiryDate
+#     def __init__(self,product_name = "NaN",expiry_date=Date(2000,1,1), ID = "Invalid"):
+#         self.product_name = product_name
+#         self.expiry_date  = expiry_date
 #         self.ID          = ID
 #         self.food_item_selection = FoodItemSelection(_owner = self)
 #         self.food_item_selection.createOption()
@@ -301,17 +301,17 @@ class SearchPopup(ModalView):
 #         # self.food_item_selection = None
 
 #     """ Generates an ID for an item with 4 random digits"""
-#     def createUniqueID(self):
+#     def create_unique_ID(self):
 #         ID = str(randint(1000,4999))
-#         self.ID = self.productName + ID
+#         self.ID = self.product_name + ID
 
 #     """ Arranges the information so it can be stored in the JSON file """
-#     def convertToJSONInput(self):
-#         return [self.productName,[self.expiryDate.year,self.expiryDate.month,self.expiryDate.day]]
+#     def as_JSON_format(self):
+#         return [self.product_name,[self.expiry_date.year,self.expiry_date.month,self.expiry_date.day]]
 
 #     """ In order for displaying the item """
-#     def toString(self):
-#         return f"{self.productName} expiring {self.expiryDate.toString()}"
+#     def as_string(self):
+#         return f"{self.product_name} expiring {self.expiry_date.as_string()}"
 
 
 
