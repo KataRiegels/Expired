@@ -1,75 +1,56 @@
 
-<MDBottomNavigationHeader>:
-    # text_color: 1,1,1,1
-    # opposite_colors: 1,1,1,1
-    # text_color_normal: 1,1,1,1
 
+# Navigation bar  - manages the screens
 <MNavigationBar>:
-
-    # panel_color: app.theme_cls.primary_dark
-    
-    panel_color: app.theme_cls.primary_color
-    text_color_active: app.theme_cls.primary_light
-    # text_color_normal: app.theme_cls.primary_dark
-    
-    # panel_color: app.theme_cls.primary_dark
-
-    # text_color_normal: app.theme_cls.accent_light
-    # text_color_inactive: app.theme_cls.primary_light
+    panel_color:        app.theme_cls.primary_color  # Background color of nav bar
+    text_color_active:  app.theme_cls.primary_light  # Color of active tab icon when 
 
     MenuScreen:
-        # canvas:
-        #     Color:
-        #         rgba: app.theme_cls.primary_light
-        #     Rectangle:
-        #         size: root.size
-        id: menu_tab
-        md_bg_color: app.theme_cls.bg_light
-        # icon_color: app.theme_cls.primary_light
-
-        # specific_text_color: 1, 1, 1, 1
-        _parent: root
-        order: 1
-        direction: "left"
-        name: 'menu'
-        text: 'Menu'
-        icon: 'backburger'
-        on_tab_press: root.change_screen("menu")
+        id:             menu_tab
+        md_bg_color:    app.theme_cls.bg_light
+        _parent:        root
+        order:          1
+        # direction:      "left"
+        name:           'menu'
+        text:           'Menu'
+        icon:           'backburger'
+        on_tab_press:   root.change_screen("menu")
 
 
     ListScreen:
-        id: list_tab
-        _parent: root
-        order: 2
-        direction: "right"
-        text: 'List'
-        icon: 'format-list-numbered'
-        on_tab_press: root.change_screen("list")
+        id:             list_tab
+        _parent:        root
+        order:          2
+        name:           'list'
+        text:           'List'
+        icon:           'format-list-numbered'
+        on_tab_press:   root.change_screen("list")
+        # direction: "right"
         # on_tab_press: app.swipe_screen("right")
 
     ScanScreen:
-        id: scan_tab
-        _parent: root
-        order: 3
-        text: 'Scan'
-        icon: 'camera'
-        name: 'scan'
-        on_tab_press: root.change_screen("scan")
+        id:             scan_tab
+        _parent:        root
+        order:          3
+        name:           'scan'
+        text:           'Scan'
+        icon:           'camera'
+        on_tab_press:   root.change_screen("scan")
 
     SettingsScreen:
-        id: settings_tab
-        _parent: root
-        order: 4
-        name: 'settings'
-        text: 'Settings'
-        icon: 'cog'
-        on_tab_press: root.change_screen("settings")
+        id:             settings_tab
+        _parent:        root
+        order:          4
+        name:           'settings'
+        text:           'Settings'
+        icon:           'cog'
+        on_tab_press:   root.change_screen("settings")
 
+# The bar at the top of the screen displaying screen name and quit button
 <Toolbar@MDToolbar>:
-    md_bg_color: app.theme_cls.primary_color
-    title: "Scan Screen"
-    size_hint_y: .08
-    # height: dp(40)
-    pos_hint: {"top": 1}
-    anchor_title: 'center'
+    # title: "Scan Screen"
+    md_bg_color:        app.theme_cls.primary_color
+    size_hint_y:        .08
+    pos_hint:           {"top": 1}
+    anchor_title:       'center'
     right_action_items: [["close-circle", lambda x: app.stop()]]
