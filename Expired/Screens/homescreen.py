@@ -63,7 +63,7 @@ class MenuScreen(MyScreen):
     # def prepareMenu(self):
     def initiateScreen(self):
         self.ids.dates_layout.clear_widgets()
-        for item in MDApp.get_running_app().fridge.sortedFridgeListDate:
+        for item in MDApp.get_running_app().fridge.sorted_fridge_list:
             food = DateLayout()
             food.createItem(item)
             self.ids.dates_layout.addItem(food)

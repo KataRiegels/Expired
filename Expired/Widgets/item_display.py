@@ -174,9 +174,11 @@ class ItemListView(RelativeLayout):
     def delete_items(self):
         items = self.selection_list.get_selected_list_items()
         for item in items:
-            # self.screen.manager.fridge.removeItem(item.instance_item._owner)
-            MDApp.get_running_app().fridge.removeItem(item.instance_item._owner)
+            print(item)
+            # self.screen.manager.fridge.remove_item(item.instance_item._owner)
+            print(self.current_widgets)
             self.current_widgets.remove(item.instance_item._owner.food_item_selection)
+            MDApp.get_running_app().fridge.remove_item(item.instance_item._owner)
             self.selection_list.remove_widget(item)
 
     # def resetList(self):
