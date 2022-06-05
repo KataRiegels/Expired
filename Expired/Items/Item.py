@@ -1,4 +1,4 @@
-from Widgets.ItemListDisplay import FoodItemSelection
+from Widgets.item_display import FoodItemSelection
 from . import Date
 from Widgets import *
 

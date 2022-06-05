@@ -14,12 +14,11 @@ from kivy.uix.button import Button
 from Screens.ListScreen import ListScreen
 from Screens.ScanScreen import ScanScreen
 from Screens.SettingsScreen import SettingsScreen
-from Screens.CalenderScreen import CalenderScreen
 from kivy.config import Config
 from kivymd.uix.screen import MDScreen
 # from kivymd.uix.label import MDLabel
-from Screens.MainMenuScreen import *
-# from Screens.MainMenuScreen import *
+from Screens.homescreen import *
+# from Screens.Homescreen import *
 # from kivymd.uix.textfield import MDTextField
 from Items import *
 from Widgets.Bars import *
@@ -36,17 +35,16 @@ import csv
 # Config.set('graphics', 'height', '600')
 # Config.set('graphics', 'width', '300')
 
-LabelBase.register(name='ExpiredFont', fn_regular='Resources/custom.ttf')
+# LabelBase.register(name='ExpiredFont', fn_regular='Resources/custom.ttf')
 LabelBase.register(name='BestBefore', fn_regular='Resources/Dited.otf')
 
 def building():
-    Builder.load_file('Widgets/itemlistdisplay.kv')
-    Builder.load_file('Screens/mainmenuscreen.kv')
+    Builder.load_file('Widgets/item_display.kv')
+    Builder.load_file('Screens/homescreen.kv')
     Builder.load_file('Screens/settingsscreen.kv')
     Builder.load_file('Screens/listscreen.kv')
     Builder.load_file('Screens/scanscreen.kv')
 
-    Builder.load_file('Screens/calenderscreen.kv')
     Builder.load_file('Widgets/bars.kv')
     return Builder.load_file('main_screen.kv')
 

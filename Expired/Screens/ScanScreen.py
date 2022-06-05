@@ -11,7 +11,7 @@ from Items import *
 from camera4kivy import Preview
 from kivy.utils import platform
 # from Widgets.ItemListDisplay import MSnackbar
-from Widgets.ItemListDisplay import MSnackbar
+from Widgets.item_display import MSnackbar
 
 if platform == 'android':
     from android.permissions import request_permissions,Permission

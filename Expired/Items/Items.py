@@ -1,7 +1,7 @@
 import time
 import datetime as dt
 
-from Widgets.ItemListDisplay import ItemWidgetList
+from Widgets.item_display import ItemWidgetList
 from kivymd.app import MDApp
 # import Item
 from . import Date
