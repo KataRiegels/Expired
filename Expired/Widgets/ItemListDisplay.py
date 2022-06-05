@@ -97,7 +97,7 @@ class ConfirmDelete(MDDialog):
             elif len(items) > noofitems:
                 self.text += "\n"
 
-""" The part that handles the whole list area
+""" The class that handles the whole list part
 """
 class ItemListView(RelativeLayout):
 
