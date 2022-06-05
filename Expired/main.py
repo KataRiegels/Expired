@@ -1,31 +1,16 @@
-import threading
-import time
 from kivy.clock import Clock, mainthread
-import cProfile
-import os
-import kivy
-import kivymd
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.button import Button
-from Screens.ListScreen import ListScreen
-from Screens.ScanScreen import ScanScreen
-from Screens.SettingsScreen import SettingsScreen
-from kivy.config import Config
-from kivymd.uix.screen import MDScreen
-# from kivymd.uix.label import MDLabel
-from Screens.homescreen import *
-# from Screens.Homescreen import *
-# from kivymd.uix.textfield import MDTextField
-from Items import *
-from Widgets.Bars import *
+from screens.listscreen import ListScreen
+from screens.scanscreen import ScanScreen
+from screens.settingsscreen import SettingsScreen
+from screens.homescreen import *
+from items import *
+from widgets.bars import *
 from kivy.uix.screenmanager import *
 from kivy.core.text import LabelBase
-from kivy.uix.scrollview import DampedScrollEffect
-from colors import colors
+from resources.colors import colors
 from kivy.core.window import Window
 from kivy.properties import ObjectProperty
 from kivy.utils import get_color_from_hex
@@ -35,24 +20,24 @@ import csv
 # Config.set('graphics', 'height', '600')
 # Config.set('graphics', 'width', '300')
 
-# LabelBase.register(name='ExpiredFont', fn_regular='Resources/custom.ttf')
-LabelBase.register(name='BestBefore', fn_regular='Resources/Dited.otf')
+# LabelBase.register(name='ExpiredFont', fn_regular='resources/custom.ttf')
+LabelBase.register(name='BestBefore', fn_regular='resources/Dited.otf')
 
 def building():
-    Builder.load_file('Widgets/item_display.kv')
-    Builder.load_file('Screens/homescreen.kv')
-    Builder.load_file('Screens/settingsscreen.kv')
-    Builder.load_file('Screens/listscreen.kv')
-    Builder.load_file('Screens/scanscreen.kv')
+    Builder.load_file('widgets/item_display.kv')
+    Builder.load_file('screens/homescreen.kv')
+    Builder.load_file('screens/settingsscreen.kv')
+    Builder.load_file('screens/listscreen.kv')
+    Builder.load_file('screens/scanscreen.kv')
 
-    Builder.load_file('Widgets/bars.kv')
+    Builder.load_file('widgets/bars.kv')
     return Builder.load_file('main_screen.kv')
 
 
 Window.softinput_mode = "below_target"
 
 def setTheme(app):
-    with open('theme.csv') as csv_file:
+    with open('save_files/theme.csv') as csv_file:
         csv_reader = csv.reader(csv_file)
         data = []
         data = next(csv_reader)
@@ -91,7 +76,7 @@ class ExpiringFoodApp(MDApp):
         self.bar = bar
         setTheme(self)
         print("LOADING JSON FILE")
-        self.items = Items("data.json")
+        self.items = Items("save_files/data.json")
         print("finished loading JSON")
         self.items.openFridge()
         self.fridge = self.items
@@ -103,7 +88,7 @@ class ExpiringFoodApp(MDApp):
         # self.list_screen.ids.select_view.create_item_list_widget()
         # Clock.schedule_once(self.make_widget,1)
         # self.make_widget(2)
-        Window.bind(on_keyboard=self.Android_back_click)
+        Window.bind(on_keyboard=self.back_click)
 
         return manager
         # return root
@@ -123,7 +108,7 @@ class ExpiringFoodApp(MDApp):
     # @mainthread
     def make_widget(self, value):
         print("loading...")
-        self.list_screen.ids.select_view.create_item_list_widget()
+        # self.list_screen.ids.select_view.create_item_list_widget()
         print("Created list view")
         for child in self.bar.ids.tab_manager.screens:
             if not child == self.menu_screen:
@@ -132,14 +117,14 @@ class ExpiringFoodApp(MDApp):
             
         pass
     
-    def Android_back_click(self,window,key,*largs):
+    def back_click(self,window,key,*largs):
         if key == 27:
             self.bar.back_screen()
             return True
         
-    def updateList(self):
+    def update_fridge(self):
         for screen in self.bar.ids.tab_manager.screens:
-            screen.updatedList()
+            screen.updated_fridge()
         
         
     def stop(self, *largs):

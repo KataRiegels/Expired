@@ -42,7 +42,7 @@ class SettingsScreen(MyScreen):
             
     def save_theme(self,instance):
         app_theme = MDApp.get_running_app().theme_cls
-        with open('theme.csv', 'w') as f:
+        with open('save_files/theme.csv', 'w') as f:
             writer = csv.writer(f)
             writer.writerow([app_theme.primary_palette,app_theme.theme_style])
         pass

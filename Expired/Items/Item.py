@@ -1,6 +1,6 @@
-from Widgets.item_display import FoodItemSelection
+from widgets.item_display import FoodItemSelection
 from . import Date
-from Widgets import *
+from widgets import *
 
 from random import randint
 class Item():

@@ -7,11 +7,11 @@ from kivy.clock import Clock
 from . import MyScreen
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
-from Items import *
+from items import *
 from camera4kivy import Preview
 from kivy.utils import platform
-# from Widgets.ItemListDisplay import MSnackbar
-from Widgets.item_display import MSnackbar
+# from widgets.ItemListDisplay import MSnackbar
+from widgets.item_display import MSnackbar
 
 if platform == 'android':
     from android.permissions import request_permissions,Permission

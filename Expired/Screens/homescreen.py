@@ -4,7 +4,7 @@
 
 # # for makng button work
 # from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty
-# # from ..Widgets.Button import Button
+# # from ..widgets.Button import Button
 # # from ..Items.Items import Items
 # from kivy.uix.button import Button
 # from functools import partial
@@ -70,9 +70,9 @@ class MenuScreen(MyScreen):
             if len(self.ids.dates_layout.children)>5:
                 break
             
-    def updatedList(self):
+    def updated_fridge(self):
         self.initiateScreen()
-        return super().updatedList()
+        # return super().updated_fridge()
             # self.ids.dates_layout
         # self.ids.test
         

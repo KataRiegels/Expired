@@ -1,5 +1,5 @@
 
 
 
-from .MyScreen import MyScreen
-# from ..Widgets.MySelectionItem import MySelectionItem,MySelectionList
+from .myscreen import MyScreen
+# from ..widgets.MySelectionItem import MySelectionItem,MySelectionList

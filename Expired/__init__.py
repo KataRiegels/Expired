@@ -1,3 +1,3 @@
 
-from . import Widgets
-from . import Screens
+from . import widgets
+from . import screens

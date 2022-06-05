@@ -3,7 +3,7 @@ from kivymd.app import MDApp
 from kivymd.uix.screen import MDScreen
 from kivy.uix.screenmanager import ScreenManager
 from kivymd.uix.bottomnavigation import MDBottomNavigation,MDBottomNavigationItem
-from Widgets.Bars import MNavigationBar, NavigationItem
+from widgets.bars import MNavigationBar, NavigationItem
 from gestures4kivy import CommonGestures
 
 # class MyScreen(MDScreen):
@@ -17,8 +17,8 @@ class MyScreen(MDBottomNavigationItem,Screen,CommonGestures):
         # self.sm = self.app.sm
         # self.add_widget(self.sm.bar)
         
-    def on_tab_press(self, *args):
-        super().on_tab_press(*args)
+    # def on_tab_press(self, *args):
+    #     super().on_tab_press(*args)
         # self._parent.text_color_normal = MDApp.get_running_app().theme_cls.primary_dark
         # print(self._parent.text_color_normal)
         
@@ -26,10 +26,10 @@ class MyScreen(MDBottomNavigationItem,Screen,CommonGestures):
         # MDApp.get_running_app().swipe_screen(right)
         self._parent.swipe_screen(right)
         
-    def closeApp(self):
-        MDApp.get_running_app().stop()
-        
-    def updatedList(self):
+    # def closeApp(self):
+    #     MDApp.get_running_app().stop()
+    """ For when the fridge is updated """    
+    def updated_fridge(self):
         pass
     # def on_tab_press(self, *args):
         

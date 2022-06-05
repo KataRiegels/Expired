@@ -1,7 +1,7 @@
 import time
 import datetime as dt
 
-from Widgets.item_display import ItemWidgetList
+from widgets.item_display import ItemWidgetList
 from kivymd.app import MDApp
 # import Item
 from . import Date
@@ -36,7 +36,7 @@ class Items():
         self.addItemToLists(item)
         self.convertToJSON()
         self.createJSON()
-        MDApp.get_running_app().updateList()
+        MDApp.get_running_app().update_fridge()
 
     """ Adds items to the current lists and dictionaries"""
     def addItemToLists(self,item:Item):
@@ -57,7 +57,7 @@ class Items():
         self.convertToJSON()
         self.createJSON()
         self.sortAscendingDate()
-        MDApp.get_running_app().updateList()
+        MDApp.get_running_app().update_fridge()
 
     """ Adds an item to the json dictionary with the format accepted by json files """
     def convertToJSON(self):
