@@ -1,7 +1,7 @@
-
 """ Representing the expiry date of an item """
 class Date():
 
+    # Not currently used
     months_dict = \
         {"1":{"full": "January",    "clipped":"Jan"},
         "2":{ "full": "February",   "clipped":"Feb"},
@@ -17,7 +17,7 @@ class Date():
         "12":{"full": "December",   "clipped":"Dec"},
     }
 
-    def __init__(self,day=1,month=1,year=2000):
+    def __init__(self, day=1, month=1, year=2000):
         self.day = day; self.month = month; self.year = year
 
     """ For sorting based on date """
@@ -28,19 +28,9 @@ class Date():
     def __eq__(self,other):
         return (self.year,self.month,self.day) == (other.year,other.month,other.day)
 
-    # "%02d" % (number,)
     def as_string(self):
         return f"{self.day:02d}/{self.month:02d}-{self.year}"
 
-    def as_string_DMY(self):
-        return f"{self.day}/{self.month}-{self.year}"
-    
-    def as_string_MDY(self):
-        # if self.day < 10:
-        return f"{self.month}/{self.day}-{self.year}"
-
-    def as_string_DMY_month(self):
-        return f"{self.months_dict[str(self.month)]}"
 
 
 
