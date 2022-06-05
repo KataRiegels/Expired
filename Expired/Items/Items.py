@@ -42,7 +42,6 @@ class Items():
     def addItemToLists(self,item:Item):
         self.fridge[item.ID] = item
         self.sortedFridgeListDate.append(item)
-        # self.sortedFridgeListName.append(item)
         self.widget_list.append(item.food_item_selection)
         self.sortAscendingDate()
         # self.sortProductName()
@@ -87,6 +86,7 @@ class Items():
         for key,value in self.jsonDict.items():
             item  = Item(value[0],Date(year = value[1][0],month = value[1][1],day = value[1][2]),key)
             self.addItemToLists(item)
+            pass
 
     """ Sorting the sorted lists for after adding items """
     def sortAscendingDate(self):    

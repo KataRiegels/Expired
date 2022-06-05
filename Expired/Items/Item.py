@@ -11,7 +11,7 @@ class Item():
         self.ID          = ID
         self.food_item_selection = FoodItemSelection(_owner = self)
         # self.food_item_selection = productName
-        # self.food_item_selection.createOption()
+        self.food_item_selection.createOption()
         
         # self.food_item_selection = None
 
