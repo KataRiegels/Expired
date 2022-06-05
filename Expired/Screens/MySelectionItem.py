@@ -31,9 +31,9 @@ class MySelectionItem(SelectionItem):
             self._instance_progress_inner_outer_color.rgba = (
                 self.get_progress_line_color()
             )
-            self._instance_progress_inner_circle_color.rgba = (
-                self.get_progress_round_color()
-            )
+            # self._instance_progress_inner_circle_color.rgba = (
+            #     self.get_progress_round_color()
+            # )
         else:
             self.reset_progress_animation()
 
