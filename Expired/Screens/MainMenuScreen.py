@@ -38,11 +38,27 @@ class DatesLayout(BoxLayout):
         pass
 
 class MenuScreen(MyScreen):
+    
+    entered = False
+    
     def __init__(self,**args):
         super().__init__(**args)
 
     def on_pre_enter(self, *args):
         return super().on_pre_enter(*args)
+
+    # def on_enter(self, *args):
+    #     if not self.entered:
+    #         self.entered = True
+    #         self.create_selection_list()
+    #     return super().on_enter(*args)
+
+    # def create_selection_list(self):
+    #     # MDApp.get_running_app().list_screen.ids.select_view.initialEnter()
+    #     app = MDApp.get_running_app()
+    #     print("hello")
+        
+    #     pass
 
     # def prepareMenu(self):
     def initiateScreen(self):

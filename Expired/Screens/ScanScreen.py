@@ -129,7 +129,8 @@ class ScanScreen(MyScreen):
         item = Item(productName,expDate)
         app = MDApp.get_running_app()
         app.fridge.add_item_to_fridge(item)
-        app.list_screen.ids.select_view.complete_refresh()
+        app.list_screen.ids.select_view.add_item_to_list(item)
+        # app.list_screen.ids.select_view.complete_refresh()
         # app.list_screen.ids.select_view.initialEnter()
         
 
@@ -156,4 +157,5 @@ class ConfirmAdd(MDDialog):
     """ When confirm button on dialog is pressed """
     def confirm_button(self,instance):
         self.dismiss()
+        # Clock.schedule_once(self._parent.on_confirm,.2)
         self._parent.on_confirm(instance)

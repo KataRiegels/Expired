@@ -10,6 +10,11 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivy.core.window import Window
 import threading
 from kivymd.app import MDApp
+
+import threading
+import time
+from kivy.clock import Clock, mainthread
+
 """Class that uses the abstract MD BaseListItem. 
 Used when adding a widget to the item list
 """
@@ -142,6 +147,13 @@ class ItemListView(RelativeLayout):
         self.add_all_items()
         self.displayWidgets()
 
+    def add_item_to_list(self,item):
+        option = item.food_item_selection
+        option.createOption()
+        self.current_widgets.append(option)
+        self.ids.selection_list.add_widget(option)
+        pass
+
     def complete_refresh(self):
         self.widgets = self.fridge.widget_list
         self.add_all_items()
@@ -167,15 +179,22 @@ class ItemListView(RelativeLayout):
     """Just adds all items to the list view"""
     def add_all_items(self):
         self.current_widgets.clear()
+        # for item in self.fridge:
+        #     option = item.food_item_selection
+        #     option.createOption()
+        #     self.current_widgets.append(option)
         for item in self.fridge:
-            option = item.food_item_selection
-            option.createOption()
-            self.current_widgets.append(option)
+            a=0
+            food = FoodItemSelection(_owner = item)
+            food.createOption()
+            self.current_widgets.append(food)
+            # self.ids.selection_list.add_widget(food)
 
     """Give it the list of items you want the list to show"""
     def refreshWidgets(self):
+        self.displayWidgets()
         # print(f"BEFORE: {len(self.ids.selection_list.children)}")
-        self.ids.selection_list.clear_widgets()
+        # self.ids.selection_list.clear_widgets()
         # print(len(self.selection_list.canvas.children))
         # print(f"AFTER: {len(self.ids.selection_list.children)}")
         # for widget in self.current_widgets:
@@ -183,7 +202,8 @@ class ItemListView(RelativeLayout):
         # self.test_make_items()
         # threading.Thread(target = self.test_make_items).start()
         # self.ids.selection_list.add_widget(self.current_widgets[1])
-        
+    
+    @mainthread    
     def test_make_items(self):
         for item in self.fridge:
             a=0

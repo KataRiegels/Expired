@@ -56,7 +56,8 @@ class ListScreen(MyScreen):
         return super().on_leave(*args)
 
     def initiateScreen(self):
-        # return
+        
+        return
         self.ids.select_view.initialEnter(self)
         # return super().initiateScreen()
 

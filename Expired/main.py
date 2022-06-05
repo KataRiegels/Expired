@@ -1,5 +1,7 @@
-
-
+import threading
+import time
+from kivy.clock import Clock, mainthread
+import cProfile
 import os
 import kivy
 import kivymd
@@ -71,13 +73,18 @@ def setTheme(app):
 
 
 
-class Lay(BoxLayout):
+class Root(BoxLayout):
+
+    @mainthread    
+    def test(self):
+        print("dfjjf")
+        pass
     pass
 
 class ExpiringFoodApp(MDApp):
     def build(self):
-        
-        manager = building()
+        manager2 = building()
+        manager = Root()
         self.enable_swipe = True
         bar = manager.ids.nav_bar
         menuscreen = bar.ids.menu_tab
@@ -85,19 +92,47 @@ class ExpiringFoodApp(MDApp):
         self.sm = bar.ids.tab_manager
         self.bar = bar
         setTheme(self)
+        print("LOADING JSON FILE")
         self.items = Items("data.json")
         self.items.openFridge()
+        print("finished loading JSON")
         self.fridge = self.items
-        # self.bar.ids.menu_tab.initiateScreen()
-        for child in self.bar.ids.tab_manager.screens:
-            child.initiateScreen()
         self.list_screen = bar.ids.list_tab
         self.scan_screen = bar.ids.scan_tab
         self.settings_screen = bar.ids.settings_tab
         self.menu_screen = bar.ids.menu_tab
+        self.menu_screen.initiateScreen()
+        # self.list_screen.ids.select_view.initialEnter()
+        # Clock.schedule_once(self.make_widget,1)
+        # self.make_widget(2)
         Window.bind(on_keyboard=self.Android_back_click)
 
         return manager
+        # return root
+    def on_start(self,**kwargs):
+        # Clock.schedule_once(self.make_widget,3)
+        # self.make_widget(2)
+        self.test()
+        pass
+    
+    @mainthread
+    def test(self):
+        # self.make_widget(2)
+        Clock.schedule_once(self.make_widget,.1)
+        
+        pass
+    
+    # @mainthread
+    def make_widget(self, value):
+        print("loading...")
+        self.list_screen.ids.select_view.initialEnter()
+        print("Created list view")
+        for child in self.bar.ids.tab_manager.screens:
+            if not child == self.menu_screen:
+                child.initiateScreen()
+        print("now it ran")
+            
+        pass
     
     def Android_back_click(self,window,key,*largs):
         if key == 27:
