@@ -10,7 +10,6 @@
         md_bg_color:    app.theme_cls.bg_light
         _parent:        root
         order:          1
-        # direction:      "left"
         name:           'menu'
         text:           'Menu'
         icon:           'backburger'
@@ -25,8 +24,6 @@
         text:           'List'
         icon:           'format-list-numbered'
         on_tab_press:   root.change_screen("list")
-        # direction: "right"
-        # on_tab_press: app.swipe_screen("right")
 
     ScanScreen:
         id:             scan_tab
@@ -48,7 +45,6 @@
 
 # The bar at the top of the screen displaying screen name and quit button
 <Toolbar@MDToolbar>:
-    # title: "Scan Screen"
     md_bg_color:        app.theme_cls.primary_color
     size_hint_y:        .08
     pos_hint:           {"top": 1}
