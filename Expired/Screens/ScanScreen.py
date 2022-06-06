@@ -41,13 +41,13 @@ class ScanScreen(MyScreen):
     dialog = None
     selected_date = ObjectProperty(None)
     spinner = ObjectProperty(None)
-    itemTextInput = ObjectProperty(None)
+    item_text_input = ObjectProperty(None)
 
 
     """ Stops the spinner after picked date """
     def stopSpinner(self, value):
         self.spinner.active = False
-        self.ids.date_label.text = self.current_date.as_string()
+        self.ids.date_picker_button.text = self.current_date.as_string()
 
     """ Triggered when clicking "Confirm" at the date pickers
     Saving the date  """
@@ -85,7 +85,7 @@ class ScanScreen(MyScreen):
     """ When pressing the "Save item" button
     Either adds the item to the fridge or displays snackbars """
     def save_item(self):
-        if self.itemTextInput.text == "": # If product name was not given
+        if self.item_text_input.text == "": # If product name was not given
             save_item_warning = MSnackbar()
             save_item_warning.text = "Please enter a product name first"    
             save_item_warning.open()
@@ -95,7 +95,7 @@ class ScanScreen(MyScreen):
             save_item_warning.open()
         else:
             date  = Date(year =self.saved_date.year,month = self.saved_date.month, day=self.saved_date.day)
-            dialog_text = f"{date.as_string()}     {self.itemTextInput.text}"
+            dialog_text = f"{date.as_string()}     {self.item_text_input.text}"
             dialog = ConfirmAdd(self, text = dialog_text)
             dialog.text = dialog_text
             dialog.open()
@@ -112,8 +112,8 @@ class ScanScreen(MyScreen):
     Calls for saving item and 'refreshes' entered info """
     def on_confirm(self,instance):
         self.save_item_to_fridge(self)
-        self.ids.date_label.text = "Select a Date"
-        self.ids.itemName.text = ""
+        self.ids.date_picker_button.text = "Select a Date"
+        self.ids.product_name_input.text = ""
         # self.dialog.dismiss()
         # self.close_dialog(self)
 
@@ -127,7 +127,7 @@ class ScanScreen(MyScreen):
     """ Creates the actual item and adds it to the Items instance """
     def save_item_to_fridge(self,item_save = None):
         item_save = self.saved_date
-        product_name = self.itemTextInput.text
+        product_name = self.item_text_input.text
         expDate = Date(year = item_save.year,month = item_save.month, day=item_save.day)
         item = Item(product_name,expDate)
         app = MDApp.get_running_app()

@@ -1,80 +1,67 @@
 
-
+# Date picker
 <MDDatePicker>:
-    md_bg_color: [.5,0,.5,1]
-    background_color: [.5,0,.5,1]
     text_button_color: app.theme_cls.primary_light
-    # theme_text_color: 'Custom'
-    color_mode: 'custom'
-    line_color_focus: [.5,0,.5,1]
-    # text_color: app.theme_cls.primary_light
-    # text_color: [.5,0,.5,1]
 
+# Confirmation dialog for adding items to the fridge
 <ConfirmAdd>:
-    title: "Do you want to add:"
+    title:       "Do you want to add:"
     md_bg_color: app.theme_cls.primary_color
-    type: "simple"
+    type:        "simple"
 
 <ScanScreen>:
-    selected_date: date_label
-    spinner:funSpinner
-    itemTextInput:itemName
-
+    selected_date:    date_picker_button
+    spinner:          spinner
+    item_text_input:  product_name_input
+    # Fun little spinner for adding items 
     MDSpinner:
-        id: funSpinner
-        size_hint: (.1,.1)
-        pos_hint: {'center_x': .5, 'center_y': .25}
-        active: False
+        id:         spinner
+        size_hint:  (.1,.1)
+        pos_hint:   {'center_x': .5, 'center_y': .25}
+        active:     False
+    # Layout containing camera
     BoxLayout:
         pos_hint: {'center_x': .5, 'top': .95}
-        # size_hint: (1,.5)
         size_hint: (1,.7)
+        # Camera display
         Preview:
-            id: preview
+            id:           preview
 	        aspect_ratio: '16:9'
     Toolbar:
         title: "Scan"
+
+    # Button for saving image for OCR
     MDFillRoundFlatIconButton:
-        icon: "magnify-scan"
-        text: "Scan image"
-        pos_hint: {'center_x': .5, 'center_y': .30}
+        icon:       "magnify-scan"
+        text:       "Scan image"
+        pos_hint:   {'center_x': .5, 'center_y': .30}
         on_release: root.photo()
+    # Button for manually adding date    
     MDFillRoundFlatIconButton:
-        id: date_label
-        font_size: dp(15)
-        icon: "calendar-range"
-        text: "Select Expiry Date"
-        # pos_hint: {'center_x': .5, 'center_y': .35}
+        id:         date_picker_button
+        font_size:  dp(15)
+        pos_hint:   {'center_x': .75, 'center_y': .17}
+        icon:       "calendar-range"
+        text:       "Select Expiry Date"
         on_release: root.show_date_picker()
-        pos_hint: {'center_x': .75, 'center_y': .17}
-
+    # Item name input widget
     FilteredInput:
-        id: itemName
-        hint_text: "Enter item name"
-        multiline: False
-        mode: "rectangle"
-        # mode: "fill"
+        id:               product_name_input
+        hint_text:        "Enter item name"
+        multiline:        False
+        mode:             "rectangle"
         theme_text_color: 'Custom'
-        color_mode: 'custom'
-
-
-        # focus_behavior: False
-        # unfocus_color: 1, 0, 1, 1
-        # text_color: [1,0,1,1]
-        
-        # text_color_focus: [1,0,1,1]
-        # text_color_normal: [1,1,0,1]
+        color_mode:       'custom'
         line_color_focus: app.theme_cls.primary_dark
-        max_text_length: 20
-        size_hint: .35,None
-        height: '40dp'
-        pos_hint: {'x': .1, 'center_y': .17}
-
+        max_text_length:  20
+        size_hint:        .35,None
+        pos_hint:         {'x': .1, 'center_y': .17}
+    # Button to save item from given product name and date
     MDFillRoundFlatIconButton:
-        id: save_item
-        font_size: dp(15)
-        icon: "content-save"
-        text: "Save Item"
-        pos_hint: {'center_x': .5, 'y': .04}
+        id:         save_item
+        font_size:  dp(15)
+        icon:       "content-save"
+        text:       "Save Item"
+        pos_hint:   {'center_x': .5, 'y': .04}
         on_release: root.save_item()
 
