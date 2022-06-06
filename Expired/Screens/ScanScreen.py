@@ -1,51 +1,33 @@
-from functools import partial
-import time
-from kivy.uix.screenmanager import Screen
-from kivymd.uix.picker import MDDatePicker
-from kivy.properties import ObjectProperty
-from kivy.clock import Clock
-from . import MyScreen
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDFlatButton
-from items import *
-from camera4kivy import Preview
-from kivy.utils import platform
-# from widgets.ItemListDisplay import MSnackbar
-from widgets.item_display import MSnackbar
+from kivymd.uix.picker      import MDDatePicker
+from kivymd.uix.dialog      import MDDialog
+from kivymd.uix.button      import MDFlatButton
+from kivy.properties        import ObjectProperty
+from kivy.utils             import platform
+from kivy.clock             import Clock
+from .                      import MyScreen
+from items                  import Date,Item
+from widgets.item_display   import MSnackbar
+from camera4kivy            import Preview
 
 if platform == 'android':
     from android.permissions import request_permissions,Permission
     from android import api_version
-from kivymd.uix.button import MDRaisedButton
-from kivy.uix.textinput import TextInput
-from kivymd.uix.textfield import MDTextField, MDTextFieldRound
+from kivymd.uix.textfield import MDTextField
 from kivymd.app import MDApp
 
-"""
-The input field for product name
-"""
-class FilteredInput(MDTextField):
-    def insert_text(self, substring, from_undo=False):
-        filtered_characters = ["\"", "\\", "\'"]
-        for character in filtered_characters:
-            if substring == character:
-                s = ""
-                break
-            else:
-                s = substring
-        return super().insert_text(s, from_undo=from_undo)
-    # def on_disabled(self, *args):
-    #     pass
 
+""" 
+Scan screen class
+"""
 class ScanScreen(MyScreen):
-    dialog = None
-    selected_date = ObjectProperty(None)
-    spinner = ObjectProperty(None)
+    dialog          = None
+    selected_date   = ObjectProperty(None)
+    spinner         = ObjectProperty(None)
     item_text_input = ObjectProperty(None)
 
 
     """ Stops the spinner after picked date """
-    def stopSpinner(self, value):
+    def stop_spinner(self, value):
         self.spinner.active = False
         self.ids.date_picker_button.text = self.current_date.as_string()
 
@@ -53,9 +35,9 @@ class ScanScreen(MyScreen):
     Saving the date  """
     def on_save(self, instance, value, date_range):
         self.spinner.active = True
-        self.current_date = Date(year =value.year,month = value.month, day=value.day)
-        self.saved_date = value
-        Clock.schedule_once(self.stopSpinner,1)
+        self.current_date   = Date(year =value.year,month = value.month, day=value.day)
+        self.saved_date     = value
+        Clock.schedule_once(self.stop_spinner,.6)
 
     """ Asking for permission as screen is created """
     def initiate_screen(self):
@@ -64,7 +46,6 @@ class ScanScreen(MyScreen):
             if api_version < 29:
                 permissions.append(Permission.WRITE_EXTERNAL_STORAGE)        
             request_permissions(permissions)
-        
         return super().initiate_screen()
 
     """ Method called by Kivy as screen is entered
@@ -80,7 +61,7 @@ class ScanScreen(MyScreen):
     """ Captures a photo to use for OCR """
     def photo(self):
         self.ids.preview.capture_photo()
-        Clock.schedule_once(self.stopSpinner, 0.5)
+        Clock.schedule_once(self.stop_spinner, 0.5)
 
     """ When pressing the "Save item" button
     Either adds the item to the fridge or displays snackbars """
@@ -94,69 +75,71 @@ class ScanScreen(MyScreen):
             save_item_warning.text = "Please pick a date first"    
             save_item_warning.open()
         else:
-            date  = Date(year =self.saved_date.year,month = self.saved_date.month, day=self.saved_date.day)
+            date        = Date(year =self.saved_date.year,month = self.saved_date.month, day=self.saved_date.day)
             dialog_text = f"{date.as_string()}     {self.item_text_input.text}"
-            dialog = ConfirmAdd(self, text = dialog_text)
+            dialog      = ConfirmAdd(self, text = dialog_text)
             dialog.text = dialog_text
             dialog.open()
 
-    # def on_cancel(self, instance, value):
-    #     pass
-
-    # def close_dialog(self, instance):
-        
-    #     # if self.dialog:
-    #     self.dialog.dismiss()
 
     """ When confirming saved item 
     Calls for saving item and 'refreshes' entered info """
     def on_confirm(self,instance):
-        self.save_item_to_fridge(self)
+        self.save_item_to_fridge()
         self.ids.date_picker_button.text = "Select a Date"
         self.ids.product_name_input.text = ""
-        # self.dialog.dismiss()
-        # self.close_dialog(self)
 
     """ Open date picker """
     def show_date_picker(self):
         date_dialog = MDDatePicker()
         date_dialog.bind(on_save=self.on_save)
-        # date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
         date_dialog.open()
 
     """ Creates the actual item and adds it to the Items instance """
-    def save_item_to_fridge(self,item_save = None):
-        item_save = self.saved_date
-        product_name = self.item_text_input.text
-        expDate = Date(year = item_save.year,month = item_save.month, day=item_save.day)
-        item = Item(product_name,expDate)
-        app = MDApp.get_running_app()
+    def save_item_to_fridge(self):
+        item_save       = self.saved_date
+        product_name    = self.item_text_input.text
+        expiry_date     = Date(year = item_save.year,month = item_save.month, day=item_save.day)
+        item            = Item(product_name,expiry_date)
+        app             = MDApp.get_running_app()
         app.fridge.add_item_to_fridge(item)
         app.list_screen.ids.select_view.add_item_to_list(item)
         
+"""
+The input field for product name
+"""
+class FilteredInput(MDTextField):
+    def insert_text(self, substring, from_undo=False):
+        filtered_characters = ["\"", "\\", "\'"]
+        for character in filtered_characters:
+            if substring == character:
+                s = ""
+                break
+            else:
+                s = substring
+        return super().insert_text(s, from_undo=from_undo)
 
-""" Confirm dialog when saving an item """
+""" 
+Confirm dialog when saving an item 
+"""
 class ConfirmAdd(MDDialog):
     """ Add confirm and cancel buttons to the dialog """
     def __init__(self, _parent = None, **kwargs):
         self.cancel_button = MDFlatButton(
-                text="CANCEL",
-                text_color=MDApp.get_running_app().theme_cls.primary_color,
-                on_release= self.dismiss,
+                text        = "CANCEL",
+                text_color  = MDApp.get_running_app().theme_cls.primary_color,
+                on_release  = self.dismiss,
             )
         self.ok_button = MDFlatButton(
-                text="CONFIRM",
-                text_color=MDApp.get_running_app().theme_cls.primary_color,
-                on_release= self.confirm_button,
+                text        = "CONFIRM",
+                text_color  = MDApp.get_running_app().theme_cls.primary_color,
+                on_release  = self.confirm_button,
             )
         buttons=[self.cancel_button, self.ok_button]
-        # self.deleted_items = deleted_items
-        # self.add_item_to_dialog(deleted_items)
         super().__init__(buttons = buttons, **kwargs)
         self._parent = _parent # Such that the scan screen can be accessed
     
     """ When confirm button on dialog is pressed """
     def confirm_button(self,instance):
         self.dismiss()
-        # Clock.schedule_once(self._parent.on_confirm,.2)
         self._parent.on_confirm(instance)
