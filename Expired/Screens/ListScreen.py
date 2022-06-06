@@ -7,7 +7,7 @@ class ListScreen(MyScreen):
         super().__init__(**kwargs)
         self.items = items
 
-    def initiateScreen(self):
+    def initiate_screen(self):
         self.ids.select_view.create_item_list_widget()
 
 

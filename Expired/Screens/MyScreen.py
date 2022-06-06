@@ -20,7 +20,8 @@ class MyScreen(MDBottomNavigationItem,Screen,CommonGestures):
     #     super().on_tab_press(*args)
         # self._parent.text_color_normal = MDApp.get_running_app().theme_cls.primary_dark
         # print(self._parent.text_color_normal)
-        
+    
+    
     def cg_swipe_horizontal(self, touch, right):
         # MDApp.get_running_app().swipe_screen(right)
         self._parent.swipe_screen(right)
@@ -35,7 +36,7 @@ class MyScreen(MDBottomNavigationItem,Screen,CommonGestures):
     #     return super().on_tab_press(*args)
         
         
-    def initiateScreen(self):
+    def initiate_screen(self):
         pass
         # bar = MNavigationBar()
         # self.add_widget(bar)

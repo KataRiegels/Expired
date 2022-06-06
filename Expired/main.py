@@ -79,7 +79,7 @@ class ExpiringFoodApp(MDApp):
         self.scan_screen = bar.ids.scan_tab
         self.settings_screen = bar.ids.settings_tab
         self.menu_screen = bar.ids.menu_tab
-        self.menu_screen.initiateScreen()
+        self.menu_screen.initiate_screen()
         # self.list_screen.ids.select_view.create_item_list_widget()
         # Clock.schedule_once(self.make_widget,1)
         # self.make_widget(2)
@@ -107,7 +107,7 @@ class ExpiringFoodApp(MDApp):
         print("Created list view")
         for child in self.bar.ids.tab_manager.screens:
             if not child == self.menu_screen:
-                child.initiateScreen()
+                child.initiate_screen()
         print("now it ran")
             
         pass

@@ -58,14 +58,14 @@ class ScanScreen(MyScreen):
         Clock.schedule_once(self.stopSpinner,1)
 
     """ Asking for permission as screen is created """
-    def initiateScreen(self):
+    def initiate_screen(self):
         if platform == 'android':
             permissions = [Permission.CAMERA, Permission.RECORD_AUDIO]
             if api_version < 29:
                 permissions.append(Permission.WRITE_EXTERNAL_STORAGE)        
             request_permissions(permissions)
         
-        return super().initiateScreen()
+        return super().initiate_screen()
 
     """ Method called by Kivy as screen is entered
     Connects the camera """
