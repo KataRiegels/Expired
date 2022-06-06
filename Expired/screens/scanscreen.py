@@ -12,9 +12,8 @@ if platform == 'android':
     from android.permissions import request_permissions,Permission
     from android import api_version
 from kivymd.uix.textfield import MDTextField
-from kivymd.app import MDApp
+from kivymd.app           import MDApp
 
-import datetime
 
 """ 
 Scan screen class
@@ -42,7 +41,6 @@ class ScanScreen(MyScreen):
     """ Asking for permission as screen is created """
     def initiate_screen(self):
         if platform == 'android':
-            # permissions = [Permission.CAMERA, Permission.RECORD_AUDIO]
             permissions = [Permission.CAMERA]
             if api_version < 29:
                 permissions.append(Permission.WRITE_EXTERNAL_STORAGE)        
@@ -62,7 +60,6 @@ class ScanScreen(MyScreen):
     """ Captures a photo to use for OCR """
     def photo(self):
         self.ids.preview.capture_photo()
-        # Clock.schedule_once(self.stop_spinner, 0.5)
 
     """ When pressing the "Save item" button
     Either adds the item to the fridge or displays snackbars """
@@ -92,8 +89,6 @@ class ScanScreen(MyScreen):
 
     """ Open date picker """
     def show_date_picker(self):
-        # min_date = datetime.strptime("2022:01:01", '%Y:%m:%d').date()
-        # min_date = Date(2022,1,1)
         date_dialog = MDDatePicker(min_year=2022)
         date_dialog.bind(on_save=self.on_save)
         date_dialog.open()

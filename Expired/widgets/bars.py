@@ -3,26 +3,6 @@ from kivymd.uix.bottomnavigation import MDBottomNavigationItem,MDBottomNavigatio
 from kivymd.uix.toolbar import MDToolbar
 
 
-# class MyBottomNavigationHeader(MDBottomNavigationHeader):
-#     def on_press(self) -> None:
-#         """Called when clicking on a panel item."""
-
-#         if self.theme_cls.material_style == "M2":
-#             Animation(_label_font_size=sp(14), d=0.1).start(self)
-#         elif self.theme_cls.material_style == "M3":
-#             Animation(
-#                 _selected_region_width=dp(64),
-#                 t="in_out_sine",
-#                 d=0,
-#             ).start(self)
-#         Animation(
-#             _text_color_normal=self.theme_cls.primary_color
-#             # _text_color_normal=self.theme_cls.primary_dark_hue
-#             if self.text_color_active == [1, 1, 1, 1]
-#             else self.text_color_active,
-#             d=0.1,
-#         ).start(self)
-
 """
 Navigation bar widget
 """
@@ -31,20 +11,6 @@ class MNavigationBar(MDBottomNavigation):
     def __init__(self, **kwargs):
         self.current_tab = 1
         super().__init__(**kwargs)
-    
-    # def on_press(self):
-    #     Animation(_label_font_size=sp(14), d=0.1).start(self)
-    #     Animation(
-    #         _text_color_normal=self.theme_cls.primary_color,
-    #         d=0.1,
-    #     ).start(self)
-    
-    # def updateBackList(self,current):
-    #     self.latest_tabs.append(current)
-    #     if len(self.latest_tabs) > 4:
-    #         self.latest_tabs.pop(0)
-    #     return self.latest_tabs[-1]
-    #     pass
     
     """ Using the "order" to get retrieve the Screen instance """
     def get_screen_from_order(self,order):

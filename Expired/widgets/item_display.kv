@@ -150,8 +150,6 @@
 # Rule for the interactive display of items
 <ItemListView>:
     MDBoxLayout:
-        # adaptive_height:    False # Useless?
-        # adaptive_size:      False #useless?
         orientation:    "vertical"
         padding:        ([10,10,10,10])
         spacing:        5     
@@ -162,7 +160,6 @@
             product_name_lbl:   "[b] Product name[/b]"
         # Allows scrolling up and down the list view
         ScrollView: 
-            # id:                 scrollview
             always_overscroll:  False
             do_scroll_x:        False
             effect_cls:         ScrollEffect
@@ -185,16 +182,6 @@
                 ]
 # The list itself which displays the items
 <MySelectionList>:
-    # Not sure about this, just basically copied from kivyMD
-    # canvas.before:
-    #     RoundedRectangle:
-    #         group: "Background_instruction"
-    #         size: self.size
-    #         pos: self.pos if not isinstance(self, RelativeLayout) else (0, 0)
-    #         radius: root.radius
-    #         source: root.background
-    #     Color: 
-    #         rgba: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["200"])
     padding:        ([0,0,0,0]) 
     spacing:        "2dp"
     md_bg_color:    get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["200"])
