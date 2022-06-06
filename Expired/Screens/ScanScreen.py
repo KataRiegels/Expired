@@ -2,13 +2,13 @@ from kivymd.uix.picker      import MDDatePicker
 from kivymd.uix.dialog      import MDDialog
 from kivymd.uix.button      import MDFlatButton
 from kivy.properties        import ObjectProperty
-from kivy.utils             import platform
 from kivy.clock             import Clock
 from .                      import MyScreen
 from items                  import Date,Item
 from widgets.item_display   import MSnackbar
 from camera4kivy            import Preview
 
+from kivy.utils             import platform
 if platform == 'android':
     from android.permissions import request_permissions,Permission
     from android import api_version
