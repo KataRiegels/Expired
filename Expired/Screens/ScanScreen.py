@@ -21,11 +21,14 @@ from kivy.uix.textinput import TextInput
 from kivymd.uix.textfield import MDTextField, MDTextFieldRound
 from kivymd.app import MDApp
 
+"""
+The input field for product name
+"""
 class FilteredInput(MDTextField):
     def insert_text(self, substring, from_undo=False):
-        test = ["\"", "\\", "\'"]
-        for i in range(len(test)):
-            if substring == test[i]:
+        filtered_characters = ["\"", "\\", "\'"]
+        for character in filtered_characters:
+            if substring == character:
                 s = ""
                 break
             else:

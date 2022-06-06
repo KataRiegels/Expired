@@ -14,7 +14,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
 from . import MyScreen
 from kivymd.app import MDApp
-# class MenuScreen():
+# class HomeScreen():
 #     pass
 
 class DateLayout(RelativeLayout):
@@ -37,7 +37,7 @@ class DatesLayout(BoxLayout):
         self.add_widget(item)
         pass
 
-class MenuScreen(MyScreen):
+class HomeScreen(MyScreen):
     
     entered = False
     
