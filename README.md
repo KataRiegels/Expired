@@ -1,5 +1,17 @@
 # ExpiredHumans
 
+**How to upload an APK onto an Android device**
+
+1. download the APK provided or build an APK (see below)
+
+2. connect android phone via usb
+
+3. transfer APK file to phone (remember location)
+
+4. open APK on phone (in location it was transfered too), accept warnings about sideloading and press install
+
+5. app is now installed, find in app list and run
+
 **How to build the app**
 
 1. open CMD prompt as administrator
