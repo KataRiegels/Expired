@@ -7,6 +7,7 @@ class ListScreen(MyScreen):
         super().__init__(**kwargs)
         self.items = items
 
+    """ Assembling the interactive display of items  """
     def initiate_screen(self):
         self.ids.select_view.create_item_list_widget()
 
