@@ -23,16 +23,16 @@ class SettingsScreen(MyScreen):
                     pos_hint  = {'x':.25,'y':.4},
                     on_press  = self.apisaved_date)
             self.add_widget(self.api2)
-            self.api1 = MDFillRoundFlatButton(text= 'Test cat fact API (PC)',
-                    size_hint = (.5,.1),
-                    pos_hint  = {'x':.25,'y':.3},
-                    on_press  = self.apiTEST1)
-            self.add_widget(self.api1)
-        # If test feeature ARE enabled
+            # self.api1 = MDFillRoundFlatButton(text= 'Test cat fact API (PC)',
+            #         size_hint = (.5,.1),
+            #         pos_hint  = {'x':.25,'y':.3},
+            #         on_press  = self.apiTEST1)
+            # self.add_widget(self.api1)
+        # If test feature ARE enabled
         elif self.ids.features.text == "Disable test features":
             self.ids.label_text.text = "" 
             self.ids.features.text   = "Enable test features"
-            self.remove_widget(self.api1)
+            # self.remove_widget(self.api1)
             self.remove_widget(self.api2)
     
     """ For opening the theme picker widget """

@@ -86,9 +86,11 @@ class ItemListView(RelativeLayout):
 
     """ Checks for which items contain searched string and adds it to the list widget """
     def search_items(self,string):
+        string = string.casefold()
+        
         self.selection_list.clear_widgets()
         for widget in self.current_widgets.copy():
-            if_found = widget._owner.product_name.find(string) # .find() returns -1 when input wasn't detected
+            if_found = widget._owner.product_name.casefold().find(string.casefold()) # .find() returns -1 when input wasn't detected
             if if_found==-1: 
                 self.current_widgets.remove(widget)
         self.refresh_widgets()
