@@ -17,7 +17,7 @@ class SettingsScreen(MyScreen):
     def enable_features(self):
         self.ids.features
         if self.ids.features.text == "Enable test features":
-            self.ids.labelText.text = "API response" 
+            self.ids.label_text.text = "API response" 
             self.ids.features.text = "Disable test features"
             self.api2 = MDFillRoundFlatButton(text= 'test cat api',
                     size_hint=(.5,.1),
@@ -30,7 +30,7 @@ class SettingsScreen(MyScreen):
                     on_press= self.apiTEST1)
             self.add_widget(self.api1)
         elif self.ids.features.text == "Disable test features":
-            self.ids.labelText.text = "" 
+            self.ids.label_text.text = "" 
             self.ids.features.text = "Enable test features"
             self.remove_widget(self.api1)
             self.remove_widget(self.api2)
@@ -51,7 +51,7 @@ class SettingsScreen(MyScreen):
         request = UrlRequest("https://catfact.ninja/fact", on_success=self.get_data)
 
     def get_data(self,request,response):
-        self.ids.labelText.text = response['fact']
+        self.ids.label_text.text = response['fact']
     
     def apiTEST1(self):
         pass
@@ -82,5 +82,5 @@ class SettingsScreen(MyScreen):
         request = UrlRequest("https://catfact.ninja/fact", on_success=self.get_data)
 
     def get_data(self,request,response):
-        self.ids.labelText.text = response['fact']
+        self.ids.label_text.text = response['fact']
 """

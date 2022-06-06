@@ -2,41 +2,28 @@
 
 
 <SettingsScreen>:
-    # MNavigationBar:
     Toolbar:
         title: "Settings"
-    # Button:
-    #     text: 'test cat api'
-    #     size_hint:(.5,.1)
-    #     pos_hint: {'x':.25,'y':.4}
-    #     on_press: root.apisaved_date()
-    # Button:
-    #     text: 'test api (pc)'
-    #     size_hint:(.5,.1)
-    #     pos_hint: {'x':.25,'y':.3}
-    #     on_press: root.apiTEST()
+    # Button to enable test features (currently just API test)
     MDFillRoundFlatButton:
-        id: features
-        text: 'Enable test features'
-        # theme_text_color: "Custom"
-        # text_color: app.theme_cls.primary_light
+        id:         features
+        text:       'Enable test features'
         md_bg_color: app.theme_cls.primary_color
-        size_hint:(.5,.1)
-        pos_hint: {'x':.25,'y':.5}
-        on_press: root.enable_features()
+        size_hint:  (.5,.1)
+        pos_hint:   {'x':.25,'y':.5}
+        on_press:   root.enable_features()
+    # Button to open theme picker    
     MDFillRoundFlatButton:
-        text: 'Choose theme color'
+        text:       'Choose theme color'
         md_bg_color: app.theme_cls.primary_color
-        size_hint:(.5,.1)
-        # md_bg_color: app.theme_cls.primary_color
-        pos_hint: {'x':.25,'y':.6}
-        # on_press: app.change_theme()
-
-        on_press: root.show_theme_picker()
+        size_hint:  (.5,.1)
+        pos_hint:   {'x':.25,'y':.6}
+        on_press:   root.show_theme_picker()
+    # Label showing "API responce" when test features are on
     MDLabel:
-        id: labelText
-        text: ""
-        halign: "center"
-        font_size: '30dp'
-        pos_hint: {'x':0,'y':-.3}
+        id:         label_text
+        text:       ""
+        halign:     "center"
+        font_size:  '30dp'
+        pos_hint:   {'x':0,'y':-.3}
 
