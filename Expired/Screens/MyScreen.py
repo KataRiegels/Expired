@@ -1,47 +1,20 @@
-from kivy.uix.screenmanager import Screen
-from kivymd.app import MDApp
-from kivymd.uix.screen import MDScreen
-from kivy.uix.screenmanager import ScreenManager
-from kivymd.uix.bottomnavigation import MDBottomNavigation,MDBottomNavigationItem
-from gestures4kivy import CommonGestures
+from kivy.uix.screenmanager      import Screen
+from kivymd.uix.bottomnavigation import MDBottomNavigationItem
+from gestures4kivy               import CommonGestures
 
-# class MyScreen(MDScreen):
-class MyScreen(MDBottomNavigationItem,Screen,CommonGestures):
-# class MyScreen(NavigationItem):
-    # app = App.get_running_app()
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,**kwargs)
-        self.md_bg_color = MDApp.get_running_app().theme_cls.bg_light
-         
-        # self.sm = self.app.sm
-        # self.add_widget(self.sm.bar)
-        
-    # def on_tab_press(self, *args):
-    #     super().on_tab_press(*args)
-        # self._parent.text_color_normal = MDApp.get_running_app().theme_cls.primary_dark
-        # print(self._parent.text_color_normal)
+"""
+The super-class for all the screens
+"""
+class MyScreen(MDBottomNavigationItem,CommonGestures):
     
-    
+    """ Responsible for change of screens when swiping """
     def cg_swipe_horizontal(self, touch, right):
-        # MDApp.get_running_app().swipe_screen(right)
         self._parent.swipe_screen(right)
         
-    # def closeApp(self):
-    #     MDApp.get_running_app().stop()
     """ For when the fridge is updated """    
     def updated_fridge(self):
         pass
-    # def on_tab_press(self, *args):
         
-    #     return super().on_tab_press(*args)
-        
-        
+    """ For building certain parts of a screen """
     def initiate_screen(self):
         pass
-        # bar = MNavigationBar()
-        # self.add_widget(bar)
-        # bar = MDBottomNavigation()
-        
-class PrimaryScreen(ScreenManager):
-    # bar = Bars.MNavigationBar()
-    pass
