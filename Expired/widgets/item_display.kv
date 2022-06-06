@@ -1,0 +1,201 @@
+#:import Factory kivy.factory.Factory
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import ScrollEffect kivy.effects.scroll.ScrollEffect
+
+# Snackbar rule
+<MSnackbar>:
+    text:       "Please hold an item to start selection"
+    snackbar_x: dp(15)
+    snackbar_y: dp(20)
+    size_hint_x: .95
+
+# Rule for the confirm deletion dialog
+<ConfirmDelete>
+    title:       "Do you want to delete:"
+    md_bg_color: app.theme_cls.primary_color
+    type:        "simple"
+
+
+# Layout for where to display labels in the FoodSelectionItem and header
+<ItemLayout@RelativeLayout>:
+    exp_date_lbl:           " exp date here "
+    exp_date_font_size:     dp(20)
+    product_name_lbl:       " product name here"
+    theme_text_color:       "Primary"
+    text_color:             0,0,0,1
+    product_name_font_size: dp(20)
+    MDLabel:
+        id:         expiry_date_lbl
+        markup:     True
+        font_name:  "BestBefore"
+        pos_hint:   {'x':.02,'y':.0}
+        text_color: root.text_color
+        text:       root.exp_date_lbl
+        font_size:  root.exp_date_font_size
+    MDLabel:
+        id:         product_name_lbl
+        markup:     True
+        text_color: root.text_color
+        font_size:  root.product_name_font_size
+        text:       root.product_name_lbl
+        pos_hint:   {"x":.35,"y":.0}
+
+
+
+# The item in its UI form
+<FoodItemSelection>
+    bg_color:           get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["700"])
+    _no_ripple_effect:  True
+    _txt_top_pad:       "12dp"
+    _txt_bot_pad:       "12dp"
+    height:             dp(30)
+    size_hint_y:        None
+    canvas:
+        Color:
+            rgba:   root.bg_color if root.bg_color else (0, 0, 0, 0)
+        Rectangle:
+            pos:    self.pos
+            size:   self.size
+    ItemLayout:
+        id:                 list_item
+        product_name_lbl:   "dummy value"
+
+# Rule for the buttons inside the sort pppup
+<SortIconButton@OneLineIconListItem>
+    theme_text_color:   "Custom"
+    _lbl_primary:       None
+    icon_:              "magnify"
+    text_color:         get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
+    line_color:         1, 0, 1, 1
+    Icon:
+        id:   _icon
+        icon: root.icon_
+
+<Icon@IconLeftWidget>
+    theme_text_color: "Custom"
+    text_color:       get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette][app.theme_cls.primary_light_hue])
+
+
+# The popup displaying the different sorting posibilities
+<SortByPopup>
+    anchor_x:           'left'
+    anchor_y:           'bottom'
+    pos_hint:           {"right": 1, "bottom": 1}
+    size_hint_y:        .6
+    size_hint_x:        .7
+    title:              "Sort by"
+    background:         ""  # Makes sure the popup background is not darkened
+    background_color:   app.theme_cls.primary_color
+    GridLayout:
+        cols: 1
+        SortIconButton:
+            text:       "Ascending name"
+            icon_:      "sort-alphabetical-ascending"
+            on_press:   root._parent.sort_display_by_name(ascending=True)
+            on_release: root.dismiss()
+        SortIconButton:
+            text:       "Descending name"
+            icon_:      "sort-alphabetical-descending"
+            on_press:   root._parent.sort_display_by_name(ascending=False)
+            on_release: root.dismiss()
+        SortIconButton:
+            text:       "Ascending date"
+            icon_:      "sort-calendar-ascending"
+            on_press:   root._parent.sort_display_by_date(ascending=True)
+            on_release: root.dismiss()
+        SortIconButton:
+            text:       "Descending date"
+            icon_:      "sort-calendar-descending"
+            on_press:   root._parent.sort_display_by_date(ascending=False)
+            on_release: root.dismiss()
+
+# Popup containing a search field
+<SearchPopUp>:
+    id:                 search_popup
+    anchor_x:           'left'
+    anchor_y:           'bottom'
+    on_open:            search_field.show_keyboard()
+    size_hint_y:        None
+    size:               (0,search_field.line_height*2)
+    size_hint_x:        .5
+    pos_hint:           {"center_x": .5, "y": .05}
+    background:         ""
+    background_color:   app.theme_cls.primary_color
+    canvas:
+        Color:
+            rgba:   app.theme_cls.primary_dark
+        Rectangle:
+            pos:    self.pos
+            size:   self.size
+    GridLayout:
+        cols: 1
+        rows: 1
+        BoxLayout:
+            orientation: "horizontal"
+            # Search field
+            TextInput:
+                id:                 search_field
+                hint_text:          'Search item'
+                size_hint_x:        .3
+                on_text_validate:   root.clicked_search()
+                readonly:           False
+                multiline:          False
+                focus:              True
+            # The magnifying glass next to the search field
+            MDIconButton:
+                icon:       "magnify"
+                pos_hint:   {"x": .5, "center_y": .5}
+                on_press:   root.clicked_search()
+                
+# Rule for the interactive display of items
+<ItemListView>:
+    MDBoxLayout:
+        # adaptive_height:    False # Useless?
+        # adaptive_size:      False #useless?
+        orientation:    "vertical"
+        padding:        ([10,10,10,10])
+        spacing:        5     
+        ItemLayout:
+            size_hint_y:        .1
+            size_hint_x:        1
+            exp_date_lbl:       "[b]Expiry date[/b] \nDD/MM-YYYY"
+            product_name_lbl:   "[b] Product name[/b]"
+        # Allows scrolling up and down the list view
+        ScrollView: 
+            # id:                 scrollview
+            always_overscroll:  False
+            do_scroll_x:        False
+            effect_cls:         ScrollEffect
+            bar_width:          10
+            # The list view (collection of FoodSelectionItems)
+            MySelectionList:
+                id:             selection_list
+                size_hint_min:  None,None
+        # The bar containing the small icon buttons below the list view
+        MDToolbar: 
+            id:         toolbar
+            title:      "Items"
+            size_hint_y: .1
+            right_action_items: 
+                [
+                ["magnify",lambda x: root.open_search()],
+                ["sort",lambda x: root.open_sort_by()],
+                ["delete",lambda x: root.pressed_delete()],
+                ["refresh",lambda x: root.refresh_list()],
+                ]
+# The list itself which displays the items
+<MySelectionList>:
+    # Not sure about this, just basically copied from kivyMD
+    # canvas.before:
+    #     RoundedRectangle:
+    #         group: "Background_instruction"
+    #         size: self.size
+    #         pos: self.pos if not isinstance(self, RelativeLayout) else (0, 0)
+    #         radius: root.radius
+    #         source: root.background
+    #     Color: 
+    #         rgba: get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["200"])
+    padding:        ([0,0,0,0]) 
+    spacing:        "2dp"
+    md_bg_color:    get_color_from_hex(app.theme_cls.colors[app.theme_cls.primary_palette]["200"])
+    overlay_color:  [1,1,1,0.3]

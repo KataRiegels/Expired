@@ -1,0 +1,29 @@
+
+
+
+<SettingsScreen>:
+    Toolbar:
+        title: "Settings"
+    # Button to enable test features (currently just API test)
+    MDFillRoundFlatButton:
+        id:         features
+        text:       'Enable test features'
+        md_bg_color: app.theme_cls.primary_color
+        size_hint:  (.5,.1)
+        pos_hint:   {'x':.25,'y':.5}
+        on_press:   root.enable_features()
+    # Button to open theme picker    
+    MDFillRoundFlatButton:
+        text:       'Choose theme color'
+        md_bg_color: app.theme_cls.primary_color
+        size_hint:  (.5,.1)
+        pos_hint:   {'x':.25,'y':.6}
+        on_press:   root.show_theme_picker()
+    # Label showing the API responce when testing API
+    MDLabel:
+        id:         label_text
+        text:       ""
+        halign:     "center"
+        font_size:  '30dp'
+        pos_hint:   {'x':0,'y':-.3}
+

@@ -1,0 +1,68 @@
+
+# The layout responsible for positioning the expiry date and the product name
+<DateLayout>:
+    exp_date_lbl:           " exp date here "
+    exp_date_font_size:     dp(18)
+    product_name_lbl:       " product name here"
+    theme_text_color:       "Custom"
+    text_color:             0,0,0,1
+    product_name_font_size: dp(20)
+    MDLabel:
+        markup:           False
+        id:               product_name_lbl
+        theme_text_color: root.theme_text_color
+        text_color:       root.text_color
+        font_size:        root.product_name_font_size
+        text:             root.product_name_lbl
+        pos_hint:         {"x":.35,"y":.0}
+    MDLabel:
+        markup:           True
+        id:               expiry_date_lbl
+        font_name:        "BestBefore"
+        pos_hint:         {'x':.02,'y':.0}
+        theme_text_color: root.theme_text_color
+        text_color:       root.text_color
+        text:             root.exp_date_lbl
+        font_size:        root.exp_date_font_size
+
+# The layout holding the multiple DateLayout 
+<DatesLayout@MDBoxLayout>: 
+    size_hint_y:    .5
+    orientation:    "vertical"
+    pos_hint:       {"x":.1,"top":.7}
+
+
+<HomeScreen>:
+    Toolbar:
+        title: "Home screen"
+    FloatLayout:        
+        pos_hint:   {"center_x":.5,"center_y":.42}
+        size_hint:  .85, None
+        size:       self.width, self.width
+        # Sticky note
+        Image:
+            pos_hint:   {"x":0,"y":0}
+            source:     'resources/sticky_note.png'
+            size:       self.texture_size
+        # Sticky note heading
+        MDLabel:
+            pos_hint:           {"x":.1,"top":1}
+            text:               "Next to expire:"
+            size_hint_y:        .3
+            font_size:          dp(30)
+            text_color:         0,0,0,1
+            theme_text_color:   "Custom"
+        # The next expering food items
+        DatesLayout:
+            id: dates_layout
+    # Simple "WELCOME" label
+    MDLabel:
+        font_name:  "BestBefore"
+        text:       "WELCOME"
+        halign:     "center"
+        font_size:  dp(60)
+        pos_hint:   {"center_x": .5, "y":.3}
+    
+
+
+
